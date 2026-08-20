@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🔐 সিকিউর পাসওয়ার্ড ম্যানেজার</title>
+    <title>🔐 সিকিউর পাস</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -14,9 +14,9 @@
         :root {
             --bg-primary: #0a0e17;
             --bg-secondary: #0f1923;
-            --bg-card: rgba(26, 35, 50, 0.8);
-            --bg-input: rgba(15, 23, 41, 0.9);
-            --border-color: rgba(42, 58, 92, 0.5);
+            --bg-card: rgba(26, 35, 50, 0.7);
+            --bg-input: rgba(15, 23, 41, 0.8);
+            --border-color: rgba(42, 58, 92, 0.3);
             --text-primary: #e8edf5;
             --text-secondary: #94a3b8;
             --text-muted: #64748b;
@@ -27,10 +27,10 @@
             --accent-pink: #ec4899;
             --accent-orange: #f59e0b;
             --accent-cyan: #06b6d4;
-            --glow-blue: rgba(59, 130, 246, 0.3);
-            --shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
-            --glass-bg: rgba(26, 35, 50, 0.6);
-            --glass-border: rgba(255, 255, 255, 0.05);
+            --glow-blue: rgba(59, 130, 246, 0.25);
+            --shadow: 0 8px 40px rgba(0, 0, 0, 0.6);
+            --glass-bg: rgba(26, 35, 50, 0.5);
+            --glass-border: rgba(255, 255, 255, 0.06);
         }
         
         body {
@@ -43,17 +43,17 @@
             align-items: center;
             padding: 20px;
             background-image: 
-                radial-gradient(ellipse at 10% 20%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
-                radial-gradient(ellipse at 90% 80%, rgba(139, 92, 246, 0.08) 0%, transparent 50%),
-                radial-gradient(ellipse at 50% 50%, rgba(236, 72, 153, 0.05) 0%, transparent 70%);
+                radial-gradient(ellipse at 10% 20%, rgba(59, 130, 246, 0.12) 0%, transparent 50%),
+                radial-gradient(ellipse at 90% 80%, rgba(139, 92, 246, 0.10) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(236, 72, 153, 0.06) 0%, transparent 70%);
         }
         
         .container {
-            max-width: 540px;
+            max-width: 560px;
             width: 100%;
             background: var(--bg-secondary);
-            border-radius: 28px;
-            padding: 32px 28px;
+            border-radius: 32px;
+            padding: 28px 24px;
             box-shadow: var(--shadow);
             border: 1px solid var(--glass-border);
             backdrop-filter: blur(10px);
@@ -68,9 +68,9 @@
             top: 0;
             left: 0;
             right: 0;
-            height: 2px;
-            background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple), var(--accent-pink));
-            border-radius: 28px 28px 0 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple), var(--accent-pink), var(--accent-orange));
+            border-radius: 32px 32px 0 0;
         }
         
         .container::-webkit-scrollbar { width: 4px; }
@@ -82,9 +82,10 @@
         
         .hidden { display: none !important; }
         
+        /* ===== HEADER ===== */
         .app-header {
             text-align: center;
-            margin-bottom: 28px;
+            margin-bottom: 24px;
             position: relative;
         }
         
@@ -92,23 +93,23 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 72px;
-            height: 72px;
+            width: 68px;
+            height: 68px;
             background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple), var(--accent-pink));
-            border-radius: 22px;
-            font-size: 32px;
-            margin-bottom: 14px;
-            box-shadow: 0 4px 30px rgba(59, 130, 246, 0.4);
-            animation: pulse-glow 2s ease-in-out infinite;
+            border-radius: 20px;
+            font-size: 30px;
+            margin-bottom: 12px;
+            box-shadow: 0 4px 30px rgba(59, 130, 246, 0.35);
+            animation: pulse-glow 2.5s ease-in-out infinite;
         }
         
         @keyframes pulse-glow {
-            0%, 100% { box-shadow: 0 4px 30px rgba(59, 130, 246, 0.4); }
-            50% { box-shadow: 0 4px 50px rgba(139, 92, 246, 0.6); }
+            0%, 100% { box-shadow: 0 4px 30px rgba(59, 130, 246, 0.35); }
+            50% { box-shadow: 0 4px 50px rgba(139, 92, 246, 0.5); }
         }
         
         .app-title {
-            font-size: 24px;
+            font-size: 22px;
             font-weight: 900;
             background: linear-gradient(135deg, #60a5fa, #a78bfa, #f472b6);
             -webkit-background-clip: text;
@@ -118,15 +119,16 @@
         
         .app-subtitle {
             color: var(--text-secondary);
-            font-size: 13px;
-            margin-top: 4px;
+            font-size: 12px;
+            margin-top: 2px;
             font-weight: 400;
             letter-spacing: 0.3px;
         }
         
+        /* ===== INPUTS ===== */
         .input-group {
             position: relative;
-            margin-bottom: 14px;
+            margin-bottom: 12px;
         }
         
         .input-group i {
@@ -135,16 +137,16 @@
             top: 50%;
             transform: translateY(-50%);
             color: var(--text-muted);
-            font-size: 16px;
+            font-size: 15px;
             transition: color 0.3s;
             z-index: 1;
         }
         
         .input-group input, .input-group select {
             width: 100%;
-            padding: 13px 14px 13px 44px;
+            padding: 12px 14px 12px 44px;
             background: var(--bg-input);
-            border: 2px solid var(--border-color);
+            border: 1.5px solid var(--border-color);
             border-radius: 12px;
             color: var(--text-primary);
             font-size: 14px;
@@ -188,12 +190,13 @@
             font-size: 12px;
         }
         
+        /* ===== BUTTONS ===== */
         .btn {
             width: 100%;
-            padding: 14px;
+            padding: 13px;
             border: none;
             border-radius: 12px;
-            font-size: 15px;
+            font-size: 14px;
             font-weight: 600;
             font-family: 'Inter', sans-serif;
             cursor: pointer;
@@ -207,7 +210,7 @@
             content: '';
             position: absolute;
             inset: 0;
-            background: linear-gradient(135deg, rgba(255,255,255,0.1), transparent);
+            background: linear-gradient(135deg, rgba(255,255,255,0.08), transparent);
             opacity: 0;
             transition: opacity 0.3s;
         }
@@ -229,29 +232,29 @@
         .btn-success {
             background: linear-gradient(135deg, var(--accent-green), #059669);
             color: white;
-            box-shadow: 0 4px 20px rgba(34, 197, 94, 0.3);
+            box-shadow: 0 4px 20px rgba(34, 197, 94, 0.25);
         }
         
         .btn-success:hover { 
             transform: translateY(-2px); 
-            box-shadow: 0 6px 30px rgba(34, 197, 94, 0.4);
+            box-shadow: 0 6px 30px rgba(34, 197, 94, 0.35);
         }
         
         .btn-danger {
             background: linear-gradient(135deg, var(--accent-red), #b91c1c);
             color: white;
-            box-shadow: 0 4px 20px rgba(239, 68, 68, 0.2);
+            box-shadow: 0 4px 20px rgba(239, 68, 68, 0.15);
         }
         
         .btn-danger:hover { 
             transform: translateY(-2px); 
-            box-shadow: 0 6px 30px rgba(239, 68, 68, 0.3);
+            box-shadow: 0 6px 30px rgba(239, 68, 68, 0.25);
         }
         
         .btn-outline {
             background: transparent;
             color: var(--text-secondary);
-            border: 2px solid var(--border-color);
+            border: 1.5px solid var(--border-color);
             backdrop-filter: blur(5px);
         }
         
@@ -262,61 +265,64 @@
         }
         
         .btn-sm {
-            padding: 6px 14px;
-            font-size: 12px;
+            padding: 5px 12px;
+            font-size: 11px;
             width: auto;
         }
         
         .btn-copy {
-            background: rgba(59, 130, 246, 0.12);
+            background: rgba(59, 130, 246, 0.1);
             color: var(--accent-blue);
-            border: 1px solid rgba(59, 130, 246, 0.1);
-            padding: 5px 12px;
-            border-radius: 8px;
+            border: none;
+            padding: 2px 8px;
+            border-radius: 6px;
             cursor: pointer;
-            font-size: 11px;
+            font-size: 10px;
             font-weight: 500;
-            transition: all 0.3s;
+            transition: all 0.2s;
             font-family: 'Inter', sans-serif;
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
         }
         
         .btn-copy:hover { 
             background: rgba(59, 130, 246, 0.2);
-            transform: translateY(-1px);
+            transform: scale(1.05);
         }
         
         .btn-copy.copied {
             background: rgba(34, 197, 94, 0.15);
             color: var(--accent-green);
-            border-color: rgba(34, 197, 94, 0.2);
         }
         
         .card {
             background: var(--glass-bg);
             border-radius: 16px;
-            padding: 22px 20px;
+            padding: 20px 18px;
             border: 1px solid var(--glass-border);
             backdrop-filter: blur(10px);
-            margin-bottom: 14px;
+            margin-bottom: 12px;
             transition: all 0.3s;
         }
         
         .card:hover {
-            border-color: rgba(59, 130, 246, 0.1);
+            border-color: rgba(59, 130, 246, 0.08);
         }
         
+        /* ===== PIN ===== */
         .pin-box {
             display: flex;
-            gap: 10px;
+            gap: 8px;
             justify-content: center;
-            margin: 14px 0;
+            margin: 12px 0;
         }
         
         .pin-box input {
-            width: 50px;
-            height: 58px;
+            width: 46px;
+            height: 54px;
             text-align: center;
-            font-size: 26px;
+            font-size: 24px;
             font-weight: 700;
             background: var(--bg-input);
             border: 2px solid var(--border-color);
@@ -337,46 +343,48 @@
         .pin-box input.filled {
             border-color: var(--accent-green);
             background: rgba(34, 197, 94, 0.05);
-            box-shadow: 0 0 20px rgba(34, 197, 94, 0.1);
+            box-shadow: 0 0 20px rgba(34, 197, 94, 0.08);
         }
         
+        /* ===== MESSAGES ===== */
         .message {
-            padding: 12px 16px;
+            padding: 10px 14px;
             border-radius: 10px;
-            margin-top: 12px;
-            font-size: 13px;
+            margin-top: 10px;
+            font-size: 12px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             animation: slideDown 0.3s ease;
         }
         
         @keyframes slideDown {
-            from { opacity: 0; transform: translateY(-10px); }
+            from { opacity: 0; transform: translateY(-8px); }
             to { opacity: 1; transform: translateY(0); }
         }
         
         .message-error {
-            background: rgba(239, 68, 68, 0.1);
+            background: rgba(239, 68, 68, 0.08);
             color: var(--accent-red);
-            border: 1px solid rgba(239, 68, 68, 0.15);
+            border: 1px solid rgba(239, 68, 68, 0.1);
         }
         
         .message-success {
-            background: rgba(34, 197, 94, 0.1);
+            background: rgba(34, 197, 94, 0.08);
             color: var(--accent-green);
-            border: 1px solid rgba(34, 197, 94, 0.15);
+            border: 1px solid rgba(34, 197, 94, 0.1);
         }
         
+        /* ===== DASHBOARD ===== */
         .dashboard-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 18px;
+            margin-bottom: 14px;
         }
         
         .dashboard-header h2 {
-            font-size: 18px;
+            font-size: 17px;
             font-weight: 700;
             background: linear-gradient(135deg, var(--text-primary), var(--text-secondary));
             -webkit-background-clip: text;
@@ -385,22 +393,76 @@
         
         .dashboard-actions {
             display: flex;
-            gap: 10px;
-            margin-bottom: 16px;
+            gap: 8px;
+            margin-bottom: 12px;
         }
         
         .dashboard-actions .btn {
             flex: 1;
-            padding: 10px;
-            font-size: 13px;
+            padding: 9px;
+            font-size: 12px;
             border-radius: 10px;
         }
         
+        /* ===== SEARCH ===== */
+        .search-box {
+            position: relative;
+            margin-bottom: 14px;
+        }
+        
+        .search-box i {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: 10px 14px 10px 42px;
+            background: var(--bg-input);
+            border: 1.5px solid var(--border-color);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-size: 13px;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s;
+        }
+        
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 0 4px var(--glow-blue);
+        }
+        
+        .search-box input::placeholder {
+            color: var(--text-muted);
+            font-weight: 300;
+        }
+        
+        .search-clear {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 14px;
+            transition: color 0.3s;
+            display: none;
+        }
+        
+        .search-clear:hover { color: var(--text-primary); }
+        .search-clear.show { display: block; }
+        
+        /* ===== PASSWORD ITEM (মডার্ন) ===== */
         .password-item {
             background: var(--bg-input);
-            padding: 16px 18px;
+            padding: 14px 16px;
             border-radius: 14px;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             border: 1px solid var(--border-color);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
@@ -419,8 +481,8 @@
         }
         
         .password-item:hover {
-            border-color: rgba(59, 130, 246, 0.2);
-            transform: translateX(6px) translateY(-2px);
+            border-color: rgba(59, 130, 246, 0.15);
+            transform: translateX(4px) translateY(-1px);
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
         }
         
@@ -428,25 +490,25 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
         
         .password-item .site-name {
             font-weight: 600;
-            font-size: 15px;
+            font-size: 14px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
         
         .password-item .site-name .site-icon {
-            width: 32px;
-            height: 32px;
-            border-radius: 10px;
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 15px;
+            font-size: 13px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
             transition: all 0.3s;
         }
@@ -457,64 +519,72 @@
         
         .password-item .item-details {
             color: var(--text-secondary);
-            font-size: 13px;
-            padding: 4px 0;
+            font-size: 12px;
         }
         
-        .password-item .item-details > div {
+        .password-item .item-details .field-row {
             display: flex;
             align-items: center;
-            padding: 4px 0;
+            justify-content: space-between;
+            padding: 3px 0;
             border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+            gap: 8px;
         }
         
-        .password-item .item-details > div:last-child {
+        .password-item .item-details .field-row:last-child {
             border-bottom: none;
         }
         
-        .password-item .item-details .label {
+        .password-item .item-details .field-label {
             color: var(--text-muted);
-            min-width: 75px;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 500;
-            letter-spacing: 0.3px;
+            min-width: 68px;
+            letter-spacing: 0.2px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
         }
         
-        .password-item .item-details .value {
+        .password-item .item-details .field-value {
             color: var(--text-primary);
-            word-break: break-all;
             flex: 1;
-            margin: 0 8px;
-            font-weight: 400;
-            font-size: 13px;
+            font-size: 12px;
+            word-break: break-all;
+        }
+        
+        .password-item .item-details .field-actions {
+            display: flex;
+            align-items: center;
+            gap: 4px;
         }
         
         .password-item .item-actions {
             display: flex;
             gap: 6px;
-            margin-top: 10px;
+            margin-top: 8px;
             flex-wrap: wrap;
-            padding-top: 10px;
+            padding-top: 8px;
             border-top: 1px solid rgba(255, 255, 255, 0.03);
         }
         
         .password-item .item-actions .btn {
-            padding: 5px 12px;
-            font-size: 11px;
+            padding: 4px 10px;
+            font-size: 10px;
             width: auto;
             flex: 1;
-            min-width: 60px;
+            min-width: 55px;
             border-radius: 8px;
         }
         
         .btn-delete {
-            background: rgba(239, 68, 68, 0.1);
+            background: rgba(239, 68, 68, 0.08);
             color: var(--accent-red);
-            border: 1px solid rgba(239, 68, 68, 0.1);
-            padding: 5px 12px;
+            border: none;
+            padding: 4px 10px;
             border-radius: 8px;
             cursor: pointer;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 500;
             transition: all 0.3s;
             font-family: 'Inter', sans-serif;
@@ -526,13 +596,13 @@
         }
         
         .btn-confirm {
-            background: rgba(34, 197, 94, 0.1);
+            background: rgba(34, 197, 94, 0.08);
             color: var(--accent-green);
-            border: 1px solid rgba(34, 197, 94, 0.1);
-            padding: 5px 12px;
+            border: none;
+            padding: 4px 10px;
             border-radius: 8px;
             cursor: pointer;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 500;
             transition: all 0.3s;
             font-family: 'Inter', sans-serif;
@@ -544,81 +614,83 @@
         }
         
         .btn-confirm.confirmed {
-            background: rgba(34, 197, 94, 0.2);
-            border-color: var(--accent-green);
-            box-shadow: 0 0 20px rgba(34, 197, 94, 0.1);
+            background: rgba(34, 197, 94, 0.15);
+            color: var(--accent-green);
         }
         
+        /* ===== BADGES ===== */
         .badge-confirmed {
             display: inline-flex;
             align-items: center;
-            gap: 4px;
-            background: rgba(34, 197, 94, 0.15);
+            gap: 3px;
+            background: rgba(34, 197, 94, 0.12);
             color: var(--accent-green);
-            font-size: 10px;
-            padding: 3px 12px;
+            font-size: 9px;
+            padding: 2px 10px;
             border-radius: 20px;
             font-weight: 600;
-            border: 1px solid rgba(34, 197, 94, 0.1);
-            letter-spacing: 0.3px;
+            border: 1px solid rgba(34, 197, 94, 0.08);
+            letter-spacing: 0.2px;
         }
         
         .badge-pending {
             display: inline-flex;
             align-items: center;
-            gap: 4px;
-            background: rgba(239, 68, 68, 0.12);
+            gap: 3px;
+            background: rgba(239, 68, 68, 0.10);
             color: var(--accent-red);
-            font-size: 10px;
-            padding: 3px 12px;
+            font-size: 9px;
+            padding: 2px 10px;
             border-radius: 20px;
             font-weight: 600;
-            border: 1px solid rgba(239, 68, 68, 0.1);
-            letter-spacing: 0.3px;
+            border: 1px solid rgba(239, 68, 68, 0.08);
+            letter-spacing: 0.2px;
         }
         
+        /* ===== EMPTY STATE ===== */
         .empty-state {
             text-align: center;
-            padding: 40px 20px;
+            padding: 35px 20px;
         }
         
         .empty-state .icon {
-            font-size: 56px;
-            margin-bottom: 16px;
+            font-size: 48px;
+            margin-bottom: 12px;
             display: block;
             animation: float 3s ease-in-out infinite;
         }
         
         @keyframes float {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+            50% { transform: translateY(-8px); }
         }
         
         .empty-state h3 {
             color: var(--text-secondary);
             font-weight: 600;
-            font-size: 16px;
+            font-size: 15px;
             margin-bottom: 4px;
         }
         
         .empty-state p {
             color: var(--text-muted);
-            font-size: 13px;
+            font-size: 12px;
         }
         
+        /* ===== LOADING ===== */
         .loading {
             text-align: center;
-            padding: 30px 0;
+            padding: 25px 0;
         }
         
         .spinner {
-            width: 40px;
-            height: 40px;
+            width: 32px;
+            height: 32px;
             border: 3px solid var(--border-color);
             border-top: 3px solid var(--accent-blue);
             border-radius: 50%;
             animation: spin 0.8s linear infinite;
-            margin: 0 auto 12px;
+            margin: 0 auto 10px;
         }
         
         @keyframes spin {
@@ -626,6 +698,7 @@
             100% { transform: rotate(360deg); }
         }
         
+        /* ===== TOAST ===== */
         .toast {
             position: fixed;
             bottom: 30px;
@@ -633,14 +706,14 @@
             transform: translateX(-50%) translateY(100px);
             background: var(--bg-secondary);
             color: var(--text-primary);
-            padding: 14px 24px;
+            padding: 12px 22px;
             border-radius: 14px;
             border: 1px solid var(--glass-border);
             box-shadow: var(--shadow);
             z-index: 999;
             opacity: 0;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 500;
             max-width: 90%;
             backdrop-filter: blur(20px);
@@ -654,36 +727,38 @@
             transform: translateX(-50%) translateY(0);
         }
         
-        .toast i { font-size: 18px; }
+        .toast i { font-size: 16px; }
         .toast-success i { color: var(--accent-green); }
         .toast-error i { color: var(--accent-red); }
         .toast-info i { color: var(--accent-blue); }
         
+        /* ===== RESPONSIVE ===== */
         @media (max-width: 520px) {
-            .container { padding: 20px 14px; border-radius: 20px; }
-            .pin-box { gap: 6px; }
-            .pin-box input { width: 42px; height: 50px; font-size: 22px; }
+            .container { padding: 16px 12px; border-radius: 24px; }
+            .pin-box { gap: 5px; }
+            .pin-box input { width: 38px; height: 46px; font-size: 20px; }
             .dashboard-actions { flex-direction: column; }
-            .password-item .item-details > div { flex-wrap: wrap; }
-            .password-item .item-details .label { min-width: 60px; }
+            .password-item .item-details .field-row { flex-wrap: wrap; }
+            .password-item .item-details .field-label { min-width: 55px; font-size: 10px; }
+            .password-item .item-details .field-value { font-size: 11px; }
         }
         
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(15px); }
+            from { opacity: 0; transform: translateY(12px); }
             to { opacity: 1; transform: translateY(0); }
         }
         
-        .fade-in { animation: fadeIn 0.4s ease; }
+        .fade-in { animation: fadeIn 0.35s ease; }
         
         .offline-banner {
-            background: rgba(239, 68, 68, 0.12);
-            border: 1px solid rgba(239, 68, 68, 0.15);
+            background: rgba(239, 68, 68, 0.10);
+            border: 1px solid rgba(239, 68, 68, 0.10);
             color: var(--accent-red);
-            padding: 10px 16px;
+            padding: 8px 14px;
             border-radius: 12px;
             text-align: center;
-            font-size: 13px;
-            margin-bottom: 14px;
+            font-size: 12px;
+            margin-bottom: 12px;
             display: none;
             backdrop-filter: blur(10px);
         }
@@ -699,7 +774,7 @@
         
         #addPasswordForm .input-group input,
         #addPasswordForm .input-group select {
-            background: rgba(15, 23, 41, 0.6);
+            background: rgba(15, 23, 41, 0.5);
         }
         
         #addPasswordForm .input-group input:focus,
@@ -707,6 +782,7 @@
             background: rgba(15, 23, 41, 0.9);
         }
         
+        /* কালারফুল বর্ডার */
         .password-item[data-color="blue"]::before { background: linear-gradient(180deg, #3b82f6, #60a5fa); }
         .password-item[data-color="purple"]::before { background: linear-gradient(180deg, #8b5cf6, #a78bfa); }
         .password-item[data-color="pink"]::before { background: linear-gradient(180deg, #ec4899, #f472b6); }
@@ -715,6 +791,38 @@
         .password-item[data-color="red"]::before { background: linear-gradient(180deg, #ef4444, #f87171); }
         .password-item[data-color="cyan"]::before { background: linear-gradient(180deg, #06b6d4, #22d3ee); }
         .password-item[data-color="default"]::before { background: linear-gradient(180deg, #6b7280, #9ca3af); }
+        
+        /* ===== স্ট্যাটাস কাউন্ট ===== */
+        .status-count {
+            display: flex;
+            gap: 14px;
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+            padding: 0 2px;
+        }
+        
+        .status-count span {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .status-count .count-dot {
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+        }
+        
+        .count-dot.confirmed { background: var(--accent-green); }
+        .count-dot.pending { background: var(--accent-red); }
+        .count-dot.total { background: var(--accent-blue); }
+        
+        .status-count .count-num {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
     </style>
 </head>
 <body>
@@ -745,7 +853,7 @@
             <button class="btn btn-primary" onclick="login()">
                 <i class="fas fa-sign-in-alt"></i> লগইন করুন
             </button>
-            <button class="btn btn-outline" onclick="signup()" style="margin-top: 10px;">
+            <button class="btn btn-outline" onclick="signup()" style="margin-top: 8px;">
                 <i class="fas fa-user-plus"></i> নতুন অ্যাকাউন্ট তৈরি করুন
             </button>
             <div id="loginMessage"></div>
@@ -755,8 +863,8 @@
     <!-- ===== PIN ===== -->
     <div id="pinSection" class="hidden fade-in">
         <div class="card">
-            <h3 style="text-align: center; margin-bottom: 4px; font-weight: 700;" id="pinTitle">🔑 সিকিউরিটি PIN</h3>
-            <p style="text-align: center; color: var(--text-secondary); font-size: 13px; margin-bottom: 14px;" id="pinSubtitle">
+            <h3 style="text-align: center; margin-bottom: 2px; font-weight: 700; font-size: 17px;" id="pinTitle">🔑 সিকিউরিটি PIN</h3>
+            <p style="text-align: center; color: var(--text-secondary); font-size: 12px; margin-bottom: 12px;" id="pinSubtitle">
                 ৬ ডিজিটের PIN দিন
             </p>
             <div class="pin-box">
@@ -770,7 +878,7 @@
             <button class="btn btn-success" onclick="verifyOrSetPin()">
                 <i class="fas fa-check-circle"></i> <span id="pinBtnText">যাচাই করুন</span>
             </button>
-            <button class="btn btn-outline" onclick="logout()" style="margin-top: 10px;">
+            <button class="btn btn-outline" onclick="logout()" style="margin-top: 8px;">
                 <i class="fas fa-arrow-left"></i> ফিরে যান
             </button>
             <div id="pinMessage"></div>
@@ -797,7 +905,7 @@
         
         <!-- ===== ADD PASSWORD ===== -->
         <div id="addPasswordForm" class="hidden card">
-            <h4 style="margin-bottom: 14px; font-size: 16px; font-weight: 700;">
+            <h4 style="margin-bottom: 12px; font-size: 15px; font-weight: 700;">
                 <i class="fas fa-key" style="color: var(--accent-green);"></i> নতুন তথ্য যোগ করুন
             </h4>
             
@@ -863,11 +971,27 @@
             </button>
         </div>
         
+        <!-- ===== SEARCH ===== -->
+        <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="searchInput" placeholder="🔍 সাইট, ইউজারনেম, ইমেইল দিয়ে খুঁজুন..." oninput="filterPasswords()">
+            <span class="search-clear" id="searchClear" onclick="clearSearch()">
+                <i class="fas fa-times-circle"></i>
+            </span>
+        </div>
+        
+        <!-- ===== STATUS COUNT ===== -->
+        <div class="status-count" id="statusCount">
+            <span><span class="count-dot total"></span> মোট: <span class="count-num" id="totalCount">0</span></span>
+            <span><span class="count-dot confirmed"></span> কনফর্মড: <span class="count-num" id="confirmedCount">0</span></span>
+            <span><span class="count-dot pending"></span> পেন্ডিং: <span class="count-num" id="pendingCount">0</span></span>
+        </div>
+        
         <!-- ===== PASSWORD LIST ===== -->
         <div id="passwordList">
             <div class="loading">
                 <div class="spinner"></div>
-                <p style="color: var(--text-secondary); font-size: 13px;">লোড হচ্ছে...</p>
+                <p style="color: var(--text-secondary); font-size: 12px;">লোড হচ্ছে...</p>
             </div>
         </div>
     </div>
@@ -905,6 +1029,8 @@
     let currentUser = null;
     let isPinSet = false;
     let pinVerified = false;
+    let allPasswords = [];
+    let filteredPasswords = [];
 
     // =============================================
     // 🔐 AUTH STATE
@@ -980,7 +1106,6 @@
         auth.createUserWithEmailAndPassword(email, pass)
             .then((userCredential) => {
                 const uid = userCredential.user.uid;
-                // 🔥 ইউজার ফোল্ডার আলাদা (শুধু ইউজারের তথ্য)
                 return db.ref('users/' + uid).set({
                     email: email,
                     password: pass,
@@ -1098,118 +1223,205 @@
     }
 
     // =============================================
-    // 📂 LOAD PASSWORDS (passwords ফোল্ডার থেকে)
+    // 🔍 FILTER PASSWORDS
+    // =============================================
+    function filterPasswords() {
+        const query = document.getElementById('searchInput').value.toLowerCase().trim();
+        const clearBtn = document.getElementById('searchClear');
+        
+        if (query.length > 0) {
+            clearBtn.classList.add('show');
+        } else {
+            clearBtn.classList.remove('show');
+        }
+        
+        if (!query) {
+            filteredPasswords = [...allPasswords];
+        } else {
+            filteredPasswords = allPasswords.filter(item => {
+                const searchText = (item.site + ' ' + item.username + ' ' + item.email + ' ' + item.phone).toLowerCase();
+                return searchText.includes(query);
+            });
+        }
+        
+        renderPasswords(filteredPasswords);
+        updateStatusCount(filteredPasswords);
+    }
+
+    function clearSearch() {
+        document.getElementById('searchInput').value = '';
+        document.getElementById('searchClear').classList.remove('show');
+        filterPasswords();
+        document.getElementById('searchInput').focus();
+    }
+
+    // =============================================
+    // 📊 UPDATE STATUS COUNT
+    // =============================================
+    function updateStatusCount(data) {
+        const total = data.length;
+        const confirmed = data.filter(item => item.confirmed).length;
+        const pending = total - confirmed;
+        
+        document.getElementById('totalCount').textContent = total;
+        document.getElementById('confirmedCount').textContent = confirmed;
+        document.getElementById('pendingCount').textContent = pending;
+    }
+
+    // =============================================
+    // 📂 LOAD PASSWORDS
     // =============================================
     function loadPasswords() {
         if (!currentUser) return;
         
         const list = document.getElementById('passwordList');
-        list.innerHTML = `<div class="loading"><div class="spinner"></div><p style="color: var(--text-secondary); font-size: 13px;">লোড হচ্ছে...</p></div>`;
+        list.innerHTML = `<div class="loading"><div class="spinner"></div><p style="color: var(--text-secondary); font-size: 12px;">লোড হচ্ছে...</p></div>`;
         
-        // 🔥 passwords ফোল্ডার থেকে ডেটা নিন
         db.ref('passwords/' + currentUser.uid).once('value')
             .then(snapshot => {
                 const data = snapshot.val();
+                allPasswords = [];
                 
-                if (!data) {
-                    list.innerHTML = `
-                        <div class="empty-state">
-                            <span class="icon">🔐</span>
-                            <h3>কোনো তথ্য নেই</h3>
-                            <p>"যোগ করুন" বাটনে ক্লিক করে পাসওয়ার্ড সেভ করুন</p>
-                        </div>
-                    `;
-                    return;
+                if (data) {
+                    const keys = Object.keys(data);
+                    keys.forEach(key => {
+                        const item = data[key];
+                        if (item) {
+                            item._key = key;
+                            allPasswords.push(item);
+                        }
+                    });
                 }
                 
-                const keys = Object.keys(data);
+                filteredPasswords = [...allPasswords];
+                renderPasswords(filteredPasswords);
+                updateStatusCount(filteredPasswords);
                 
-                if (keys.length === 0) {
-                    list.innerHTML = `
-                        <div class="empty-state">
-                            <span class="icon">🔐</span>
-                            <h3>কোনো তথ্য নেই</h3>
-                            <p>"যোগ করুন" বাটনে ক্লিক করে পাসওয়ার্ড সেভ করুন</p>
-                        </div>
-                    `;
-                    return;
-                }
-                
-                let html = '';
-                keys.forEach((key) => {
-                    const item = data[key];
-                    if (!item) return;
-                    
-                    const isConfirmed = item.confirmed || false;
-                    const icon = getSiteIcon(item.site);
-                    const color = getSiteColor(item.site);
-                    const colorClass = getColorClass(item.site);
-                    
-                    html += `
-                        <div class="password-item fade-in" data-color="${colorClass}">
-                            <div class="item-header">
-                                <div class="site-name">
-                                    <div class="site-icon" style="background: ${color}">
-                                        ${icon}
-                                    </div>
-                                    ${item.site || 'নাম নেই'}
-                                    <span class="${isConfirmed ? 'badge-confirmed' : 'badge-pending'}">
-                                        <i class="fas ${isConfirmed ? 'fa-check-circle' : 'fa-clock'}"></i>
-                                        ${isConfirmed ? 'কনফর্মড' : 'পেন্ডিং'}
-                                    </span>
-                                </div>
-                                <button class="btn-delete" onclick="deletePassword('${key}')">
-                                    <i class="fas fa-trash-alt"></i>
-                                </button>
-                            </div>
-                            <div class="item-details">
-                                ${item.username ? `
-                                <div>
-                                    <span class="label"><i class="fas fa-user" style="color: var(--accent-blue); width: 14px;"></i> ইউজারনেম</span>
-                                    <span class="value">${item.username}</span>
-                                </div>` : ''}
-                                ${item.phone ? `
-                                <div>
-                                    <span class="label"><i class="fas fa-phone" style="color: var(--accent-green); width: 14px;"></i> ফোন নাম্বার</span>
-                                    <span class="value">${item.phone}</span>
-                                </div>` : ''}
-                                ${item.email ? `
-                                <div>
-                                    <span class="label"><i class="fas fa-envelope" style="color: var(--accent-purple); width: 14px;"></i> ইমেইল</span>
-                                    <span class="value">${item.email}</span>
-                                </div>` : ''}
-                                <div>
-                                    <span class="label"><i class="fas fa-key" style="color: var(--accent-orange); width: 14px;"></i> পাসওয়ার্ড</span>
-                                    <span class="value">${item.password || 'পাসওয়ার্ড নেই'}</span>
-                                </div>
-                            </div>
-                            <div class="item-actions">
-                                <button class="btn-copy" onclick="copyText('${(item.password || '').replace(/'/g, "\\'")}', this)">
-                                    <i class="fas fa-copy"></i> পাসওয়ার্ড
-                                </button>
-                                ${item.phone ? `<button class="btn-copy" onclick="copyText('${item.phone.replace(/'/g, "\\'")}', this)">
-                                    <i class="fas fa-copy"></i> ফোন
-                                </button>` : ''}
-                                ${item.email ? `<button class="btn-copy" onclick="copyText('${item.email.replace(/'/g, "\\'")}', this)">
-                                    <i class="fas fa-copy"></i> ইমেইল
-                                </button>` : ''}
-                                ${item.username ? `<button class="btn-copy" onclick="copyText('${item.username.replace(/'/g, "\\'")}', this)">
-                                    <i class="fas fa-copy"></i> ইউজারনেম
-                                </button>` : ''}
-                                <button class="btn-confirm ${isConfirmed ? 'confirmed' : ''}" onclick="confirmPassword('${key}')">
-                                    <i class="fas ${isConfirmed ? 'fa-check-circle' : 'fa-check'}"></i>
-                                    ${isConfirmed ? 'কনফর্মড' : 'কনফর্ম করুন'}
-                                </button>
-                            </div>
-                        </div>
-                    `;
-                });
-                list.innerHTML = html;
+                // সার্চ ক্লিয়ার
+                document.getElementById('searchInput').value = '';
+                document.getElementById('searchClear').classList.remove('show');
             })
             .catch(err => {
                 list.innerHTML = `<div class="message message-error"><i class="fas fa-exclamation-circle"></i> ${err.message}</div>`;
                 showToast('❌ ' + err.message, 'error');
             });
+    }
+
+    // =============================================
+    // 🖼️ RENDER PASSWORDS
+    // =============================================
+    function renderPasswords(passwords) {
+        const list = document.getElementById('passwordList');
+        
+        if (passwords.length === 0) {
+            list.innerHTML = `
+                <div class="empty-state">
+                    <span class="icon">🔐</span>
+                    <h3>${allPasswords.length === 0 ? 'কোনো তথ্য নেই' : 'কোনো ফলাফল পাওয়া যায়নি'}</h3>
+                    <p>${allPasswords.length === 0 ? '"যোগ করুন" বাটনে ক্লিক করে পাসওয়ার্ড সেভ করুন' : 'অন্য কিছু দিয়ে খুঁজুন'}</p>
+                </div>
+            `;
+            return;
+        }
+        
+        let html = '';
+        passwords.forEach((item) => {
+            const isConfirmed = item.confirmed || false;
+            const icon = getSiteIcon(item.site);
+            const color = getSiteColor(item.site);
+            const colorClass = getColorClass(item.site);
+            
+            // ফিল্ড তৈরি করুন
+            let fields = [];
+            
+            if (item.username) {
+                fields.push({
+                    label: '👤 ইউজারনেম',
+                    value: item.username,
+                    copy: item.username
+                });
+            }
+            
+            if (item.phone) {
+                fields.push({
+                    label: '📱 ফোন',
+                    value: item.phone,
+                    copy: item.phone
+                });
+            }
+            
+            if (item.email) {
+                fields.push({
+                    label: '📧 ইমেইল',
+                    value: item.email,
+                    copy: item.email
+                });
+            }
+            
+            fields.push({
+                label: '🔑 পাসওয়ার্ড',
+                value: '••••••••',
+                copy: item.password || '',
+                showCopy: true,
+                realValue: item.password || ''
+            });
+            
+            let fieldsHtml = '';
+            fields.forEach(field => {
+                const copyText = field.copy || '';
+                const showCopy = field.showCopy !== undefined ? field.showCopy : true;
+                const displayValue = field.value;
+                
+                fieldsHtml += `
+                    <div class="field-row">
+                        <span class="field-label">${field.label}</span>
+                        <span class="field-value">${displayValue}</span>
+                        <div class="field-actions">
+                            ${showCopy && copyText ? `
+                                <button class="btn-copy" onclick="copyText('${copyText.replace(/'/g, "\\'")}', this)">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            ` : ''}
+                            ${field.realValue ? `
+                                <button class="btn-copy" onclick="copyText('${field.realValue.replace(/'/g, "\\'")}', this)" style="background: rgba(245, 158, 11, 0.1); color: var(--accent-orange);">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            ` : ''}
+                        </div>
+                    </div>
+                `;
+            });
+            
+            html += `
+                <div class="password-item fade-in" data-color="${colorClass}">
+                    <div class="item-header">
+                        <div class="site-name">
+                            <div class="site-icon" style="background: ${color}">
+                                ${icon}
+                            </div>
+                            ${item.site || 'নাম নেই'}
+                            <span class="${isConfirmed ? 'badge-confirmed' : 'badge-pending'}">
+                                <i class="fas ${isConfirmed ? 'fa-check-circle' : 'fa-clock'}"></i>
+                                ${isConfirmed ? 'কনফর্মড' : 'পেন্ডিং'}
+                            </span>
+                        </div>
+                        <button class="btn-delete" onclick="deletePassword('${item._key}')">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </div>
+                    <div class="item-details">
+                        ${fieldsHtml}
+                    </div>
+                    <div class="item-actions">
+                        <button class="btn-confirm ${isConfirmed ? 'confirmed' : ''}" onclick="confirmPassword('${item._key}')">
+                            <i class="fas ${isConfirmed ? 'fa-check-circle' : 'fa-check'}"></i>
+                            ${isConfirmed ? 'কনফর্মড' : 'কনফর্ম করুন'}
+                        </button>
+                    </div>
+                </div>
+            `;
+        });
+        list.innerHTML = html;
     }
 
     // =============================================
@@ -1271,7 +1483,7 @@
     }
 
     // =============================================
-    // ✅ SAVE PASSWORD (passwords ফোল্ডারে সেভ)
+    // ✅ SAVE PASSWORD
     // =============================================
     function savePassword() {
         if (!currentUser) {
@@ -1300,15 +1512,12 @@
             createdAt: firebase.database.ServerValue.TIMESTAMP
         };
         
-        // 🔥 passwords ফোল্ডারে সেভ করুন (users ফোল্ডার থেকে আলাদা)
         const userPasswordsRef = db.ref('passwords/' + currentUser.uid);
         const newRef = userPasswordsRef.push();
         
         newRef.set(newEntry)
             .then(() => {
                 showToast('✅ তথ্য সেভ হয়েছে!', 'success');
-                console.log('✅ ডেটা সেভ হয়েছে:', newEntry);
-                console.log('✅ ইউনিক কী:', newRef.key);
                 
                 document.getElementById('siteSelect').value = '';
                 document.getElementById('siteName').value = '';
@@ -1363,14 +1572,14 @@
         }
         
         navigator.clipboard.writeText(text).then(() => {
-            const originalText = btn.innerHTML;
-            btn.innerHTML = '<i class="fas fa-check"></i> কপি হয়েছে!';
+            const originalHTML = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-check"></i>';
             btn.classList.add('copied');
             showToast('✅ কপি হয়েছে!', 'success');
             setTimeout(() => {
-                btn.innerHTML = originalText;
+                btn.innerHTML = originalHTML;
                 btn.classList.remove('copied');
-            }, 2000);
+            }, 1500);
         }).catch(() => {
             const textarea = document.createElement('textarea');
             textarea.value = text;
@@ -1459,7 +1668,7 @@
         toast.innerHTML = `<i class="fas ${icon}"></i> ${msg}`;
         toast.className = `toast show toast-${type}`;
         clearTimeout(toast._timeout);
-        toast._timeout = setTimeout(() => toast.classList.remove('show'), 3500);
+        toast._timeout = setTimeout(() => toast.classList.remove('show'), 3000);
     }
 
     // =============================================
@@ -1494,8 +1703,6 @@
     console.log('🚀 অ্যাপ রেডি! (Realtime Database)');
     console.log('📌 প্রজেক্ট:', firebaseConfig.projectId);
     console.log('📌 Database URL:', firebaseConfig.databaseURL);
-    console.log('📂 ইউজার ফোল্ডার: users/');
-    console.log('📂 পাসওয়ার্ড ফোল্ডার: passwords/');
 </script>
 
 </body>
