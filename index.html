@@ -187,6 +187,90 @@
             color: var(--accent-blue);
         }
         
+        /* ===== HOME PAGE ===== */
+        .home-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        
+        .stat-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 14px;
+            padding: 16px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s;
+        }
+        
+        .stat-card:hover {
+            border-color: rgba(59, 130, 246, 0.15);
+            transform: translateY(-2px);
+        }
+        
+        .stat-card .stat-number {
+            font-size: 28px;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .stat-card .stat-label {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+        
+        .stat-card .stat-icon {
+            font-size: 20px;
+            margin-bottom: 4px;
+            display: block;
+        }
+        
+        .stat-card.ot .stat-number {
+            background: linear-gradient(135deg, var(--accent-orange), #ea580c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .home-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+        
+        .home-actions .btn {
+            padding: 14px;
+            font-size: 13px;
+            border-radius: 12px;
+        }
+        
+        .btn-social {
+            background: linear-gradient(135deg, var(--accent-pink), var(--accent-purple));
+            color: white;
+            box-shadow: 0 4px 16px rgba(236, 72, 153, 0.2);
+        }
+        
+        .btn-social:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(236, 72, 153, 0.3);
+        }
+        
+        .btn-overtime {
+            background: linear-gradient(135deg, var(--accent-orange), #ea580c);
+            color: white;
+            box-shadow: 0 4px 16px rgba(245, 158, 11, 0.2);
+        }
+        
+        .btn-overtime:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(245, 158, 11, 0.3);
+        }
+        
         /* ===== INPUTS ===== */
         .input-group {
             position: relative;
@@ -332,6 +416,20 @@
             width: auto;
         }
         
+        .btn-back {
+            background: transparent;
+            color: var(--text-secondary);
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            transition: color 0.3s;
+            padding: 4px 8px;
+        }
+        
+        .btn-back:hover {
+            color: var(--text-primary);
+        }
+        
         .btn-copy {
             background: rgba(59, 130, 246, 0.1);
             color: var(--accent-blue);
@@ -436,15 +534,16 @@
             border: 1px solid rgba(34, 197, 94, 0.1);
         }
         
-        .dashboard-header {
+        /* ===== DASHBOARD HEADER ===== */
+        .page-header {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            margin-bottom: 10px;
+            gap: 10px;
+            margin-bottom: 14px;
         }
         
-        .dashboard-header h2 {
-            font-size: 15px;
+        .page-header h2 {
+            font-size: 17px;
             font-weight: 700;
             background: linear-gradient(135deg, var(--text-primary), var(--text-secondary));
             -webkit-background-clip: text;
@@ -564,6 +663,7 @@
             font-size: 10px;
         }
         
+        /* ===== PASSWORD ITEM ===== */
         .password-item {
             background: var(--bg-input);
             padding: 12px 14px;
@@ -776,6 +876,8 @@
             .dashboard-actions { flex-direction: column; }
             .search-filter-row { flex-direction: column; }
             .filter-box { min-width: 100%; }
+            .home-stats { grid-template-columns: 1fr 1fr; gap: 8px; }
+            .home-actions { grid-template-columns: 1fr; }
             .password-item .item-details .field-row { flex-wrap: wrap; }
             .password-item .item-details .field-label { min-width: 45px; font-size: 9px; }
             .password-item .item-details .field-value { font-size: 10px; }
@@ -985,8 +1087,8 @@
                 <span id="profileInitial">U</span>
             </div>
             <div class="profile-dropdown" id="profileDropdown">
-                <div class="profile-dropdown-item" onclick="showOvertime()">
-                    <i class="fas fa-clock"></i> ওভারটাইম হিসাব
+                <div class="profile-dropdown-item" onclick="goHome()">
+                    <i class="fas fa-home"></i> হোম
                 </div>
                 <div class="profile-dropdown-item" onclick="logout()">
                     <i class="fas fa-sign-out-alt"></i> লগআউট
@@ -1041,154 +1143,170 @@
         </div>
     </div>
     
-    <!-- ===== DASHBOARD ===== -->
-    <div id="dashboard" class="hidden fade-in">
-        <div class="dashboard-header">
-            <h2><i class="fas fa-folder-open" style="color: var(--accent-blue);"></i> আমার তথ্য</h2>
-            <button class="btn btn-danger btn-sm" onclick="logout()">
-                <i class="fas fa-sign-out-alt"></i>
+    <!-- ===== HOME PAGE ===== -->
+    <div id="homePage" class="hidden fade-in">
+        <div class="home-stats">
+            <div class="stat-card">
+                <span class="stat-icon">🔐</span>
+                <div class="stat-number" id="homeTotalPasswords">0</div>
+                <div class="stat-label">সেভ করা ইনফরমেশন</div>
+            </div>
+            <div class="stat-card ot">
+                <span class="stat-icon">⏰</span>
+                <div class="stat-number" id="homeTotalOvertime">0</div>
+                <div class="stat-label">মোট ওভারটাইম (ঘণ্টা)</div>
+            </div>
+        </div>
+        
+        <div class="home-actions">
+            <button class="btn btn-overtime" onclick="goToOvertime()">
+                <i class="fas fa-clock"></i> ওভারটাইম যোগ করুন
+            </button>
+            <button class="btn btn-social" onclick="goToSocial()">
+                <i class="fas fa-share-alt"></i> সোশ্যাল মিডিয়া যোগ করুন
             </button>
         </div>
         
-        <div class="dashboard-actions">
-            <button class="btn btn-primary" onclick="showAddPassword()">
-                <i class="fas fa-plus-circle"></i> যোগ করুন
-            </button>
-            <button class="btn btn-outline" onclick="loadPasswords()">
-                <i class="fas fa-sync-alt"></i>
-            </button>
+        <div class="card" style="text-align:center;padding:20px;">
+            <p style="color:var(--text-muted);font-size:12px;">
+                <i class="fas fa-info-circle" style="color:var(--accent-blue);"></i> 
+                ওভারটাইম যোগ করতে বা সোশ্যাল মিডিয়া ইনফরমেশন যোগ করতে উপরের বাটন ব্যবহার করুন।
+            </p>
+        </div>
+    </div>
+    
+    <!-- ===== OVERTIME PAGE ===== -->
+    <div id="overtimePage" class="hidden fade-in">
+        <div class="page-header">
+            <button class="btn-back" onclick="goHome()"><i class="fas fa-arrow-left"></i></button>
+            <h2><i class="fas fa-clock" style="color:var(--accent-orange);"></i> ওভারটাইম হিসাব</h2>
         </div>
         
-        <!-- ===== ADD PASSWORD ===== -->
-        <div id="addPasswordForm" class="hidden card">
-            <h4 style="margin-bottom: 10px; font-size: 14px; font-weight: 700;">
-                <i class="fas fa-key" style="color: var(--accent-green);"></i> নতুন তথ্য যোগ করুন
-            </h4>
-            
-            <div class="input-group">
-                <i class="fas fa-globe"></i>
-                <select id="siteSelect" onchange="updateSiteInput()">
-                    <option value="">-- সাইট সিলেক্ট করুন --</option>
-                    <option value="Gmail">📧 Gmail</option>
-                    <option value="YouTube">▶️ YouTube</option>
-                    <option value="Facebook">📘 Facebook</option>
-                    <option value="Instagram">📸 Instagram</option>
-                    <option value="TikTok">🎵 TikTok</option>
-                    <option value="Twitter">🐦 Twitter</option>
-                    <option value="LinkedIn">💼 LinkedIn</option>
-                    <option value="GitHub">🐙 GitHub</option>
-                    <option value="Amazon">🛒 Amazon</option>
-                    <option value="Netflix">🎬 Netflix</option>
-                    <option value="Spotify">🎵 Spotify</option>
-                    <option value="Microsoft">💻 Microsoft</option>
-                    <option value="Google">🔍 Google</option>
-                    <option value="Apple">🍎 Apple</option>
-                    <option value="WhatsApp">📱 WhatsApp</option>
-                    <option value="Telegram">✈️ Telegram</option>
-                    <option value="Discord">🎮 Discord</option>
-                    <option value="Reddit">🤖 Reddit</option>
-                    <option value="Snapchat">👻 Snapchat</option>
-                    <option value="Pinterest">📌 Pinterest</option>
-                    <option value="Other">🔗 অন্যান্য</option>
-                </select>
-                <i class="fas fa-chevron-down dropdown-arrow"></i>
-            </div>
-            
-            <div class="input-group">
-                <i class="fas fa-globe"></i>
-                <input type="text" id="siteName" placeholder="সাইটের নাম">
-            </div>
-            
-            <div class="input-group">
-                <i class="fas fa-user"></i>
-                <input type="text" id="siteUsername" placeholder="ইউজারনেম / আইডি">
-            </div>
-            
-            <div class="input-group">
-                <i class="fas fa-phone"></i>
-                <input type="tel" id="sitePhone" placeholder="📱 ফোন নাম্বার (ঐচ্ছিক)">
-            </div>
-            
-            <div class="input-group">
-                <i class="fas fa-envelope"></i>
-                <input type="text" id="siteEmail" placeholder="ইমেইল">
-            </div>
-            
-            <div class="input-group">
-                <i class="fas fa-key"></i>
-                <input type="text" id="sitePassword" placeholder="পাসওয়ার্ড">
-            </div>
-            
-            <button class="btn btn-success" onclick="savePassword()">
-                <i class="fas fa-save"></i> সংরক্ষণ করুন
-            </button>
-            <button class="btn btn-outline" onclick="hideAddPassword()" style="margin-top: 6px;">
-                <i class="fas fa-times"></i> বাতিল করুন
-            </button>
-        </div>
-        
-        <!-- ===== SEARCH + FILTER ===== -->
-        <div class="search-filter-row">
-            <div class="search-box">
-                <i class="fas fa-search"></i>
-                <input type="text" id="searchInput" placeholder="খুঁজুন..." oninput="filterPasswords()">
-                <span class="search-clear" id="searchClear" onclick="clearSearch()">
-                    <i class="fas fa-times-circle"></i>
-                </span>
-            </div>
-            
-            <div class="filter-box">
-                <select id="filterSelect" onchange="filterPasswords()">
-                    <option value="all">📋 সব</option>
-                    <option value="Gmail">📧 Gmail</option>
-                    <option value="YouTube">▶️ YouTube</option>
-                    <option value="Facebook">📘 Facebook</option>
-                    <option value="Instagram">📸 Instagram</option>
-                    <option value="TikTok">🎵 TikTok</option>
-                    <option value="Twitter">🐦 Twitter</option>
-                    <option value="LinkedIn">💼 LinkedIn</option>
-                    <option value="GitHub">🐙 GitHub</option>
-                    <option value="Amazon">🛒 Amazon</option>
-                    <option value="Netflix">🎬 Netflix</option>
-                    <option value="Spotify">🎵 Spotify</option>
-                    <option value="Microsoft">💻 Microsoft</option>
-                    <option value="Google">🔍 Google</option>
-                    <option value="Apple">🍎 Apple</option>
-                    <option value="WhatsApp">📱 WhatsApp</option>
-                    <option value="Telegram">✈️ Telegram</option>
-                    <option value="Discord">🎮 Discord</option>
-                    <option value="Reddit">🤖 Reddit</option>
-                    <option value="Snapchat">👻 Snapchat</option>
-                    <option value="Pinterest">📌 Pinterest</option>
-                    <option value="Other">🔗 অন্যান্য</option>
-                </select>
-                <span class="filter-icon"><i class="fas fa-chevron-down"></i></span>
-            </div>
-        </div>
-        
-        <!-- ===== STATUS COUNT ===== -->
-        <div class="status-count">
-            <span><span class="count-dot total"></span> মোট: <span class="count-num" id="totalCount">0</span></span>
-        </div>
-        
-        <!-- ===== PASSWORD LIST ===== -->
-        <div id="passwordList">
-            <div class="loading">
-                <div class="spinner"></div>
-                <p style="color: var(--text-secondary); font-size: 11px;">লোড হচ্ছে...</p>
-            </div>
-        </div>
-        
-        <!-- ===== OVERTIME SECTION ===== -->
-        <div id="overtimeSection" class="hidden overtime-section">
-            <h4><i class="fas fa-clock"></i> ওভারটাইম হিসাব</h4>
+        <div class="card">
             <div class="overtime-row">
                 <input type="date" id="otDate">
-                <input type="number" id="otHours" placeholder="ঘণ্টা" style="max-width: 80px; padding: 6px 8px;">
-                <button class="btn btn-success btn-sm" onclick="addOvertime()" style="width: auto;">যোগ</button>
+                <input type="number" id="otHours" placeholder="ঘণ্টা" style="max-width:80px;padding:6px 8px;">
+                <button class="btn btn-success btn-sm" onclick="addOvertime()" style="width:auto;">যোগ</button>
             </div>
             <div class="overtime-list" id="overtimeList"></div>
             <div class="ot-total">মোট ওভারটাইম: <span id="otTotal">০</span> ঘণ্টা</div>
+        </div>
+    </div>
+    
+    <!-- ===== SOCIAL MEDIA PAGE ===== -->
+    <div id="socialPage" class="hidden fade-in">
+        <div class="page-header">
+            <button class="btn-back" onclick="goHome()"><i class="fas fa-arrow-left"></i></button>
+            <h2><i class="fas fa-share-alt" style="color:var(--accent-pink);"></i> সোশ্যাল মিডিয়া</h2>
+        </div>
+        
+        <div class="card">
+            <div id="addPasswordFormSocial" class="hidden card" style="margin-bottom:10px;">
+                <h4 style="margin-bottom:10px;font-size:14px;font-weight:700;">
+                    <i class="fas fa-key" style="color:var(--accent-green);"></i> নতুন সোশ্যাল মিডিয়া যোগ করুন
+                </h4>
+                
+                <div class="input-group">
+                    <i class="fas fa-globe"></i>
+                    <select id="siteSelectSocial" onchange="updateSiteInputSocial()">
+                        <option value="">-- সাইট সিলেক্ট করুন --</option>
+                        <option value="Gmail">📧 Gmail</option>
+                        <option value="YouTube">▶️ YouTube</option>
+                        <option value="Facebook">📘 Facebook</option>
+                        <option value="Instagram">📸 Instagram</option>
+                        <option value="TikTok">🎵 TikTok</option>
+                        <option value="Twitter">🐦 Twitter</option>
+                        <option value="LinkedIn">💼 LinkedIn</option>
+                        <option value="GitHub">🐙 GitHub</option>
+                        <option value="WhatsApp">📱 WhatsApp</option>
+                        <option value="Telegram">✈️ Telegram</option>
+                        <option value="Discord">🎮 Discord</option>
+                        <option value="Reddit">🤖 Reddit</option>
+                        <option value="Snapchat">👻 Snapchat</option>
+                        <option value="Pinterest">📌 Pinterest</option>
+                        <option value="Other">🔗 অন্যান্য</option>
+                    </select>
+                    <i class="fas fa-chevron-down dropdown-arrow"></i>
+                </div>
+                
+                <div class="input-group">
+                    <i class="fas fa-globe"></i>
+                    <input type="text" id="siteNameSocial" placeholder="সাইটের নাম">
+                </div>
+                
+                <div class="input-group">
+                    <i class="fas fa-user"></i>
+                    <input type="text" id="siteUsernameSocial" placeholder="ইউজারনেম / আইডি">
+                </div>
+                
+                <div class="input-group">
+                    <i class="fas fa-phone"></i>
+                    <input type="tel" id="sitePhoneSocial" placeholder="📱 ফোন নাম্বার (ঐচ্ছিক)">
+                </div>
+                
+                <div class="input-group">
+                    <i class="fas fa-envelope"></i>
+                    <input type="text" id="siteEmailSocial" placeholder="ইমেইল">
+                </div>
+                
+                <div class="input-group">
+                    <i class="fas fa-key"></i>
+                    <input type="text" id="sitePasswordSocial" placeholder="পাসওয়ার্ড">
+                </div>
+                
+                <button class="btn btn-success" onclick="savePasswordSocial()">
+                    <i class="fas fa-save"></i> সংরক্ষণ করুন
+                </button>
+                <button class="btn btn-outline" onclick="hideAddPasswordSocial()" style="margin-top:6px;">
+                    <i class="fas fa-times"></i> বাতিল করুন
+                </button>
+            </div>
+            
+            <button class="btn btn-primary" onclick="showAddPasswordSocial()" id="showAddSocialBtn">
+                <i class="fas fa-plus-circle"></i> নতুন সোশ্যাল মিডিয়া যোগ করুন
+            </button>
+            
+            <div style="margin-top:12px;">
+                <div class="search-filter-row">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="searchInputSocial" placeholder="খুঁজুন..." oninput="filterPasswordsSocial()">
+                        <span class="search-clear" id="searchClearSocial" onclick="clearSearchSocial()">
+                            <i class="fas fa-times-circle"></i>
+                        </span>
+                    </div>
+                    <div class="filter-box">
+                        <select id="filterSelectSocial" onchange="filterPasswordsSocial()">
+                            <option value="all">📋 সব</option>
+                            <option value="Gmail">📧 Gmail</option>
+                            <option value="YouTube">▶️ YouTube</option>
+                            <option value="Facebook">📘 Facebook</option>
+                            <option value="Instagram">📸 Instagram</option>
+                            <option value="TikTok">🎵 TikTok</option>
+                            <option value="Twitter">🐦 Twitter</option>
+                            <option value="LinkedIn">💼 LinkedIn</option>
+                            <option value="GitHub">🐙 GitHub</option>
+                            <option value="WhatsApp">📱 WhatsApp</option>
+                            <option value="Telegram">✈️ Telegram</option>
+                            <option value="Discord">🎮 Discord</option>
+                            <option value="Reddit">🤖 Reddit</option>
+                            <option value="Snapchat">👻 Snapchat</option>
+                            <option value="Pinterest">📌 Pinterest</option>
+                            <option value="Other">🔗 অন্যান্য</option>
+                        </select>
+                        <span class="filter-icon"><i class="fas fa-chevron-down"></i></span>
+                    </div>
+                </div>
+                <div class="status-count">
+                    <span><span class="count-dot total"></span> মোট: <span class="count-num" id="totalCountSocial">0</span></span>
+                </div>
+                <div id="passwordListSocial">
+                    <div class="loading">
+                        <div class="spinner"></div>
+                        <p style="color:var(--text-secondary);font-size:11px;">লোড হচ্ছে...</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -1228,6 +1346,8 @@
     let allPasswords = [];
     let filteredPasswords = [];
     let overtimeData = [];
+    let allPasswordsSocial = [];
+    let filteredPasswordsSocial = [];
 
     // =============================================
     // 🔐 AUTH STATE
@@ -1238,7 +1358,9 @@
             currentUser = user;
             document.getElementById('loginSection').classList.add('hidden');
             document.getElementById('pinSection').classList.remove('hidden');
-            document.getElementById('dashboard').classList.add('hidden');
+            document.getElementById('homePage').classList.add('hidden');
+            document.getElementById('overtimePage').classList.add('hidden');
+            document.getElementById('socialPage').classList.add('hidden');
             document.getElementById('profileInitial').textContent = user.email ? user.email.substring(0, 2).toUpperCase() : 'U';
             checkPinStatus();
             showToast('✅ লগইন সফল!', 'success');
@@ -1246,7 +1368,9 @@
             currentUser = null;
             document.getElementById('loginSection').classList.remove('hidden');
             document.getElementById('pinSection').classList.add('hidden');
-            document.getElementById('dashboard').classList.add('hidden');
+            document.getElementById('homePage').classList.add('hidden');
+            document.getElementById('overtimePage').classList.add('hidden');
+            document.getElementById('socialPage').classList.add('hidden');
             pinVerified = false;
             resetPinInputs();
         }
@@ -1260,13 +1384,29 @@
         dropdown.classList.toggle('show');
     }
 
-    function showOvertime() {
+    // =============================================
+    // 📍 PAGE NAVIGATION
+    // =============================================
+    function goHome() {
         document.getElementById('profileDropdown').classList.remove('show');
-        const section = document.getElementById('overtimeSection');
-        section.classList.toggle('hidden');
-        if (!section.classList.contains('hidden')) {
-            loadOvertime();
-        }
+        document.getElementById('homePage').classList.remove('hidden');
+        document.getElementById('overtimePage').classList.add('hidden');
+        document.getElementById('socialPage').classList.add('hidden');
+        updateHomeStats();
+    }
+
+    function goToOvertime() {
+        document.getElementById('homePage').classList.add('hidden');
+        document.getElementById('overtimePage').classList.remove('hidden');
+        document.getElementById('socialPage').classList.add('hidden');
+        loadOvertime();
+    }
+
+    function goToSocial() {
+        document.getElementById('homePage').classList.add('hidden');
+        document.getElementById('overtimePage').classList.add('hidden');
+        document.getElementById('socialPage').classList.remove('hidden');
+        loadPasswordsSocial();
     }
 
     // =============================================
@@ -1426,7 +1566,7 @@
     }
 
     // =============================================
-    // 📊 ENTER DASHBOARD
+    // 📊 ENTER DASHBOARD (HOME)
     // =============================================
     function enterDashboard() {
         if (!pinVerified) {
@@ -1434,9 +1574,32 @@
             return;
         }
         document.getElementById('pinSection').classList.add('hidden');
-        document.getElementById('dashboard').classList.remove('hidden');
+        document.getElementById('homePage').classList.remove('hidden');
+        document.getElementById('overtimePage').classList.add('hidden');
+        document.getElementById('socialPage').classList.add('hidden');
+        loadAllData();
+    }
+
+    // =============================================
+    // 📊 LOAD ALL DATA
+    // =============================================
+    function loadAllData() {
         loadPasswords();
         loadOvertime();
+        loadPasswordsSocial();
+        updateHomeStats();
+    }
+
+    // =============================================
+    // 🏠 UPDATE HOME STATS
+    // =============================================
+    function updateHomeStats() {
+        // পাসওয়ার্ড কাউন্ট
+        document.getElementById('homeTotalPasswords').textContent = allPasswords.length + allPasswordsSocial.length;
+        
+        // ওভারটাইম টোটাল
+        const total = overtimeData.reduce((sum, item) => sum + (parseFloat(item.hours) || 0), 0);
+        document.getElementById('homeTotalOvertime').textContent = total.toFixed(1);
     }
 
     // =============================================
@@ -1480,62 +1643,15 @@
     }
 
     // =============================================
-    // 🔍 FILTER PASSWORDS
-    // =============================================
-    function filterPasswords() {
-        const query = document.getElementById('searchInput').value.toLowerCase().trim();
-        const filter = document.getElementById('filterSelect').value;
-        const clearBtn = document.getElementById('searchClear');
-        
-        if (query.length > 0) {
-            clearBtn.classList.add('show');
-        } else {
-            clearBtn.classList.remove('show');
-        }
-        
-        filteredPasswords = allPasswords.filter(item => {
-            if (filter !== 'all' && item.site !== filter) {
-                return false;
-            }
-            if (query) {
-                const searchText = (item.site + ' ' + item.username + ' ' + item.email + ' ' + item.phone).toLowerCase();
-                return searchText.includes(query);
-            }
-            return true;
-        });
-        
-        renderPasswords(filteredPasswords);
-        updateStatusCount(filteredPasswords);
-    }
-
-    function clearSearch() {
-        document.getElementById('searchInput').value = '';
-        document.getElementById('searchClear').classList.remove('show');
-        filterPasswords();
-        document.getElementById('searchInput').focus();
-    }
-
-    // =============================================
-    // 📊 UPDATE STATUS COUNT
-    // =============================================
-    function updateStatusCount(data) {
-        document.getElementById('totalCount').textContent = data.length;
-    }
-
-    // =============================================
-    // 📂 LOAD PASSWORDS
+    // 📂 LOAD PASSWORDS (Main)
     // =============================================
     function loadPasswords() {
         if (!currentUser) return;
-        
-        const list = document.getElementById('passwordList');
-        list.innerHTML = `<div class="loading"><div class="spinner"></div><p style="color: var(--text-secondary); font-size: 11px;">লোড হচ্ছে...</p></div>`;
         
         db.ref('passwords/' + currentUser.uid).once('value')
             .then(snapshot => {
                 const data = snapshot.val();
                 allPasswords = [];
-                
                 if (data) {
                     const keys = Object.keys(data);
                     keys.forEach(key => {
@@ -1546,14 +1662,40 @@
                         }
                     });
                 }
-                
-                filteredPasswords = [...allPasswords];
-                renderPasswords(filteredPasswords);
-                updateStatusCount(filteredPasswords);
-                
-                document.getElementById('searchInput').value = '';
-                document.getElementById('searchClear').classList.remove('show');
-                document.getElementById('filterSelect').value = 'all';
+                updateHomeStats();
+            })
+            .catch(err => {
+                console.error('Load Passwords Error:', err);
+            });
+    }
+
+    // =============================================
+    // 📂 LOAD PASSWORDS SOCIAL
+    // =============================================
+    function loadPasswordsSocial() {
+        if (!currentUser) return;
+        
+        const list = document.getElementById('passwordListSocial');
+        list.innerHTML = `<div class="loading"><div class="spinner"></div><p style="color:var(--text-secondary);font-size:11px;">লোড হচ্ছে...</p></div>`;
+        
+        db.ref('passwords/' + currentUser.uid).once('value')
+            .then(snapshot => {
+                const data = snapshot.val();
+                allPasswordsSocial = [];
+                if (data) {
+                    const keys = Object.keys(data);
+                    keys.forEach(key => {
+                        const item = data[key];
+                        if (item) {
+                            item._key = key;
+                            allPasswordsSocial.push(item);
+                        }
+                    });
+                }
+                filteredPasswordsSocial = [...allPasswordsSocial];
+                renderPasswordsSocial(filteredPasswordsSocial);
+                updateStatusCountSocial(filteredPasswordsSocial);
+                updateHomeStats();
             })
             .catch(err => {
                 list.innerHTML = `<div class="message message-error"><i class="fas fa-exclamation-circle"></i> ${err.message}</div>`;
@@ -1562,17 +1704,17 @@
     }
 
     // =============================================
-    // 🖼️ RENDER PASSWORDS
+    // 🖼️ RENDER PASSWORDS SOCIAL
     // =============================================
-    function renderPasswords(passwords) {
-        const list = document.getElementById('passwordList');
+    function renderPasswordsSocial(passwords) {
+        const list = document.getElementById('passwordListSocial');
         
         if (passwords.length === 0) {
             list.innerHTML = `
                 <div class="empty-state">
-                    <span class="icon">🔐</span>
-                    <h3>${allPasswords.length === 0 ? 'কোনো তথ্য নেই' : 'কোনো ফলাফল পাওয়া যায়নি'}</h3>
-                    <p>${allPasswords.length === 0 ? '"যোগ করুন" বাটনে ক্লিক করে পাসওয়ার্ড সেভ করুন' : 'অন্য কিছু দিয়ে খুঁজুন'}</p>
+                    <span class="icon">📭</span>
+                    <h3>${allPasswordsSocial.length === 0 ? 'কোনো সোশ্যাল মিডিয়া নেই' : 'কোনো ফলাফল পাওয়া যায়নি'}</h3>
+                    <p>${allPasswordsSocial.length === 0 ? '"নতুন সোশ্যাল মিডিয়া যোগ করুন" বাটনে ক্লিক করুন' : 'অন্য কিছু দিয়ে খুঁজুন'}</p>
                 </div>
             `;
             return;
@@ -1649,7 +1791,7 @@
                             </div>
                             ${item.site || 'নাম নেই'}
                         </div>
-                        <button class="btn-delete" onclick="deletePassword('${item._key}')">
+                        <button class="btn-delete" onclick="deletePasswordSocial('${item._key}')">
                             <i class="fas fa-trash-alt"></i>
                         </button>
                     </div>
@@ -1661,11 +1803,54 @@
     }
 
     // =============================================
-    // 📝 UPDATE SITE INPUT
+    // 🔍 FILTER PASSWORDS SOCIAL
     // =============================================
-    function updateSiteInput() {
-        const select = document.getElementById('siteSelect');
-        const input = document.getElementById('siteName');
+    function filterPasswordsSocial() {
+        const query = document.getElementById('searchInputSocial').value.toLowerCase().trim();
+        const filter = document.getElementById('filterSelectSocial').value;
+        const clearBtn = document.getElementById('searchClearSocial');
+        
+        if (query.length > 0) {
+            clearBtn.classList.add('show');
+        } else {
+            clearBtn.classList.remove('show');
+        }
+        
+        filteredPasswordsSocial = allPasswordsSocial.filter(item => {
+            if (filter !== 'all' && item.site !== filter) {
+                return false;
+            }
+            if (query) {
+                const searchText = (item.site + ' ' + item.username + ' ' + item.email + ' ' + item.phone).toLowerCase();
+                return searchText.includes(query);
+            }
+            return true;
+        });
+        
+        renderPasswordsSocial(filteredPasswordsSocial);
+        updateStatusCountSocial(filteredPasswordsSocial);
+    }
+
+    function clearSearchSocial() {
+        document.getElementById('searchInputSocial').value = '';
+        document.getElementById('searchClearSocial').classList.remove('show');
+        filterPasswordsSocial();
+        document.getElementById('searchInputSocial').focus();
+    }
+
+    // =============================================
+    // 📊 UPDATE STATUS COUNT SOCIAL
+    // =============================================
+    function updateStatusCountSocial(data) {
+        document.getElementById('totalCountSocial').textContent = data.length;
+    }
+
+    // =============================================
+    // 📝 UPDATE SITE INPUT SOCIAL
+    // =============================================
+    function updateSiteInputSocial() {
+        const select = document.getElementById('siteSelectSocial');
+        const input = document.getElementById('siteNameSocial');
         if (select.value === 'Other') {
             input.value = '';
             input.placeholder = 'সাইটের নাম লিখুন (যেমন: ChatGPT)';
@@ -1680,19 +1865,19 @@
     }
 
     // =============================================
-    // ✅ SAVE PASSWORD
+    // ➕ SAVE PASSWORD SOCIAL
     // =============================================
-    function savePassword() {
+    function savePasswordSocial() {
         if (!currentUser) {
             showToast('⚠️ দয়া করে লগইন করুন!', 'error');
             return;
         }
 
-        const site = document.getElementById('siteName').value.trim();
-        const username = document.getElementById('siteUsername').value.trim();
-        const phone = document.getElementById('sitePhone').value.trim();
-        const email = document.getElementById('siteEmail').value.trim();
-        const password = document.getElementById('sitePassword').value.trim();
+        const site = document.getElementById('siteNameSocial').value.trim();
+        const username = document.getElementById('siteUsernameSocial').value.trim();
+        const phone = document.getElementById('sitePhoneSocial').value.trim();
+        const email = document.getElementById('siteEmailSocial').value.trim();
+        const password = document.getElementById('sitePasswordSocial').value.trim();
         
         if (!site || !password) {
             showToast('⚠️ সাইটের নাম এবং পাসওয়ার্ড দিন', 'error');
@@ -1714,16 +1899,10 @@
         newRef.set(newEntry)
             .then(() => {
                 showToast('✅ তথ্য সেভ হয়েছে!', 'success');
-                
-                document.getElementById('siteSelect').value = '';
-                document.getElementById('siteName').value = '';
-                document.getElementById('siteUsername').value = '';
-                document.getElementById('sitePhone').value = '';
-                document.getElementById('siteEmail').value = '';
-                document.getElementById('sitePassword').value = '';
-                
-                document.getElementById('addPasswordForm').classList.add('hidden');
+                hideAddPasswordSocial();
+                loadPasswordsSocial();
                 loadPasswords();
+                updateHomeStats();
             })
             .catch(err => {
                 console.error('❌ সেভ করতে সমস্যা:', err);
@@ -1732,48 +1911,40 @@
     }
 
     // =============================================
-    // 📋 COPY TEXT
+    // 🗑️ DELETE PASSWORD SOCIAL
     // =============================================
-    function copyText(text, btn) {
-        if (!text) {
-            showToast('⚠️ কপি করার মতো কিছু নেই', 'error');
-            return;
-        }
-        
-        navigator.clipboard.writeText(text).then(() => {
-            const originalHTML = btn.innerHTML;
-            btn.innerHTML = '<i class="fas fa-check"></i>';
-            btn.classList.add('copied');
-            showToast('✅ কপি হয়েছে!', 'success');
-            setTimeout(() => {
-                btn.innerHTML = originalHTML;
-                btn.classList.remove('copied');
-            }, 1500);
-        }).catch(() => {
-            const textarea = document.createElement('textarea');
-            textarea.value = text;
-            document.body.appendChild(textarea);
-            textarea.select();
-            document.execCommand('copy');
-            document.body.removeChild(textarea);
-            showToast('✅ কপি হয়েছে!', 'success');
-        });
-    }
-
-    // =============================================
-    // 🗑️ DELETE PASSWORD
-    // =============================================
-    function deletePassword(key) {
+    function deletePasswordSocial(key) {
         if (!confirm('আপনি কি এই তথ্য মুছতে চান?')) return;
         
         db.ref('passwords/' + currentUser.uid + '/' + key).remove()
             .then(() => {
+                loadPasswordsSocial();
                 loadPasswords();
+                updateHomeStats();
                 showToast('✅ মুছে ফেলা হয়েছে!', 'success');
             })
             .catch(err => {
                 showToast('❌ মুছতে সমস্যা: ' + err.message, 'error');
             });
+    }
+
+    // =============================================
+    // 📝 ADD FORM SOCIAL SHOW/HIDE
+    // =============================================
+    function showAddPasswordSocial() {
+        document.getElementById('addPasswordFormSocial').classList.remove('hidden');
+        document.getElementById('showAddSocialBtn').style.display = 'none';
+    }
+    
+    function hideAddPasswordSocial() {
+        document.getElementById('addPasswordFormSocial').classList.add('hidden');
+        document.getElementById('showAddSocialBtn').style.display = 'block';
+        document.getElementById('siteSelectSocial').value = '';
+        document.getElementById('siteNameSocial').value = '';
+        document.getElementById('siteUsernameSocial').value = '';
+        document.getElementById('sitePhoneSocial').value = '';
+        document.getElementById('siteEmailSocial').value = '';
+        document.getElementById('sitePasswordSocial').value = '';
     }
 
     // =============================================
@@ -1787,6 +1958,7 @@
                 const data = snapshot.val();
                 overtimeData = data || [];
                 renderOvertime();
+                updateHomeStats();
             })
             .catch(err => {
                 console.error('Overtime Load Error:', err);
@@ -1842,6 +2014,7 @@
                 renderOvertime();
                 document.getElementById('otDate').value = '';
                 document.getElementById('otHours').value = '';
+                updateHomeStats();
                 showToast('✅ ওভারটাইম যোগ হয়েছে!', 'success');
             })
             .catch(err => {
@@ -1857,6 +2030,7 @@
         db.ref('users/' + currentUser.uid + '/overtime').set(overtimeData)
             .then(() => {
                 renderOvertime();
+                updateHomeStats();
                 showToast('✅ মুছে ফেলা হয়েছে!', 'success');
             })
             .catch(err => {
@@ -1865,20 +2039,32 @@
     }
 
     // =============================================
-    // 📝 ADD FORM SHOW/HIDE
+    // 📋 COPY TEXT
     // =============================================
-    function showAddPassword() {
-        document.getElementById('addPasswordForm').classList.remove('hidden');
-    }
-    
-    function hideAddPassword() {
-        document.getElementById('addPasswordForm').classList.add('hidden');
-        document.getElementById('siteSelect').value = '';
-        document.getElementById('siteName').value = '';
-        document.getElementById('siteUsername').value = '';
-        document.getElementById('sitePhone').value = '';
-        document.getElementById('siteEmail').value = '';
-        document.getElementById('sitePassword').value = '';
+    function copyText(text, btn) {
+        if (!text) {
+            showToast('⚠️ কপি করার মতো কিছু নেই', 'error');
+            return;
+        }
+        
+        navigator.clipboard.writeText(text).then(() => {
+            const originalHTML = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-check"></i>';
+            btn.classList.add('copied');
+            showToast('✅ কপি হয়েছে!', 'success');
+            setTimeout(() => {
+                btn.innerHTML = originalHTML;
+                btn.classList.remove('copied');
+            }, 1500);
+        }).catch(() => {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+            showToast('✅ কপি হয়েছে!', 'success');
+        });
     }
 
     // =============================================
@@ -1894,7 +2080,9 @@
             document.getElementById('loginMessage').innerHTML = '';
             document.getElementById('pinMessage').innerHTML = '';
             document.getElementById('profileDropdown').classList.remove('show');
-            document.getElementById('overtimeSection').classList.add('hidden');
+            document.getElementById('homePage').classList.add('hidden');
+            document.getElementById('overtimePage').classList.add('hidden');
+            document.getElementById('socialPage').classList.add('hidden');
             showToast('👋 লগআউট হয়েছে', 'success');
         }
     }
