@@ -1266,6 +1266,22 @@
             color: var(--accent-green);
             font-size: 14px;
         }
+        
+        /* ===== INFO BOX ===== */
+        .info-box {
+            background: rgba(59, 130, 246, 0.05);
+            border: 1px solid rgba(59, 130, 246, 0.1);
+            border-radius: 8px;
+            padding: 8px 12px;
+            margin-top: 8px;
+            font-size: 10px;
+            color: var(--text-muted);
+            text-align: center;
+        }
+        
+        .info-box strong {
+            color: var(--text-secondary);
+        }
     </style>
 </head>
 <body>
@@ -1430,12 +1446,16 @@
         
         <div class="card">
             <div class="salary-row">
-                <input type="number" id="basicSalary" placeholder="মূল বেতন (বেসিক)" style="flex:2;" oninput="calculateSalary()">
+                <input type="number" id="totalSalaryInput" placeholder="মোট বেতন লিখুন" style="flex:2;" oninput="calculateSalary()">
                 <button class="btn btn-success btn-sm" onclick="calculateSalary()" style="width:auto;">হিসাব</button>
             </div>
             
             <div class="salary-result" id="salaryResult">
                 <div class="result-grid">
+                    <div class="result-item">
+                        <div class="result-label">💰 বেসিক বেতন</div>
+                        <div class="result-value basic" id="resultBasic">০</div>
+                    </div>
                     <div class="result-item">
                         <div class="result-label">🏠 বাড়ি ভাড়া</div>
                         <div class="result-value basic" id="resultHouseRent">০</div>
@@ -1452,13 +1472,13 @@
                         <div class="result-label">🚌 যাতায়াত ভাতা</div>
                         <div class="result-value basic" id="resultTransport">০</div>
                     </div>
-                    <div class="result-item" style="grid-column: span 2;">
-                        <div class="result-label">⏰ ওভারটাইম হার (প্রতি ঘণ্টা)</div>
+                    <div class="result-item">
+                        <div class="result-label">⏰ ওভারটাইম হার</div>
                         <div class="result-value ot" id="resultOTRate">০</div>
                     </div>
                     <div class="result-divider"></div>
                     <div class="result-total">
-                        <div class="result-label">💰 মোট বেতন</div>
+                        <div class="result-label">📊 মোট বেতন (যাচাই)</div>
                         <div class="result-value" id="resultTotal">০</div>
                     </div>
                 </div>
@@ -1467,23 +1487,23 @@
             <!-- Breakdown -->
             <div class="salary-breakdown" id="salaryBreakdown">
                 <div class="breakdown-row">
-                    <span class="breakdown-label">বেসিক বেতন</span>
+                    <span class="breakdown-label">বেসিক বেতন (মোটের ৫০%)</span>
                     <span class="breakdown-value" id="breakdownBasic">০</span>
                 </div>
                 <div class="breakdown-row">
-                    <span class="breakdown-label">বাড়ি ভাড়া (৫০%)</span>
+                    <span class="breakdown-label">বাড়ি ভাড়া (বেসিকের ৫০%)</span>
                     <span class="breakdown-value" id="breakdownHouse">০</span>
                 </div>
                 <div class="breakdown-row">
-                    <span class="breakdown-label">খাদ্য ভাতা (২০%)</span>
+                    <span class="breakdown-label">খাদ্য ভাতা (বেসিকের ২০%)</span>
                     <span class="breakdown-value" id="breakdownFood">০</span>
                 </div>
                 <div class="breakdown-row">
-                    <span class="breakdown-label">চিকিৎসা ভাতা (১০%)</span>
+                    <span class="breakdown-label">চিকিৎসা ভাতা (বেসিকের ১০%)</span>
                     <span class="breakdown-value" id="breakdownMedical">০</span>
                 </div>
                 <div class="breakdown-row">
-                    <span class="breakdown-label">যাতায়াত ভাতা (১০%)</span>
+                    <span class="breakdown-label">যাতায়াত ভাতা (বেসিকের ১০%)</span>
                     <span class="breakdown-value" id="breakdownTransport">০</span>
                 </div>
                 <div class="breakdown-row">
@@ -1496,14 +1516,15 @@
                 </div>
             </div>
             
-            <div style="margin-top:10px;font-size:11px;color:var(--text-muted);text-align:center;">
+            <div class="info-box">
                 <i class="fas fa-info-circle"></i> 
-                <strong>বাড়ি ভাড়া:</strong> বেসিকের ৫০% | 
-                <strong>খাদ্য ভাতা:</strong> বেসিকের ২০% | 
-                <strong>চিকিৎসা:</strong> বেসিকের ১০% | 
-                <strong>যাতায়াত:</strong> বেসিকের ১০%
+                <strong>বেসিক</strong> = মোটের ৫০% | 
+                <strong>বাড়ি ভাড়া</strong> = বেসিকের ৫০% | 
+                <strong>খাদ্য</strong> = বেসিকের ২০% | 
+                <strong>চিকিৎসা</strong> = বেসিকের ১০% | 
+                <strong>যাতায়াত</strong> = বেসিকের ১০%
                 <br>
-                <strong>ওভারটাইম হার:</strong> বেসিকের ১/২০০ ভাগ (প্রতি ঘণ্টা)
+                <strong>ওভারটাইম হার</strong> = বেসিক ÷ ২০৮ (প্রতি ঘণ্টা)
             </div>
         </div>
     </div>
@@ -1924,10 +1945,8 @@
     // 🏠 UPDATE HOME STATS
     // =============================================
     function updateHomeStats() {
-        // পাসওয়ার্ড কাউন্ট
         document.getElementById('homeTotalPasswords').textContent = allPasswords.length + allPasswordsSocial.length;
         
-        // ওভারটাইম টোটাল
         const total = overtimeData.reduce((sum, item) => sum + (parseFloat(item.hours) || 0), 0);
         document.getElementById('homeTotalOvertime').textContent = total.toFixed(1);
         
@@ -2316,7 +2335,6 @@
         
         document.getElementById('otTotal').textContent = total.toFixed(1);
         
-        // Sort by date (newest first)
         const sorted = [...overtimeData].sort((a, b) => (b.date || '').localeCompare(a.date || ''));
         
         if (sorted.length === 0) {
@@ -2356,10 +2374,8 @@
             return;
         }
         
-        // যদি ঘণ্টা না দেয়, তাহলে ০ ধরে (অনুপস্থিত)
         const otHours = (hours && !isNaN(hours) && hours > 0) ? parseFloat(hours) : 0;
         
-        // চেক করুন এই তারিখে ইতিমধ্যে এন্ট্রি আছে কিনা
         const existingIndex = overtimeData.findIndex(item => item.date === date);
         if (existingIndex !== -1) {
             overtimeData[existingIndex].hours = otHours;
@@ -2398,34 +2414,38 @@
     }
 
     // =============================================
-    // 💰 SALARY CALCULATOR (অটোমেটিক)
+    // 💰 SALARY CALCULATOR (মোট বেতন থেকে)
     // =============================================
     function calculateSalary() {
-        const basic = parseFloat(document.getElementById('basicSalary').value) || 0;
+        const totalSalary = parseFloat(document.getElementById('totalSalaryInput').value) || 0;
         
-        // ভাতা গুলো বের করুন (বেসিকের শতাংশ হিসেবে)
+        // বেসিক = মোটের ৫০%
+        const basic = totalSalary * 0.50;
+        
+        // ভাতা গুলো (বেসিকের শতাংশ)
         const houseRent = basic * 0.50;    // ৫০%
         const foodAllowance = basic * 0.20; // ২০%
         const medical = basic * 0.10;       // ১০%
         const transport = basic * 0.10;     // ১০%
         
-        // ওভারটাইম হার: বেসিকের ১/২০০ ভাগ
-        const otRate = basic / 200;
+        // ওভারটাইম হার = বেসিক ÷ ২০৮
+        const otRate = basic / 208;
         
         // মোট ওভারটাইম ঘণ্টা
         const totalOT = overtimeData.reduce((sum, item) => sum + (parseFloat(item.hours) || 0), 0);
         const otBonus = totalOT * otRate;
         
-        // মোট বেতন
-        const totalSalary = basic + houseRent + foodAllowance + medical + transport + otBonus;
+        // যাচাই: মোট বেতন = basic + houseRent + foodAllowance + medical + transport + otBonus
+        const calculatedTotal = basic + houseRent + foodAllowance + medical + transport + otBonus;
         
         // আপডেট করুন
+        document.getElementById('resultBasic').textContent = basic.toFixed(2);
         document.getElementById('resultHouseRent').textContent = houseRent.toFixed(2);
         document.getElementById('resultFoodAllowance').textContent = foodAllowance.toFixed(2);
         document.getElementById('resultMedical').textContent = medical.toFixed(2);
         document.getElementById('resultTransport').textContent = transport.toFixed(2);
         document.getElementById('resultOTRate').textContent = otRate.toFixed(2);
-        document.getElementById('resultTotal').textContent = totalSalary.toFixed(2);
+        document.getElementById('resultTotal').textContent = calculatedTotal.toFixed(2);
         
         // Breakdown আপডেট
         document.getElementById('breakdownBasic').textContent = basic.toFixed(2);
@@ -2434,13 +2454,14 @@
         document.getElementById('breakdownMedical').textContent = medical.toFixed(2);
         document.getElementById('breakdownTransport').textContent = transport.toFixed(2);
         document.getElementById('breakdownOT').textContent = otBonus.toFixed(2);
-        document.getElementById('breakdownTotal').textContent = totalSalary.toFixed(2);
+        document.getElementById('breakdownTotal').textContent = calculatedTotal.toFixed(2);
         
         // হোম পেজ আপডেট
-        document.getElementById('homeTotalSalary').textContent = totalSalary.toFixed(0);
+        document.getElementById('homeTotalSalary').textContent = calculatedTotal.toFixed(0);
         
-        // টোস্ট দেখান
-        showToast('✅ বেতন হিসাব সম্পন্ন!', 'success');
+        if (totalSalary > 0) {
+            showToast('✅ বেতন হিসাব সম্পন্ন!', 'success');
+        }
     }
 
     // =============================================
