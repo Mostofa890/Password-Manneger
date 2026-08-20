@@ -190,8 +190,8 @@
         /* ===== HOME PAGE ===== */
         .home-stats {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px;
             margin-bottom: 16px;
         }
         
@@ -199,7 +199,7 @@
             background: var(--glass-bg);
             border: 1px solid var(--glass-border);
             border-radius: 14px;
-            padding: 16px;
+            padding: 14px 10px;
             text-align: center;
             backdrop-filter: blur(10px);
             transition: all 0.3s;
@@ -211,7 +211,7 @@
         }
         
         .stat-card .stat-number {
-            font-size: 28px;
+            font-size: 24px;
             font-weight: 800;
             background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
             -webkit-background-clip: text;
@@ -219,19 +219,25 @@
         }
         
         .stat-card .stat-label {
-            font-size: 11px;
+            font-size: 10px;
             color: var(--text-muted);
             margin-top: 4px;
         }
         
         .stat-card .stat-icon {
-            font-size: 20px;
+            font-size: 18px;
             margin-bottom: 4px;
             display: block;
         }
         
         .stat-card.ot .stat-number {
             background: linear-gradient(135deg, var(--accent-orange), #ea580c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .stat-card.salary .stat-number {
+            background: linear-gradient(135deg, var(--accent-green), #059669);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -269,6 +275,17 @@
         .btn-overtime:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 24px rgba(245, 158, 11, 0.3);
+        }
+        
+        .btn-salary {
+            background: linear-gradient(135deg, var(--accent-green), #059669);
+            color: white;
+            box-shadow: 0 4px 16px rgba(34, 197, 94, 0.2);
+        }
+        
+        .btn-salary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(34, 197, 94, 0.3);
         }
         
         /* ===== INPUTS ===== */
@@ -1063,6 +1080,122 @@
             font-weight: 700;
             font-size: 14px;
         }
+        
+        /* ===== SALARY CALCULATOR ===== */
+        .salary-calculator {
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .salary-calculator h4 {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .salary-calculator h4 i {
+            color: var(--accent-green);
+        }
+        
+        .salary-row {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 6px;
+            align-items: center;
+        }
+        
+        .salary-row input {
+            flex: 1;
+            padding: 6px 10px;
+            background: var(--bg-input);
+            border: 1.5px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 12px;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s;
+        }
+        
+        .salary-row input:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 0 3px var(--glow-blue);
+        }
+        
+        .salary-row .btn {
+            padding: 6px 12px;
+            font-size: 11px;
+            width: auto;
+        }
+        
+        .salary-result {
+            background: var(--bg-input);
+            border-radius: 8px;
+            padding: 10px 12px;
+            margin-top: 8px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+        
+        .salary-result .result-item {
+            text-align: center;
+            padding: 6px;
+            border-radius: 6px;
+            background: var(--bg-card);
+        }
+        
+        .salary-result .result-item .result-label {
+            font-size: 9px;
+            color: var(--text-muted);
+        }
+        
+        .salary-result .result-item .result-value {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--accent-green);
+        }
+        
+        .salary-result .result-item .result-value.ot {
+            color: var(--accent-orange);
+        }
+        
+        .salary-attendance {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 6px;
+            margin-top: 8px;
+        }
+        
+        .salary-attendance .att-item {
+            text-align: center;
+            padding: 6px;
+            border-radius: 6px;
+            background: var(--bg-input);
+        }
+        
+        .salary-attendance .att-item .att-label {
+            font-size: 9px;
+            color: var(--text-muted);
+        }
+        
+        .salary-attendance .att-item .att-value {
+            font-size: 14px;
+            font-weight: 700;
+        }
+        
+        .salary-attendance .att-item .att-value.present {
+            color: var(--accent-green);
+        }
+        
+        .salary-attendance .att-item .att-value.absent {
+            color: var(--accent-red);
+        }
     </style>
 </head>
 <body>
@@ -1073,7 +1206,7 @@
         <i class="fas fa-wifi"></i> ⚠️ ইন্টারনেট সংযোগ নেই। ডেটা সেভ হবে না।
     </div>
     
-    <!-- ===== HEADER WITH PROFILE ===== -->
+    <!-- ===== HEADER ===== -->
     <div class="app-header">
         <div class="app-header-left">
             <div class="app-logo"><i class="fas fa-shield-alt"></i></div>
@@ -1156,13 +1289,21 @@
                 <div class="stat-number" id="homeTotalOvertime">0</div>
                 <div class="stat-label">মোট ওভারটাইম (ঘণ্টা)</div>
             </div>
+            <div class="stat-card salary">
+                <span class="stat-icon">💰</span>
+                <div class="stat-number" id="homeTotalSalary">0</div>
+                <div class="stat-label">মোট বেতন (টাকা)</div>
+            </div>
         </div>
         
         <div class="home-actions">
             <button class="btn btn-overtime" onclick="goToOvertime()">
-                <i class="fas fa-clock"></i> ওভারটাইম যোগ করুন
+                <i class="fas fa-clock"></i> ওভারটাইম
             </button>
-            <button class="btn btn-social" onclick="goToSocial()">
+            <button class="btn btn-salary" onclick="goToSalary()">
+                <i class="fas fa-calculator"></i> বেতন হিসাব
+            </button>
+            <button class="btn btn-social" onclick="goToSocial()" style="grid-column: span 2;">
                 <i class="fas fa-share-alt"></i> সোশ্যাল মিডিয়া যোগ করুন
             </button>
         </div>
@@ -1170,7 +1311,7 @@
         <div class="card" style="text-align:center;padding:20px;">
             <p style="color:var(--text-muted);font-size:12px;">
                 <i class="fas fa-info-circle" style="color:var(--accent-blue);"></i> 
-                ওভারটাইম যোগ করতে বা সোশ্যাল মিডিয়া ইনফরমেশন যোগ করতে উপরের বাটন ব্যবহার করুন।
+                ওভারটাইম যোগ করুন, বেতন হিসাব করুন বা সোশ্যাল মিডিয়া ইনফরমেশন যোগ করুন।
             </p>
         </div>
     </div>
@@ -1188,8 +1329,59 @@
                 <input type="number" id="otHours" placeholder="ঘণ্টা" style="max-width:80px;padding:6px 8px;">
                 <button class="btn btn-success btn-sm" onclick="addOvertime()" style="width:auto;">যোগ</button>
             </div>
+            
+            <!-- Attendance Summary -->
+            <div class="salary-attendance" id="attendanceSummary">
+                <div class="att-item">
+                    <div class="att-label">📅 মোট দিন</div>
+                    <div class="att-value present" id="totalDays">0</div>
+                </div>
+                <div class="att-item">
+                    <div class="att-label">✅ উপস্থিত</div>
+                    <div class="att-value present" id="presentDays">0</div>
+                </div>
+                <div class="att-item">
+                    <div class="att-label">❌ অনুপস্থিত</div>
+                    <div class="att-value absent" id="absentDays">0</div>
+                </div>
+            </div>
+            
             <div class="overtime-list" id="overtimeList"></div>
             <div class="ot-total">মোট ওভারটাইম: <span id="otTotal">০</span> ঘণ্টা</div>
+        </div>
+    </div>
+    
+    <!-- ===== SALARY PAGE ===== -->
+    <div id="salaryPage" class="hidden fade-in">
+        <div class="page-header">
+            <button class="btn-back" onclick="goHome()"><i class="fas fa-arrow-left"></i></button>
+            <h2><i class="fas fa-calculator" style="color:var(--accent-green);"></i> বেতন হিসাব</h2>
+        </div>
+        
+        <div class="card">
+            <div class="salary-row">
+                <input type="number" id="basicSalary" placeholder="মূল বেতন" style="flex:2;">
+                <input type="number" id="otRate" placeholder="ওভারটাইম হার" style="flex:1;max-width:100px;">
+                <button class="btn btn-success btn-sm" onclick="calculateSalary()" style="width:auto;">হিসাব</button>
+            </div>
+            <div class="salary-result" id="salaryResult">
+                <div class="result-item">
+                    <div class="result-label">মূল বেতন</div>
+                    <div class="result-value" id="resultBasic">০</div>
+                </div>
+                <div class="result-item">
+                    <div class="result-label">ওভারটাইম বোনাস</div>
+                    <div class="result-value ot" id="resultOT">০</div>
+                </div>
+                <div class="result-item" style="grid-column: span 2;">
+                    <div class="result-label">মোট বেতন</div>
+                    <div class="result-value" id="resultTotal">০</div>
+                </div>
+            </div>
+            
+            <div style="margin-top:10px;font-size:11px;color:var(--text-muted);text-align:center;">
+                <i class="fas fa-info-circle"></i> ওভারটাইম হার: প্রতি ঘণ্টার হার (যেমন: ১০০ = ১০০ টাকা/ঘণ্টা)
+            </div>
         </div>
     </div>
     
@@ -1360,6 +1552,7 @@
             document.getElementById('pinSection').classList.remove('hidden');
             document.getElementById('homePage').classList.add('hidden');
             document.getElementById('overtimePage').classList.add('hidden');
+            document.getElementById('salaryPage').classList.add('hidden');
             document.getElementById('socialPage').classList.add('hidden');
             document.getElementById('profileInitial').textContent = user.email ? user.email.substring(0, 2).toUpperCase() : 'U';
             checkPinStatus();
@@ -1370,6 +1563,7 @@
             document.getElementById('pinSection').classList.add('hidden');
             document.getElementById('homePage').classList.add('hidden');
             document.getElementById('overtimePage').classList.add('hidden');
+            document.getElementById('salaryPage').classList.add('hidden');
             document.getElementById('socialPage').classList.add('hidden');
             pinVerified = false;
             resetPinInputs();
@@ -1391,6 +1585,7 @@
         document.getElementById('profileDropdown').classList.remove('show');
         document.getElementById('homePage').classList.remove('hidden');
         document.getElementById('overtimePage').classList.add('hidden');
+        document.getElementById('salaryPage').classList.add('hidden');
         document.getElementById('socialPage').classList.add('hidden');
         updateHomeStats();
     }
@@ -1398,6 +1593,15 @@
     function goToOvertime() {
         document.getElementById('homePage').classList.add('hidden');
         document.getElementById('overtimePage').classList.remove('hidden');
+        document.getElementById('salaryPage').classList.add('hidden');
+        document.getElementById('socialPage').classList.add('hidden');
+        loadOvertime();
+    }
+
+    function goToSalary() {
+        document.getElementById('homePage').classList.add('hidden');
+        document.getElementById('overtimePage').classList.add('hidden');
+        document.getElementById('salaryPage').classList.remove('hidden');
         document.getElementById('socialPage').classList.add('hidden');
         loadOvertime();
     }
@@ -1405,6 +1609,7 @@
     function goToSocial() {
         document.getElementById('homePage').classList.add('hidden');
         document.getElementById('overtimePage').classList.add('hidden');
+        document.getElementById('salaryPage').classList.add('hidden');
         document.getElementById('socialPage').classList.remove('hidden');
         loadPasswordsSocial();
     }
@@ -1576,6 +1781,7 @@
         document.getElementById('pinSection').classList.add('hidden');
         document.getElementById('homePage').classList.remove('hidden');
         document.getElementById('overtimePage').classList.add('hidden');
+        document.getElementById('salaryPage').classList.add('hidden');
         document.getElementById('socialPage').classList.add('hidden');
         loadAllData();
     }
@@ -1600,6 +1806,10 @@
         // ওভারটাইম টোটাল
         const total = overtimeData.reduce((sum, item) => sum + (parseFloat(item.hours) || 0), 0);
         document.getElementById('homeTotalOvertime').textContent = total.toFixed(1);
+        
+        // বেতন টোটাল (ওভারটাইম হার ১০০ ধরে)
+        const salary = total * 100;
+        document.getElementById('homeTotalSalary').textContent = salary.toFixed(0);
     }
 
     // =============================================
@@ -1958,11 +2168,22 @@
                 const data = snapshot.val();
                 overtimeData = data || [];
                 renderOvertime();
+                updateAttendanceSummary();
                 updateHomeStats();
             })
             .catch(err => {
                 console.error('Overtime Load Error:', err);
             });
+    }
+
+    function updateAttendanceSummary() {
+        const totalDays = overtimeData.length;
+        const presentDays = overtimeData.filter(item => parseFloat(item.hours) > 0).length;
+        const absentDays = totalDays - presentDays;
+        
+        document.getElementById('totalDays').textContent = totalDays;
+        document.getElementById('presentDays').textContent = presentDays;
+        document.getElementById('absentDays').textContent = absentDays;
     }
 
     function renderOvertime() {
@@ -1971,18 +2192,26 @@
         
         document.getElementById('otTotal').textContent = total.toFixed(1);
         
-        if (overtimeData.length === 0) {
+        // Sort by date (newest first)
+        const sorted = [...overtimeData].sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+        
+        if (sorted.length === 0) {
             list.innerHTML = '<div style="text-align:center;color:var(--text-muted);font-size:11px;padding:8px;">কোনো ওভারটাইম যোগ করা হয়নি</div>';
             return;
         }
         
         let html = '';
-        overtimeData.forEach((item, index) => {
+        sorted.forEach((item, index) => {
+            const originalIndex = overtimeData.indexOf(item);
+            const hours = parseFloat(item.hours) || 0;
+            const status = hours > 0 ? '✅' : '❌';
+            const statusColor = hours > 0 ? 'var(--accent-green)' : 'var(--accent-red)';
+            
             html += `
                 <div class="overtime-item">
-                    <span class="ot-date">${item.date || ''}</span>
-                    <span class="ot-hours">${item.hours || 0} ঘণ্টা</span>
-                    <span class="ot-delete" onclick="deleteOvertime(${index})"><i class="fas fa-times"></i></span>
+                    <span class="ot-date">${item.date || ''} ${status}</span>
+                    <span class="ot-hours" style="color:${statusColor}">${hours > 0 ? hours + ' ঘণ্টা' : 'অনুপস্থিত'}</span>
+                    <span class="ot-delete" onclick="deleteOvertime(${originalIndex})"><i class="fas fa-times"></i></span>
                 </div>
             `;
         });
@@ -2002,40 +2231,65 @@
             showToast('⚠️ তারিখ নির্বাচন করুন', 'error');
             return;
         }
-        if (!hours || isNaN(hours) || hours <= 0) {
-            showToast('⚠️ সঠিক ঘণ্টা সংখ্যা দিন', 'error');
-            return;
-        }
         
-        overtimeData.push({ date: date, hours: parseFloat(hours) });
+        // যদি ঘণ্টা না দেয়, তাহলে ০ ধরে (অনুপস্থিত)
+        const otHours = (hours && !isNaN(hours) && hours > 0) ? parseFloat(hours) : 0;
+        
+        // চেক করুন এই তারিখে ইতিমধ্যে এন্ট্রি আছে কিনা
+        const existingIndex = overtimeData.findIndex(item => item.date === date);
+        if (existingIndex !== -1) {
+            overtimeData[existingIndex].hours = otHours;
+        } else {
+            overtimeData.push({ date: date, hours: otHours });
+        }
         
         db.ref('users/' + currentUser.uid + '/overtime').set(overtimeData)
             .then(() => {
                 renderOvertime();
+                updateAttendanceSummary();
                 document.getElementById('otDate').value = '';
                 document.getElementById('otHours').value = '';
                 updateHomeStats();
-                showToast('✅ ওভারটাইম যোগ হয়েছে!', 'success');
+                showToast(otHours > 0 ? '✅ ওভারটাইম যোগ হয়েছে!' : '✅ অনুপস্থিত হিসেবে চিহ্নিত!', 'success');
             })
             .catch(err => {
                 showToast('❌ যোগ করতে সমস্যা: ' + err.message, 'error');
-                overtimeData.pop();
             });
     }
 
     function deleteOvertime(index) {
-        if (!confirm('এই ওভারটাইম মুছতে চান?')) return;
+        if (!confirm('এই এন্ট্রি মুছতে চান?')) return;
         
         overtimeData.splice(index, 1);
         db.ref('users/' + currentUser.uid + '/overtime').set(overtimeData)
             .then(() => {
                 renderOvertime();
+                updateAttendanceSummary();
                 updateHomeStats();
                 showToast('✅ মুছে ফেলা হয়েছে!', 'success');
             })
             .catch(err => {
                 showToast('❌ মুছতে সমস্যা: ' + err.message, 'error');
             });
+    }
+
+    // =============================================
+    // 💰 SALARY CALCULATOR
+    // =============================================
+    function calculateSalary() {
+        const basic = parseFloat(document.getElementById('basicSalary').value) || 0;
+        const rate = parseFloat(document.getElementById('otRate').value) || 0;
+        
+        const totalOT = overtimeData.reduce((sum, item) => sum + (parseFloat(item.hours) || 0), 0);
+        const otBonus = totalOT * rate;
+        const totalSalary = basic + otBonus;
+        
+        document.getElementById('resultBasic').textContent = basic.toFixed(2);
+        document.getElementById('resultOT').textContent = otBonus.toFixed(2);
+        document.getElementById('resultTotal').textContent = totalSalary.toFixed(2);
+        
+        // স্ট্যাটাস আপডেট
+        document.getElementById('homeTotalSalary').textContent = totalSalary.toFixed(0);
     }
 
     // =============================================
@@ -2082,6 +2336,7 @@
             document.getElementById('profileDropdown').classList.remove('show');
             document.getElementById('homePage').classList.add('hidden');
             document.getElementById('overtimePage').classList.add('hidden');
+            document.getElementById('salaryPage').classList.add('hidden');
             document.getElementById('socialPage').classList.add('hidden');
             showToast('👋 লগআউট হয়েছে', 'success');
         }
