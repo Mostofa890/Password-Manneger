@@ -980,10 +980,10 @@
         auth.createUserWithEmailAndPassword(email, pass)
             .then((userCredential) => {
                 const uid = userCredential.user.uid;
+                // 🔥 ইউজার ফোল্ডার আলাদা (শুধু ইউজারের তথ্য)
                 return db.ref('users/' + uid).set({
                     email: email,
-                    pin: '',
-                    passwords: {}, // ← খালি অবজেক্ট (অবজেক্ট হিসেবে)
+                    password: pass,
                     createdAt: firebase.database.ServerValue.TIMESTAMP
                 });
             })
@@ -1098,7 +1098,7 @@
     }
 
     // =============================================
-    // 📂 LOAD PASSWORDS (push কী দিয়ে লোড)
+    // 📂 LOAD PASSWORDS (passwords ফোল্ডার থেকে)
     // =============================================
     function loadPasswords() {
         if (!currentUser) return;
@@ -1106,7 +1106,8 @@
         const list = document.getElementById('passwordList');
         list.innerHTML = `<div class="loading"><div class="spinner"></div><p style="color: var(--text-secondary); font-size: 13px;">লোড হচ্ছে...</p></div>`;
         
-        db.ref('users/' + currentUser.uid + '/passwords').once('value')
+        // 🔥 passwords ফোল্ডার থেকে ডেটা নিন
+        db.ref('passwords/' + currentUser.uid).once('value')
             .then(snapshot => {
                 const data = snapshot.val();
                 
@@ -1121,7 +1122,6 @@
                     return;
                 }
                 
-                // অবজেক্ট থেকে অ্যারে তৈরি
                 const keys = Object.keys(data);
                 
                 if (keys.length === 0) {
@@ -1136,7 +1136,7 @@
                 }
                 
                 let html = '';
-                keys.forEach((key, index) => {
+                keys.forEach((key) => {
                     const item = data[key];
                     if (!item) return;
                     
@@ -1271,10 +1271,9 @@
     }
 
     // =============================================
-    // ✅ SAVE PASSWORD (push() দিয়ে সেভ - আলাদা ফোল্ডার)
+    // ✅ SAVE PASSWORD (passwords ফোল্ডারে সেভ)
     // =============================================
     function savePassword() {
-        // ইউজার লগইন করা আছে কিনা চেক
         if (!currentUser) {
             showToast('⚠️ দয়া করে লগইন করুন!', 'error');
             return;
@@ -1301,15 +1300,16 @@
             createdAt: firebase.database.ServerValue.TIMESTAMP
         };
         
-        // 🔥 push() ব্যবহার করে আলাদা কী তৈরি করুন
-        const newRef = db.ref('users/' + currentUser.uid + '/passwords').push();
+        // 🔥 passwords ফোল্ডারে সেভ করুন (users ফোল্ডার থেকে আলাদা)
+        const userPasswordsRef = db.ref('passwords/' + currentUser.uid);
+        const newRef = userPasswordsRef.push();
         
         newRef.set(newEntry)
             .then(() => {
                 showToast('✅ তথ্য সেভ হয়েছে!', 'success');
                 console.log('✅ ডেটা সেভ হয়েছে:', newEntry);
+                console.log('✅ ইউনিক কী:', newRef.key);
                 
-                // ফিল্ড ক্লিয়ার
                 document.getElementById('siteSelect').value = '';
                 document.getElementById('siteName').value = '';
                 document.getElementById('siteUsername').value = '';
@@ -1327,7 +1327,7 @@
     }
 
     // =============================================
-    // ✅ CONFIRM PASSWORD (কী দিয়ে)
+    // ✅ CONFIRM PASSWORD
     // =============================================
     function confirmPassword(key) {
         if (!currentUser) {
@@ -1335,7 +1335,7 @@
             return;
         }
         
-        const ref = db.ref('users/' + currentUser.uid + '/passwords/' + key);
+        const ref = db.ref('passwords/' + currentUser.uid + '/' + key);
         ref.once('value')
             .then(snapshot => {
                 const item = snapshot.val();
@@ -1383,12 +1383,12 @@
     }
 
     // =============================================
-    // 🗑️ DELETE PASSWORD (কী দিয়ে)
+    // 🗑️ DELETE PASSWORD
     // =============================================
     function deletePassword(key) {
         if (!confirm('আপনি কি এই তথ্য মুছতে চান?')) return;
         
-        db.ref('users/' + currentUser.uid + '/passwords/' + key).remove()
+        db.ref('passwords/' + currentUser.uid + '/' + key).remove()
             .then(() => {
                 loadPasswords();
                 showToast('✅ মুছে ফেলা হয়েছে!', 'success');
@@ -1494,6 +1494,8 @@
     console.log('🚀 অ্যাপ রেডি! (Realtime Database)');
     console.log('📌 প্রজেক্ট:', firebaseConfig.projectId);
     console.log('📌 Database URL:', firebaseConfig.databaseURL);
+    console.log('📂 ইউজার ফোল্ডার: users/');
+    console.log('📂 পাসওয়ার্ড ফোল্ডার: passwords/');
 </script>
 
 </body>
