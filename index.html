@@ -84,72 +84,134 @@
         
         /* ===== HEADER ===== */
         .app-header {
-            text-align: center;
-            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
             position: relative;
+        }
+        
+        .app-header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
         
         .app-logo {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 68px;
-            height: 68px;
+            width: 48px;
+            height: 48px;
             background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple), var(--accent-pink));
-            border-radius: 20px;
-            font-size: 30px;
-            margin-bottom: 12px;
-            box-shadow: 0 4px 30px rgba(59, 130, 246, 0.35);
-            animation: pulse-glow 2.5s ease-in-out infinite;
-        }
-        
-        @keyframes pulse-glow {
-            0%, 100% { box-shadow: 0 4px 30px rgba(59, 130, 246, 0.35); }
-            50% { box-shadow: 0 4px 50px rgba(139, 92, 246, 0.5); }
-        }
-        
-        .app-title {
+            border-radius: 14px;
             font-size: 22px;
-            font-weight: 900;
+            box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3);
+        }
+        
+        .app-title-text {
+            font-size: 18px;
+            font-weight: 800;
             background: linear-gradient(135deg, #60a5fa, #a78bfa, #f472b6);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            letter-spacing: -0.5px;
         }
         
-        .app-subtitle {
-            color: var(--text-secondary);
+        .app-subtitle-text {
+            font-size: 10px;
+            color: var(--text-muted);
+            display: block;
+            margin-top: -2px;
+        }
+        
+        /* ===== PROFILE ICON ===== */
+        .profile-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            font-weight: 700;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 2px 12px rgba(59, 130, 246, 0.3);
+            position: relative;
+        }
+        
+        .profile-icon:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 20px rgba(59, 130, 246, 0.4);
+        }
+        
+        .profile-dropdown {
+            position: absolute;
+            top: 55px;
+            right: 0;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 8px 0;
+            min-width: 160px;
+            box-shadow: var(--shadow);
+            z-index: 100;
+            display: none;
+            backdrop-filter: blur(20px);
+        }
+        
+        .profile-dropdown.show {
+            display: block;
+        }
+        
+        .profile-dropdown-item {
+            padding: 8px 16px;
             font-size: 12px;
-            margin-top: 2px;
-            font-weight: 400;
-            letter-spacing: 0.3px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .profile-dropdown-item:hover {
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--text-primary);
+        }
+        
+        .profile-dropdown-item i {
+            width: 16px;
+            color: var(--accent-blue);
         }
         
         /* ===== INPUTS ===== */
         .input-group {
             position: relative;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
         }
         
         .input-group i {
             position: absolute;
-            left: 14px;
+            left: 12px;
             top: 50%;
             transform: translateY(-50%);
             color: var(--text-muted);
-            font-size: 15px;
+            font-size: 14px;
             transition: color 0.3s;
             z-index: 1;
         }
         
         .input-group input, .input-group select {
             width: 100%;
-            padding: 12px 14px 12px 44px;
+            padding: 10px 12px 10px 38px;
             background: var(--bg-input);
             border: 1.5px solid var(--border-color);
-            border-radius: 12px;
+            border-radius: 10px;
             color: var(--text-primary);
-            font-size: 14px;
+            font-size: 13px;
             font-family: 'Inter', sans-serif;
             transition: all 0.3s;
             appearance: none;
@@ -157,7 +219,7 @@
         }
         
         .input-group select {
-            padding-right: 40px;
+            padding-right: 36px;
             cursor: pointer;
             background-image: linear-gradient(135deg, var(--bg-input), rgba(59, 130, 246, 0.05));
         }
@@ -165,7 +227,7 @@
         .input-group select option {
             background: var(--bg-card);
             color: var(--text-primary);
-            padding: 10px;
+            padding: 8px;
         }
         
         .input-group input:focus, .input-group select:focus {
@@ -182,21 +244,21 @@
         
         .input-group .dropdown-arrow {
             position: absolute;
-            right: 14px;
+            right: 12px;
             top: 50%;
             transform: translateY(-50%);
             color: var(--text-muted);
             pointer-events: none;
-            font-size: 12px;
+            font-size: 11px;
         }
         
         /* ===== BUTTONS ===== */
         .btn {
             width: 100%;
-            padding: 13px;
+            padding: 11px;
             border: none;
-            border-radius: 12px;
-            font-size: 14px;
+            border-radius: 10px;
+            font-size: 13px;
             font-weight: 600;
             font-family: 'Inter', sans-serif;
             cursor: pointer;
@@ -221,34 +283,34 @@
         .btn-primary {
             background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
             color: white;
-            box-shadow: 0 4px 20px var(--glow-blue);
+            box-shadow: 0 4px 16px var(--glow-blue);
         }
         
         .btn-primary:hover { 
             transform: translateY(-2px); 
-            box-shadow: 0 6px 30px var(--glow-blue);
+            box-shadow: 0 6px 24px var(--glow-blue);
         }
         
         .btn-success {
             background: linear-gradient(135deg, var(--accent-green), #059669);
             color: white;
-            box-shadow: 0 4px 20px rgba(34, 197, 94, 0.25);
+            box-shadow: 0 4px 16px rgba(34, 197, 94, 0.25);
         }
         
         .btn-success:hover { 
             transform: translateY(-2px); 
-            box-shadow: 0 6px 30px rgba(34, 197, 94, 0.35);
+            box-shadow: 0 6px 24px rgba(34, 197, 94, 0.35);
         }
         
         .btn-danger {
             background: linear-gradient(135deg, var(--accent-red), #b91c1c);
             color: white;
-            box-shadow: 0 4px 20px rgba(239, 68, 68, 0.15);
+            box-shadow: 0 4px 16px rgba(239, 68, 68, 0.15);
         }
         
         .btn-danger:hover { 
             transform: translateY(-2px); 
-            box-shadow: 0 6px 30px rgba(239, 68, 68, 0.25);
+            box-shadow: 0 6px 24px rgba(239, 68, 68, 0.25);
         }
         
         .btn-outline {
@@ -265,8 +327,8 @@
         }
         
         .btn-sm {
-            padding: 5px 12px;
-            font-size: 11px;
+            padding: 4px 10px;
+            font-size: 10px;
             width: auto;
         }
         
@@ -274,10 +336,10 @@
             background: rgba(59, 130, 246, 0.1);
             color: var(--accent-blue);
             border: none;
-            padding: 2px 8px;
-            border-radius: 6px;
+            padding: 2px 6px;
+            border-radius: 5px;
             cursor: pointer;
-            font-size: 10px;
+            font-size: 9px;
             font-weight: 500;
             transition: all 0.2s;
             font-family: 'Inter', sans-serif;
@@ -298,11 +360,11 @@
         
         .card {
             background: var(--glass-bg);
-            border-radius: 16px;
-            padding: 20px 18px;
+            border-radius: 14px;
+            padding: 16px 14px;
             border: 1px solid var(--glass-border);
             backdrop-filter: blur(10px);
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             transition: all 0.3s;
         }
         
@@ -313,20 +375,20 @@
         /* ===== PIN ===== */
         .pin-box {
             display: flex;
-            gap: 8px;
+            gap: 6px;
             justify-content: center;
-            margin: 12px 0;
+            margin: 10px 0;
         }
         
         .pin-box input {
-            width: 46px;
-            height: 54px;
+            width: 40px;
+            height: 48px;
             text-align: center;
-            font-size: 24px;
+            font-size: 22px;
             font-weight: 700;
             background: var(--bg-input);
             border: 2px solid var(--border-color);
-            border-radius: 12px;
+            border-radius: 10px;
             color: var(--accent-blue);
             padding: 0;
             transition: all 0.3s;
@@ -343,23 +405,22 @@
         .pin-box input.filled {
             border-color: var(--accent-green);
             background: rgba(34, 197, 94, 0.05);
-            box-shadow: 0 0 20px rgba(34, 197, 94, 0.08);
+            box-shadow: 0 0 16px rgba(34, 197, 94, 0.08);
         }
         
-        /* ===== MESSAGES ===== */
         .message {
-            padding: 10px 14px;
-            border-radius: 10px;
-            margin-top: 10px;
-            font-size: 12px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            margin-top: 8px;
+            font-size: 11px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
             animation: slideDown 0.3s ease;
         }
         
         @keyframes slideDown {
-            from { opacity: 0; transform: translateY(-8px); }
+            from { opacity: 0; transform: translateY(-6px); }
             to { opacity: 1; transform: translateY(0); }
         }
         
@@ -375,16 +436,15 @@
             border: 1px solid rgba(34, 197, 94, 0.1);
         }
         
-        /* ===== DASHBOARD ===== */
         .dashboard-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 14px;
+            margin-bottom: 10px;
         }
         
         .dashboard-header h2 {
-            font-size: 17px;
+            font-size: 15px;
             font-weight: 700;
             background: linear-gradient(135deg, var(--text-primary), var(--text-secondary));
             -webkit-background-clip: text;
@@ -393,40 +453,46 @@
         
         .dashboard-actions {
             display: flex;
-            gap: 8px;
-            margin-bottom: 12px;
+            gap: 6px;
+            margin-bottom: 10px;
         }
         
         .dashboard-actions .btn {
             flex: 1;
-            padding: 9px;
-            font-size: 12px;
-            border-radius: 10px;
+            padding: 8px;
+            font-size: 11px;
+            border-radius: 8px;
         }
         
-        /* ===== SEARCH ===== */
+        /* ===== SEARCH + FILTER ===== */
+        .search-filter-row {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 10px;
+        }
+        
         .search-box {
             position: relative;
-            margin-bottom: 14px;
+            flex: 1;
         }
         
         .search-box i {
             position: absolute;
-            left: 14px;
+            left: 10px;
             top: 50%;
             transform: translateY(-50%);
             color: var(--text-muted);
-            font-size: 14px;
+            font-size: 12px;
         }
         
         .search-box input {
             width: 100%;
-            padding: 10px 14px 10px 42px;
+            padding: 7px 10px 7px 32px;
             background: var(--bg-input);
             border: 1.5px solid var(--border-color);
-            border-radius: 12px;
+            border-radius: 8px;
             color: var(--text-primary);
-            font-size: 13px;
+            font-size: 11px;
             font-family: 'Inter', sans-serif;
             transition: all 0.3s;
         }
@@ -444,12 +510,12 @@
         
         .search-clear {
             position: absolute;
-            right: 12px;
+            right: 8px;
             top: 50%;
             transform: translateY(-50%);
             color: var(--text-muted);
             cursor: pointer;
-            font-size: 14px;
+            font-size: 12px;
             transition: color 0.3s;
             display: none;
         }
@@ -457,12 +523,52 @@
         .search-clear:hover { color: var(--text-primary); }
         .search-clear.show { display: block; }
         
-        /* ===== PASSWORD ITEM (মডার্ন) ===== */
+        .filter-box {
+            position: relative;
+            min-width: 90px;
+        }
+        
+        .filter-box select {
+            width: 100%;
+            padding: 7px 28px 7px 10px;
+            background: var(--bg-input);
+            border: 1.5px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 11px;
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+            appearance: none;
+            transition: all 0.3s;
+        }
+        
+        .filter-box select:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 0 4px var(--glow-blue);
+        }
+        
+        .filter-box select option {
+            background: var(--bg-card);
+            color: var(--text-primary);
+            padding: 6px;
+        }
+        
+        .filter-box .filter-icon {
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            pointer-events: none;
+            font-size: 10px;
+        }
+        
         .password-item {
             background: var(--bg-input);
-            padding: 14px 16px;
-            border-radius: 14px;
-            margin-bottom: 10px;
+            padding: 12px 14px;
+            border-radius: 12px;
+            margin-bottom: 8px;
             border: 1px solid var(--border-color);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
@@ -474,43 +580,47 @@
             position: absolute;
             top: 0;
             left: 0;
-            width: 4px;
+            width: 3px;
             height: 100%;
-            border-radius: 14px 0 0 14px;
+            border-radius: 12px 0 0 12px;
             transition: all 0.3s;
         }
         
         .password-item:hover {
             border-color: rgba(59, 130, 246, 0.15);
-            transform: translateX(4px) translateY(-1px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            transform: translateX(3px) translateY(-1px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
         }
         
         .password-item .item-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
         
         .password-item .site-name {
             font-weight: 600;
-            font-size: 14px;
+            font-size: 13px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
         }
         
         .password-item .site-name .site-icon {
-            width: 28px;
-            height: 28px;
-            border-radius: 8px;
+            width: 26px;
+            height: 26px;
+            border-radius: 7px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 13px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            font-size: 11px;
+            font-weight: 700;
+            color: white;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
             transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
         
         .password-item:hover .site-icon {
@@ -519,16 +629,16 @@
         
         .password-item .item-details {
             color: var(--text-secondary);
-            font-size: 12px;
+            font-size: 11px;
         }
         
         .password-item .item-details .field-row {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 3px 0;
+            padding: 2px 0;
             border-bottom: 1px solid rgba(255, 255, 255, 0.02);
-            gap: 8px;
+            gap: 6px;
         }
         
         .password-item .item-details .field-row:last-child {
@@ -537,54 +647,36 @@
         
         .password-item .item-details .field-label {
             color: var(--text-muted);
-            font-size: 11px;
+            font-size: 10px;
             font-weight: 500;
-            min-width: 68px;
+            min-width: 55px;
             letter-spacing: 0.2px;
             display: flex;
             align-items: center;
-            gap: 4px;
+            gap: 3px;
         }
         
         .password-item .item-details .field-value {
             color: var(--text-primary);
             flex: 1;
-            font-size: 12px;
+            font-size: 11px;
             word-break: break-all;
         }
         
         .password-item .item-details .field-actions {
             display: flex;
             align-items: center;
-            gap: 4px;
-        }
-        
-        .password-item .item-actions {
-            display: flex;
-            gap: 6px;
-            margin-top: 8px;
-            flex-wrap: wrap;
-            padding-top: 8px;
-            border-top: 1px solid rgba(255, 255, 255, 0.03);
-        }
-        
-        .password-item .item-actions .btn {
-            padding: 4px 10px;
-            font-size: 10px;
-            width: auto;
-            flex: 1;
-            min-width: 55px;
-            border-radius: 8px;
+            gap: 3px;
         }
         
         .btn-delete {
             background: rgba(239, 68, 68, 0.08);
             color: var(--accent-red);
             border: none;
-            padding: 4px 10px;
-            border-radius: 8px;
+            padding: 3px 8px;
+            border-radius: 6px;
             cursor: pointer;
-            font-size: 11px;
+            font-size: 10px;
             font-weight: 500;
             transition: all 0.3s;
             font-family: 'Inter', sans-serif;
@@ -595,102 +687,48 @@
             transform: translateY(-1px);
         }
         
-        .btn-confirm {
-            background: rgba(34, 197, 94, 0.08);
-            color: var(--accent-green);
-            border: none;
-            padding: 4px 10px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 11px;
-            font-weight: 500;
-            transition: all 0.3s;
-            font-family: 'Inter', sans-serif;
-        }
-        
-        .btn-confirm:hover {
-            background: rgba(34, 197, 94, 0.2);
-            transform: translateY(-1px);
-        }
-        
-        .btn-confirm.confirmed {
-            background: rgba(34, 197, 94, 0.15);
-            color: var(--accent-green);
-        }
-        
-        /* ===== BADGES ===== */
-        .badge-confirmed {
-            display: inline-flex;
-            align-items: center;
-            gap: 3px;
-            background: rgba(34, 197, 94, 0.12);
-            color: var(--accent-green);
-            font-size: 9px;
-            padding: 2px 10px;
-            border-radius: 20px;
-            font-weight: 600;
-            border: 1px solid rgba(34, 197, 94, 0.08);
-            letter-spacing: 0.2px;
-        }
-        
-        .badge-pending {
-            display: inline-flex;
-            align-items: center;
-            gap: 3px;
-            background: rgba(239, 68, 68, 0.10);
-            color: var(--accent-red);
-            font-size: 9px;
-            padding: 2px 10px;
-            border-radius: 20px;
-            font-weight: 600;
-            border: 1px solid rgba(239, 68, 68, 0.08);
-            letter-spacing: 0.2px;
-        }
-        
-        /* ===== EMPTY STATE ===== */
         .empty-state {
             text-align: center;
-            padding: 35px 20px;
+            padding: 30px 16px;
         }
         
         .empty-state .icon {
-            font-size: 48px;
-            margin-bottom: 12px;
+            font-size: 40px;
+            margin-bottom: 10px;
             display: block;
             animation: float 3s ease-in-out infinite;
         }
         
         @keyframes float {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-8px); }
+            50% { transform: translateY(-6px); }
         }
         
         .empty-state h3 {
             color: var(--text-secondary);
             font-weight: 600;
-            font-size: 15px;
-            margin-bottom: 4px;
+            font-size: 14px;
+            margin-bottom: 3px;
         }
         
         .empty-state p {
             color: var(--text-muted);
-            font-size: 12px;
+            font-size: 11px;
         }
         
-        /* ===== LOADING ===== */
         .loading {
             text-align: center;
-            padding: 25px 0;
+            padding: 20px 0;
         }
         
         .spinner {
-            width: 32px;
-            height: 32px;
+            width: 28px;
+            height: 28px;
             border: 3px solid var(--border-color);
             border-top: 3px solid var(--accent-blue);
             border-radius: 50%;
             animation: spin 0.8s linear infinite;
-            margin: 0 auto 10px;
+            margin: 0 auto 8px;
         }
         
         @keyframes spin {
@@ -698,7 +736,6 @@
             100% { transform: rotate(360deg); }
         }
         
-        /* ===== TOAST ===== */
         .toast {
             position: fixed;
             bottom: 30px;
@@ -706,20 +743,20 @@
             transform: translateX(-50%) translateY(100px);
             background: var(--bg-secondary);
             color: var(--text-primary);
-            padding: 12px 22px;
-            border-radius: 14px;
+            padding: 10px 18px;
+            border-radius: 12px;
             border: 1px solid var(--glass-border);
             box-shadow: var(--shadow);
             z-index: 999;
             opacity: 0;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 500;
             max-width: 90%;
             backdrop-filter: blur(20px);
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
         
         .toast.show {
@@ -727,45 +764,48 @@
             transform: translateX(-50%) translateY(0);
         }
         
-        .toast i { font-size: 16px; }
+        .toast i { font-size: 14px; }
         .toast-success i { color: var(--accent-green); }
         .toast-error i { color: var(--accent-red); }
         .toast-info i { color: var(--accent-blue); }
         
-        /* ===== RESPONSIVE ===== */
         @media (max-width: 520px) {
-            .container { padding: 16px 12px; border-radius: 24px; }
-            .pin-box { gap: 5px; }
-            .pin-box input { width: 38px; height: 46px; font-size: 20px; }
+            .container { padding: 14px 10px; border-radius: 20px; }
+            .pin-box { gap: 4px; }
+            .pin-box input { width: 34px; height: 42px; font-size: 18px; }
             .dashboard-actions { flex-direction: column; }
+            .search-filter-row { flex-direction: column; }
+            .filter-box { min-width: 100%; }
             .password-item .item-details .field-row { flex-wrap: wrap; }
-            .password-item .item-details .field-label { min-width: 55px; font-size: 10px; }
-            .password-item .item-details .field-value { font-size: 11px; }
+            .password-item .item-details .field-label { min-width: 45px; font-size: 9px; }
+            .password-item .item-details .field-value { font-size: 10px; }
+            .app-header { flex-wrap: wrap; }
+            .profile-dropdown { right: -10px; }
         }
         
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(12px); }
+            from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
         
-        .fade-in { animation: fadeIn 0.35s ease; }
+        .fade-in { animation: fadeIn 0.3s ease; }
         
         .offline-banner {
             background: rgba(239, 68, 68, 0.10);
             border: 1px solid rgba(239, 68, 68, 0.10);
             color: var(--accent-red);
-            padding: 8px 14px;
-            border-radius: 12px;
+            padding: 6px 12px;
+            border-radius: 10px;
             text-align: center;
-            font-size: 12px;
-            margin-bottom: 12px;
+            font-size: 11px;
+            margin-bottom: 10px;
             display: none;
             backdrop-filter: blur(10px);
         }
         
         .offline-banner.show { display: block; }
         
-        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar { width: 3px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { 
             background: linear-gradient(180deg, var(--accent-blue), var(--accent-purple));
@@ -782,7 +822,6 @@
             background: rgba(15, 23, 41, 0.9);
         }
         
-        /* কালারফুল বর্ডার */
         .password-item[data-color="blue"]::before { background: linear-gradient(180deg, #3b82f6, #60a5fa); }
         .password-item[data-color="purple"]::before { background: linear-gradient(180deg, #8b5cf6, #a78bfa); }
         .password-item[data-color="pink"]::before { background: linear-gradient(180deg, #ec4899, #f472b6); }
@@ -792,36 +831,135 @@
         .password-item[data-color="cyan"]::before { background: linear-gradient(180deg, #06b6d4, #22d3ee); }
         .password-item[data-color="default"]::before { background: linear-gradient(180deg, #6b7280, #9ca3af); }
         
-        /* ===== স্ট্যাটাস কাউন্ট ===== */
         .status-count {
             display: flex;
-            gap: 14px;
-            font-size: 11px;
+            gap: 12px;
+            font-size: 10px;
             color: var(--text-muted);
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             padding: 0 2px;
         }
         
         .status-count span {
             display: flex;
             align-items: center;
-            gap: 4px;
+            gap: 3px;
         }
         
         .status-count .count-dot {
             display: inline-block;
-            width: 6px;
-            height: 6px;
+            width: 5px;
+            height: 5px;
             border-radius: 50%;
         }
         
-        .count-dot.confirmed { background: var(--accent-green); }
-        .count-dot.pending { background: var(--accent-red); }
         .count-dot.total { background: var(--accent-blue); }
         
         .status-count .count-num {
             color: var(--text-primary);
             font-weight: 600;
+        }
+        
+        /* ===== OVERTIME SECTION ===== */
+        .overtime-section {
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .overtime-section h4 {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .overtime-section h4 i {
+            color: var(--accent-orange);
+        }
+        
+        .overtime-row {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 6px;
+            align-items: center;
+        }
+        
+        .overtime-row input {
+            flex: 1;
+            padding: 6px 10px;
+            background: var(--bg-input);
+            border: 1.5px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 12px;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s;
+        }
+        
+        .overtime-row input:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 0 3px var(--glow-blue);
+        }
+        
+        .overtime-row .btn {
+            padding: 6px 12px;
+            font-size: 11px;
+            width: auto;
+        }
+        
+        .overtime-list {
+            margin-top: 6px;
+        }
+        
+        .overtime-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 4px 8px;
+            background: var(--bg-input);
+            border-radius: 6px;
+            margin-bottom: 4px;
+            font-size: 11px;
+        }
+        
+        .overtime-item .ot-date {
+            color: var(--text-muted);
+        }
+        
+        .overtime-item .ot-hours {
+            color: var(--accent-green);
+            font-weight: 600;
+        }
+        
+        .overtime-item .ot-delete {
+            color: var(--accent-red);
+            cursor: pointer;
+            font-size: 12px;
+            transition: color 0.3s;
+        }
+        
+        .overtime-item .ot-delete:hover {
+            color: #f85149;
+        }
+        
+        .ot-total {
+            text-align: right;
+            font-size: 12px;
+            color: var(--text-secondary);
+            padding-top: 6px;
+            border-top: 1px solid var(--border-color);
+            margin-top: 6px;
+        }
+        
+        .ot-total span {
+            color: var(--accent-green);
+            font-weight: 700;
+            font-size: 14px;
         }
     </style>
 </head>
@@ -833,10 +971,28 @@
         <i class="fas fa-wifi"></i> ⚠️ ইন্টারনেট সংযোগ নেই। ডেটা সেভ হবে না।
     </div>
     
+    <!-- ===== HEADER WITH PROFILE ===== -->
     <div class="app-header">
-        <div class="app-logo"><i class="fas fa-shield-alt"></i></div>
-        <div class="app-title">সিকিউর পাস</div>
-        <div class="app-subtitle">🔐 আপনার সব পাসওয়ার্ড এক জায়গায়</div>
+        <div class="app-header-left">
+            <div class="app-logo"><i class="fas fa-shield-alt"></i></div>
+            <div>
+                <span class="app-title-text">সিকিউর পাস</span>
+                <span class="app-subtitle-text">🔐 আপনার সব পাসওয়ার্ড এক জায়গায়</span>
+            </div>
+        </div>
+        <div style="position: relative;">
+            <div class="profile-icon" id="profileIcon" onclick="toggleProfile()">
+                <span id="profileInitial">U</span>
+            </div>
+            <div class="profile-dropdown" id="profileDropdown">
+                <div class="profile-dropdown-item" onclick="showOvertime()">
+                    <i class="fas fa-clock"></i> ওভারটাইম হিসাব
+                </div>
+                <div class="profile-dropdown-item" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i> লগআউট
+                </div>
+            </div>
+        </div>
     </div>
     
     <!-- ===== LOGIN ===== -->
@@ -853,7 +1009,7 @@
             <button class="btn btn-primary" onclick="login()">
                 <i class="fas fa-sign-in-alt"></i> লগইন করুন
             </button>
-            <button class="btn btn-outline" onclick="signup()" style="margin-top: 8px;">
+            <button class="btn btn-outline" onclick="signup()" style="margin-top: 6px;">
                 <i class="fas fa-user-plus"></i> নতুন অ্যাকাউন্ট তৈরি করুন
             </button>
             <div id="loginMessage"></div>
@@ -863,8 +1019,8 @@
     <!-- ===== PIN ===== -->
     <div id="pinSection" class="hidden fade-in">
         <div class="card">
-            <h3 style="text-align: center; margin-bottom: 2px; font-weight: 700; font-size: 17px;" id="pinTitle">🔑 সিকিউরিটি PIN</h3>
-            <p style="text-align: center; color: var(--text-secondary); font-size: 12px; margin-bottom: 12px;" id="pinSubtitle">
+            <h3 style="text-align: center; margin-bottom: 2px; font-weight: 700; font-size: 16px;" id="pinTitle">🔑 সিকিউরিটি PIN</h3>
+            <p style="text-align: center; color: var(--text-secondary); font-size: 11px; margin-bottom: 10px;" id="pinSubtitle">
                 ৬ ডিজিটের PIN দিন
             </p>
             <div class="pin-box">
@@ -878,7 +1034,7 @@
             <button class="btn btn-success" onclick="verifyOrSetPin()">
                 <i class="fas fa-check-circle"></i> <span id="pinBtnText">যাচাই করুন</span>
             </button>
-            <button class="btn btn-outline" onclick="logout()" style="margin-top: 8px;">
+            <button class="btn btn-outline" onclick="logout()" style="margin-top: 6px;">
                 <i class="fas fa-arrow-left"></i> ফিরে যান
             </button>
             <div id="pinMessage"></div>
@@ -905,7 +1061,7 @@
         
         <!-- ===== ADD PASSWORD ===== -->
         <div id="addPasswordForm" class="hidden card">
-            <h4 style="margin-bottom: 12px; font-size: 15px; font-weight: 700;">
+            <h4 style="margin-bottom: 10px; font-size: 14px; font-weight: 700;">
                 <i class="fas fa-key" style="color: var(--accent-green);"></i> নতুন তথ্য যোগ করুন
             </h4>
             
@@ -966,33 +1122,73 @@
             <button class="btn btn-success" onclick="savePassword()">
                 <i class="fas fa-save"></i> সংরক্ষণ করুন
             </button>
-            <button class="btn btn-outline" onclick="hideAddPassword()" style="margin-top: 8px;">
+            <button class="btn btn-outline" onclick="hideAddPassword()" style="margin-top: 6px;">
                 <i class="fas fa-times"></i> বাতিল করুন
             </button>
         </div>
         
-        <!-- ===== SEARCH ===== -->
-        <div class="search-box">
-            <i class="fas fa-search"></i>
-            <input type="text" id="searchInput" placeholder="🔍 সাইট, ইউজারনেম, ইমেইল দিয়ে খুঁজুন..." oninput="filterPasswords()">
-            <span class="search-clear" id="searchClear" onclick="clearSearch()">
-                <i class="fas fa-times-circle"></i>
-            </span>
+        <!-- ===== SEARCH + FILTER ===== -->
+        <div class="search-filter-row">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="খুঁজুন..." oninput="filterPasswords()">
+                <span class="search-clear" id="searchClear" onclick="clearSearch()">
+                    <i class="fas fa-times-circle"></i>
+                </span>
+            </div>
+            
+            <div class="filter-box">
+                <select id="filterSelect" onchange="filterPasswords()">
+                    <option value="all">📋 সব</option>
+                    <option value="Gmail">📧 Gmail</option>
+                    <option value="YouTube">▶️ YouTube</option>
+                    <option value="Facebook">📘 Facebook</option>
+                    <option value="Instagram">📸 Instagram</option>
+                    <option value="TikTok">🎵 TikTok</option>
+                    <option value="Twitter">🐦 Twitter</option>
+                    <option value="LinkedIn">💼 LinkedIn</option>
+                    <option value="GitHub">🐙 GitHub</option>
+                    <option value="Amazon">🛒 Amazon</option>
+                    <option value="Netflix">🎬 Netflix</option>
+                    <option value="Spotify">🎵 Spotify</option>
+                    <option value="Microsoft">💻 Microsoft</option>
+                    <option value="Google">🔍 Google</option>
+                    <option value="Apple">🍎 Apple</option>
+                    <option value="WhatsApp">📱 WhatsApp</option>
+                    <option value="Telegram">✈️ Telegram</option>
+                    <option value="Discord">🎮 Discord</option>
+                    <option value="Reddit">🤖 Reddit</option>
+                    <option value="Snapchat">👻 Snapchat</option>
+                    <option value="Pinterest">📌 Pinterest</option>
+                    <option value="Other">🔗 অন্যান্য</option>
+                </select>
+                <span class="filter-icon"><i class="fas fa-chevron-down"></i></span>
+            </div>
         </div>
         
         <!-- ===== STATUS COUNT ===== -->
-        <div class="status-count" id="statusCount">
+        <div class="status-count">
             <span><span class="count-dot total"></span> মোট: <span class="count-num" id="totalCount">0</span></span>
-            <span><span class="count-dot confirmed"></span> কনফর্মড: <span class="count-num" id="confirmedCount">0</span></span>
-            <span><span class="count-dot pending"></span> পেন্ডিং: <span class="count-num" id="pendingCount">0</span></span>
         </div>
         
         <!-- ===== PASSWORD LIST ===== -->
         <div id="passwordList">
             <div class="loading">
                 <div class="spinner"></div>
-                <p style="color: var(--text-secondary); font-size: 12px;">লোড হচ্ছে...</p>
+                <p style="color: var(--text-secondary); font-size: 11px;">লোড হচ্ছে...</p>
             </div>
+        </div>
+        
+        <!-- ===== OVERTIME SECTION ===== -->
+        <div id="overtimeSection" class="hidden overtime-section">
+            <h4><i class="fas fa-clock"></i> ওভারটাইম হিসাব</h4>
+            <div class="overtime-row">
+                <input type="date" id="otDate">
+                <input type="number" id="otHours" placeholder="ঘণ্টা" style="max-width: 80px; padding: 6px 8px;">
+                <button class="btn btn-success btn-sm" onclick="addOvertime()" style="width: auto;">যোগ</button>
+            </div>
+            <div class="overtime-list" id="overtimeList"></div>
+            <div class="ot-total">মোট ওভারটাইম: <span id="otTotal">০</span> ঘণ্টা</div>
         </div>
     </div>
 </div>
@@ -1031,6 +1227,7 @@
     let pinVerified = false;
     let allPasswords = [];
     let filteredPasswords = [];
+    let overtimeData = [];
 
     // =============================================
     // 🔐 AUTH STATE
@@ -1042,6 +1239,7 @@
             document.getElementById('loginSection').classList.add('hidden');
             document.getElementById('pinSection').classList.remove('hidden');
             document.getElementById('dashboard').classList.add('hidden');
+            document.getElementById('profileInitial').textContent = user.email ? user.email.substring(0, 2).toUpperCase() : 'U';
             checkPinStatus();
             showToast('✅ লগইন সফল!', 'success');
         } else {
@@ -1053,6 +1251,23 @@
             resetPinInputs();
         }
     });
+
+    // =============================================
+    // 👤 PROFILE
+    // =============================================
+    function toggleProfile() {
+        const dropdown = document.getElementById('profileDropdown');
+        dropdown.classList.toggle('show');
+    }
+
+    function showOvertime() {
+        document.getElementById('profileDropdown').classList.remove('show');
+        const section = document.getElementById('overtimeSection');
+        section.classList.toggle('hidden');
+        if (!section.classList.contains('hidden')) {
+            loadOvertime();
+        }
+    }
 
     // =============================================
     // 📝 LOGIN
@@ -1109,7 +1324,8 @@
                 return db.ref('users/' + uid).set({
                     email: email,
                     password: pass,
-                    createdAt: firebase.database.ServerValue.TIMESTAMP
+                    createdAt: firebase.database.ServerValue.TIMESTAMP,
+                    overtime: []
                 });
             })
             .then(() => {
@@ -1220,208 +1436,7 @@
         document.getElementById('pinSection').classList.add('hidden');
         document.getElementById('dashboard').classList.remove('hidden');
         loadPasswords();
-    }
-
-    // =============================================
-    // 🔍 FILTER PASSWORDS
-    // =============================================
-    function filterPasswords() {
-        const query = document.getElementById('searchInput').value.toLowerCase().trim();
-        const clearBtn = document.getElementById('searchClear');
-        
-        if (query.length > 0) {
-            clearBtn.classList.add('show');
-        } else {
-            clearBtn.classList.remove('show');
-        }
-        
-        if (!query) {
-            filteredPasswords = [...allPasswords];
-        } else {
-            filteredPasswords = allPasswords.filter(item => {
-                const searchText = (item.site + ' ' + item.username + ' ' + item.email + ' ' + item.phone).toLowerCase();
-                return searchText.includes(query);
-            });
-        }
-        
-        renderPasswords(filteredPasswords);
-        updateStatusCount(filteredPasswords);
-    }
-
-    function clearSearch() {
-        document.getElementById('searchInput').value = '';
-        document.getElementById('searchClear').classList.remove('show');
-        filterPasswords();
-        document.getElementById('searchInput').focus();
-    }
-
-    // =============================================
-    // 📊 UPDATE STATUS COUNT
-    // =============================================
-    function updateStatusCount(data) {
-        const total = data.length;
-        const confirmed = data.filter(item => item.confirmed).length;
-        const pending = total - confirmed;
-        
-        document.getElementById('totalCount').textContent = total;
-        document.getElementById('confirmedCount').textContent = confirmed;
-        document.getElementById('pendingCount').textContent = pending;
-    }
-
-    // =============================================
-    // 📂 LOAD PASSWORDS
-    // =============================================
-    function loadPasswords() {
-        if (!currentUser) return;
-        
-        const list = document.getElementById('passwordList');
-        list.innerHTML = `<div class="loading"><div class="spinner"></div><p style="color: var(--text-secondary); font-size: 12px;">লোড হচ্ছে...</p></div>`;
-        
-        db.ref('passwords/' + currentUser.uid).once('value')
-            .then(snapshot => {
-                const data = snapshot.val();
-                allPasswords = [];
-                
-                if (data) {
-                    const keys = Object.keys(data);
-                    keys.forEach(key => {
-                        const item = data[key];
-                        if (item) {
-                            item._key = key;
-                            allPasswords.push(item);
-                        }
-                    });
-                }
-                
-                filteredPasswords = [...allPasswords];
-                renderPasswords(filteredPasswords);
-                updateStatusCount(filteredPasswords);
-                
-                // সার্চ ক্লিয়ার
-                document.getElementById('searchInput').value = '';
-                document.getElementById('searchClear').classList.remove('show');
-            })
-            .catch(err => {
-                list.innerHTML = `<div class="message message-error"><i class="fas fa-exclamation-circle"></i> ${err.message}</div>`;
-                showToast('❌ ' + err.message, 'error');
-            });
-    }
-
-    // =============================================
-    // 🖼️ RENDER PASSWORDS
-    // =============================================
-    function renderPasswords(passwords) {
-        const list = document.getElementById('passwordList');
-        
-        if (passwords.length === 0) {
-            list.innerHTML = `
-                <div class="empty-state">
-                    <span class="icon">🔐</span>
-                    <h3>${allPasswords.length === 0 ? 'কোনো তথ্য নেই' : 'কোনো ফলাফল পাওয়া যায়নি'}</h3>
-                    <p>${allPasswords.length === 0 ? '"যোগ করুন" বাটনে ক্লিক করে পাসওয়ার্ড সেভ করুন' : 'অন্য কিছু দিয়ে খুঁজুন'}</p>
-                </div>
-            `;
-            return;
-        }
-        
-        let html = '';
-        passwords.forEach((item) => {
-            const isConfirmed = item.confirmed || false;
-            const icon = getSiteIcon(item.site);
-            const color = getSiteColor(item.site);
-            const colorClass = getColorClass(item.site);
-            
-            // ফিল্ড তৈরি করুন
-            let fields = [];
-            
-            if (item.username) {
-                fields.push({
-                    label: '👤 ইউজারনেম',
-                    value: item.username,
-                    copy: item.username
-                });
-            }
-            
-            if (item.phone) {
-                fields.push({
-                    label: '📱 ফোন',
-                    value: item.phone,
-                    copy: item.phone
-                });
-            }
-            
-            if (item.email) {
-                fields.push({
-                    label: '📧 ইমেইল',
-                    value: item.email,
-                    copy: item.email
-                });
-            }
-            
-            fields.push({
-                label: '🔑 পাসওয়ার্ড',
-                value: '••••••••',
-                copy: item.password || '',
-                showCopy: true,
-                realValue: item.password || ''
-            });
-            
-            let fieldsHtml = '';
-            fields.forEach(field => {
-                const copyText = field.copy || '';
-                const showCopy = field.showCopy !== undefined ? field.showCopy : true;
-                const displayValue = field.value;
-                
-                fieldsHtml += `
-                    <div class="field-row">
-                        <span class="field-label">${field.label}</span>
-                        <span class="field-value">${displayValue}</span>
-                        <div class="field-actions">
-                            ${showCopy && copyText ? `
-                                <button class="btn-copy" onclick="copyText('${copyText.replace(/'/g, "\\'")}', this)">
-                                    <i class="fas fa-copy"></i>
-                                </button>
-                            ` : ''}
-                            ${field.realValue ? `
-                                <button class="btn-copy" onclick="copyText('${field.realValue.replace(/'/g, "\\'")}', this)" style="background: rgba(245, 158, 11, 0.1); color: var(--accent-orange);">
-                                    <i class="fas fa-eye"></i>
-                                </button>
-                            ` : ''}
-                        </div>
-                    </div>
-                `;
-            });
-            
-            html += `
-                <div class="password-item fade-in" data-color="${colorClass}">
-                    <div class="item-header">
-                        <div class="site-name">
-                            <div class="site-icon" style="background: ${color}">
-                                ${icon}
-                            </div>
-                            ${item.site || 'নাম নেই'}
-                            <span class="${isConfirmed ? 'badge-confirmed' : 'badge-pending'}">
-                                <i class="fas ${isConfirmed ? 'fa-check-circle' : 'fa-clock'}"></i>
-                                ${isConfirmed ? 'কনফর্মড' : 'পেন্ডিং'}
-                            </span>
-                        </div>
-                        <button class="btn-delete" onclick="deletePassword('${item._key}')">
-                            <i class="fas fa-trash-alt"></i>
-                        </button>
-                    </div>
-                    <div class="item-details">
-                        ${fieldsHtml}
-                    </div>
-                    <div class="item-actions">
-                        <button class="btn-confirm ${isConfirmed ? 'confirmed' : ''}" onclick="confirmPassword('${item._key}')">
-                            <i class="fas ${isConfirmed ? 'fa-check-circle' : 'fa-check'}"></i>
-                            ${isConfirmed ? 'কনফর্মড' : 'কনফর্ম করুন'}
-                        </button>
-                    </div>
-                </div>
-            `;
-        });
-        list.innerHTML = html;
+        loadOvertime();
     }
 
     // =============================================
@@ -1465,6 +1480,187 @@
     }
 
     // =============================================
+    // 🔍 FILTER PASSWORDS
+    // =============================================
+    function filterPasswords() {
+        const query = document.getElementById('searchInput').value.toLowerCase().trim();
+        const filter = document.getElementById('filterSelect').value;
+        const clearBtn = document.getElementById('searchClear');
+        
+        if (query.length > 0) {
+            clearBtn.classList.add('show');
+        } else {
+            clearBtn.classList.remove('show');
+        }
+        
+        filteredPasswords = allPasswords.filter(item => {
+            if (filter !== 'all' && item.site !== filter) {
+                return false;
+            }
+            if (query) {
+                const searchText = (item.site + ' ' + item.username + ' ' + item.email + ' ' + item.phone).toLowerCase();
+                return searchText.includes(query);
+            }
+            return true;
+        });
+        
+        renderPasswords(filteredPasswords);
+        updateStatusCount(filteredPasswords);
+    }
+
+    function clearSearch() {
+        document.getElementById('searchInput').value = '';
+        document.getElementById('searchClear').classList.remove('show');
+        filterPasswords();
+        document.getElementById('searchInput').focus();
+    }
+
+    // =============================================
+    // 📊 UPDATE STATUS COUNT
+    // =============================================
+    function updateStatusCount(data) {
+        document.getElementById('totalCount').textContent = data.length;
+    }
+
+    // =============================================
+    // 📂 LOAD PASSWORDS
+    // =============================================
+    function loadPasswords() {
+        if (!currentUser) return;
+        
+        const list = document.getElementById('passwordList');
+        list.innerHTML = `<div class="loading"><div class="spinner"></div><p style="color: var(--text-secondary); font-size: 11px;">লোড হচ্ছে...</p></div>`;
+        
+        db.ref('passwords/' + currentUser.uid).once('value')
+            .then(snapshot => {
+                const data = snapshot.val();
+                allPasswords = [];
+                
+                if (data) {
+                    const keys = Object.keys(data);
+                    keys.forEach(key => {
+                        const item = data[key];
+                        if (item) {
+                            item._key = key;
+                            allPasswords.push(item);
+                        }
+                    });
+                }
+                
+                filteredPasswords = [...allPasswords];
+                renderPasswords(filteredPasswords);
+                updateStatusCount(filteredPasswords);
+                
+                document.getElementById('searchInput').value = '';
+                document.getElementById('searchClear').classList.remove('show');
+                document.getElementById('filterSelect').value = 'all';
+            })
+            .catch(err => {
+                list.innerHTML = `<div class="message message-error"><i class="fas fa-exclamation-circle"></i> ${err.message}</div>`;
+                showToast('❌ ' + err.message, 'error');
+            });
+    }
+
+    // =============================================
+    // 🖼️ RENDER PASSWORDS
+    // =============================================
+    function renderPasswords(passwords) {
+        const list = document.getElementById('passwordList');
+        
+        if (passwords.length === 0) {
+            list.innerHTML = `
+                <div class="empty-state">
+                    <span class="icon">🔐</span>
+                    <h3>${allPasswords.length === 0 ? 'কোনো তথ্য নেই' : 'কোনো ফলাফল পাওয়া যায়নি'}</h3>
+                    <p>${allPasswords.length === 0 ? '"যোগ করুন" বাটনে ক্লিক করে পাসওয়ার্ড সেভ করুন' : 'অন্য কিছু দিয়ে খুঁজুন'}</p>
+                </div>
+            `;
+            return;
+        }
+        
+        let html = '';
+        passwords.forEach((item) => {
+            const icon = getSiteIcon(item.site);
+            const color = getSiteColor(item.site);
+            const colorClass = getColorClass(item.site);
+            
+            let displayIcon = icon;
+            let displayBg = color;
+            
+            if (item.site === 'Other' || !icon) {
+                const name = item.site || 'OT';
+                const shortName = name.substring(0, 2).toUpperCase();
+                displayIcon = shortName;
+                const hash = name.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+                const hue = hash % 360;
+                displayBg = `hsl(${hue}, 70%, 45%)`;
+            }
+            
+            let fields = [];
+            if (item.username) {
+                fields.push({ label: '👤 ইউজারনেম', value: item.username, copy: item.username });
+            }
+            if (item.phone) {
+                fields.push({ label: '📱 ফোন', value: item.phone, copy: item.phone });
+            }
+            if (item.email) {
+                fields.push({ label: '📧 ইমেইল', value: item.email, copy: item.email });
+            }
+            fields.push({
+                label: '🔑 পাসওয়ার্ড',
+                value: '••••••••',
+                copy: item.password || '',
+                showCopy: true,
+                realValue: item.password || ''
+            });
+            
+            let fieldsHtml = '';
+            fields.forEach(field => {
+                const copyText = field.copy || '';
+                const showCopy = field.showCopy !== undefined ? field.showCopy : true;
+                const displayValue = field.value;
+                
+                fieldsHtml += `
+                    <div class="field-row">
+                        <span class="field-label">${field.label}</span>
+                        <span class="field-value">${displayValue}</span>
+                        <div class="field-actions">
+                            ${showCopy && copyText ? `
+                                <button class="btn-copy" onclick="copyText('${copyText.replace(/'/g, "\\'")}', this)">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            ` : ''}
+                            ${field.realValue ? `
+                                <button class="btn-copy" onclick="copyText('${field.realValue.replace(/'/g, "\\'")}', this)" style="background: rgba(245, 158, 11, 0.1); color: var(--accent-orange);">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            ` : ''}
+                        </div>
+                    </div>
+                `;
+            });
+            
+            html += `
+                <div class="password-item fade-in" data-color="${colorClass}">
+                    <div class="item-header">
+                        <div class="site-name">
+                            <div class="site-icon" style="background: ${displayBg}">
+                                ${displayIcon}
+                            </div>
+                            ${item.site || 'নাম নেই'}
+                        </div>
+                        <button class="btn-delete" onclick="deletePassword('${item._key}')">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </div>
+                    <div class="item-details">${fieldsHtml}</div>
+                </div>
+            `;
+        });
+        list.innerHTML = html;
+    }
+
+    // =============================================
     // 📝 UPDATE SITE INPUT
     // =============================================
     function updateSiteInput() {
@@ -1472,7 +1668,8 @@
         const input = document.getElementById('siteName');
         if (select.value === 'Other') {
             input.value = '';
-            input.placeholder = 'সাইটের নাম লিখুন';
+            input.placeholder = 'সাইটের নাম লিখুন (যেমন: ChatGPT)';
+            input.focus();
         } else if (select.value) {
             input.value = select.value;
             input.placeholder = 'সাইটের নাম';
@@ -1508,7 +1705,6 @@
             phone: phone,
             email: email,
             password: password,
-            confirmed: false,
             createdAt: firebase.database.ServerValue.TIMESTAMP
         };
         
@@ -1532,33 +1728,6 @@
             .catch(err => {
                 console.error('❌ সেভ করতে সমস্যা:', err);
                 showToast('❌ সেভ করতে সমস্যা: ' + err.message, 'error');
-            });
-    }
-
-    // =============================================
-    // ✅ CONFIRM PASSWORD
-    // =============================================
-    function confirmPassword(key) {
-        if (!currentUser) {
-            showToast('⚠️ দয়া করে লগইন করুন!', 'error');
-            return;
-        }
-        
-        const ref = db.ref('passwords/' + currentUser.uid + '/' + key);
-        ref.once('value')
-            .then(snapshot => {
-                const item = snapshot.val();
-                if (item) {
-                    const newConfirmed = !item.confirmed;
-                    return ref.update({ confirmed: newConfirmed });
-                }
-            })
-            .then(() => {
-                loadPasswords();
-                showToast('✅ স্ট্যাটাস আপডেট হয়েছে!', 'success');
-            })
-            .catch(err => {
-                showToast('❌ আপডেট করতে সমস্যা: ' + err.message, 'error');
             });
     }
 
@@ -1608,6 +1777,94 @@
     }
 
     // =============================================
+    // 📊 OVERTIME SYSTEM
+    // =============================================
+    function loadOvertime() {
+        if (!currentUser) return;
+        
+        db.ref('users/' + currentUser.uid + '/overtime').once('value')
+            .then(snapshot => {
+                const data = snapshot.val();
+                overtimeData = data || [];
+                renderOvertime();
+            })
+            .catch(err => {
+                console.error('Overtime Load Error:', err);
+            });
+    }
+
+    function renderOvertime() {
+        const list = document.getElementById('overtimeList');
+        const total = overtimeData.reduce((sum, item) => sum + (parseFloat(item.hours) || 0), 0);
+        
+        document.getElementById('otTotal').textContent = total.toFixed(1);
+        
+        if (overtimeData.length === 0) {
+            list.innerHTML = '<div style="text-align:center;color:var(--text-muted);font-size:11px;padding:8px;">কোনো ওভারটাইম যোগ করা হয়নি</div>';
+            return;
+        }
+        
+        let html = '';
+        overtimeData.forEach((item, index) => {
+            html += `
+                <div class="overtime-item">
+                    <span class="ot-date">${item.date || ''}</span>
+                    <span class="ot-hours">${item.hours || 0} ঘণ্টা</span>
+                    <span class="ot-delete" onclick="deleteOvertime(${index})"><i class="fas fa-times"></i></span>
+                </div>
+            `;
+        });
+        list.innerHTML = html;
+    }
+
+    function addOvertime() {
+        if (!currentUser) {
+            showToast('⚠️ দয়া করে লগইন করুন!', 'error');
+            return;
+        }
+        
+        const date = document.getElementById('otDate').value;
+        const hours = document.getElementById('otHours').value;
+        
+        if (!date) {
+            showToast('⚠️ তারিখ নির্বাচন করুন', 'error');
+            return;
+        }
+        if (!hours || isNaN(hours) || hours <= 0) {
+            showToast('⚠️ সঠিক ঘণ্টা সংখ্যা দিন', 'error');
+            return;
+        }
+        
+        overtimeData.push({ date: date, hours: parseFloat(hours) });
+        
+        db.ref('users/' + currentUser.uid + '/overtime').set(overtimeData)
+            .then(() => {
+                renderOvertime();
+                document.getElementById('otDate').value = '';
+                document.getElementById('otHours').value = '';
+                showToast('✅ ওভারটাইম যোগ হয়েছে!', 'success');
+            })
+            .catch(err => {
+                showToast('❌ যোগ করতে সমস্যা: ' + err.message, 'error');
+                overtimeData.pop();
+            });
+    }
+
+    function deleteOvertime(index) {
+        if (!confirm('এই ওভারটাইম মুছতে চান?')) return;
+        
+        overtimeData.splice(index, 1);
+        db.ref('users/' + currentUser.uid + '/overtime').set(overtimeData)
+            .then(() => {
+                renderOvertime();
+                showToast('✅ মুছে ফেলা হয়েছে!', 'success');
+            })
+            .catch(err => {
+                showToast('❌ মুছতে সমস্যা: ' + err.message, 'error');
+            });
+    }
+
+    // =============================================
     // 📝 ADD FORM SHOW/HIDE
     // =============================================
     function showAddPassword() {
@@ -1636,6 +1893,8 @@
             document.getElementById('loginPass').value = '';
             document.getElementById('loginMessage').innerHTML = '';
             document.getElementById('pinMessage').innerHTML = '';
+            document.getElementById('profileDropdown').classList.remove('show');
+            document.getElementById('overtimeSection').classList.add('hidden');
             showToast('👋 লগআউট হয়েছে', 'success');
         }
     }
