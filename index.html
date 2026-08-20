@@ -24,7 +24,6 @@
             --accent-green: #22c55e;
             --accent-red: #ef4444;
             --accent-purple: #8b5cf6;
-            --accent-orange: #f59e0b;
             --glow-blue: rgba(59, 130, 246, 0.3);
             --shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
         }
@@ -56,7 +55,6 @@
         
         .hidden { display: none !important; }
         
-        /* ===== Header ===== */
         .app-header {
             text-align: center;
             margin-bottom: 28px;
@@ -89,7 +87,6 @@
             margin-top: 4px;
         }
         
-        /* ===== Inputs ===== */
         .input-group {
             position: relative;
             margin-bottom: 14px;
@@ -142,7 +139,6 @@
             pointer-events: none;
         }
         
-        /* ===== Buttons ===== */
         .btn {
             width: 100%;
             padding: 13px;
@@ -174,8 +170,6 @@
             background: linear-gradient(135deg, var(--accent-red), #b91c1c);
             color: white;
         }
-        
-        .btn-danger:hover { transform: translateY(-2px); }
         
         .btn-outline {
             background: transparent;
@@ -215,7 +209,6 @@
             color: var(--accent-green);
         }
         
-        /* ===== Card ===== */
         .card {
             background: var(--bg-card);
             border-radius: 14px;
@@ -224,7 +217,6 @@
             margin-bottom: 14px;
         }
         
-        /* ===== PIN Input ===== */
         .pin-box {
             display: flex;
             gap: 10px;
@@ -257,7 +249,6 @@
             background: rgba(34, 197, 94, 0.05);
         }
         
-        /* ===== Messages ===== */
         .message {
             padding: 10px 14px;
             border-radius: 8px;
@@ -280,7 +271,6 @@
             border: 1px solid rgba(34, 197, 94, 0.2);
         }
         
-        /* ===== Dashboard ===== */
         .dashboard-header {
             display: flex;
             justify-content: space-between;
@@ -305,7 +295,6 @@
             font-size: 13px;
         }
         
-        /* ===== Password Items ===== */
         .password-item {
             background: var(--bg-input);
             padding: 14px 16px;
@@ -343,7 +332,6 @@
             align-items: center;
             justify-content: center;
             font-size: 14px;
-            color: white;
         }
         
         .password-item .item-details {
@@ -385,6 +373,21 @@
             min-width: 60px;
         }
         
+        .btn-delete {
+            background: rgba(239, 68, 68, 0.15);
+            color: var(--accent-red);
+            border: none;
+            padding: 4px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s;
+        }
+        
+        .btn-delete:hover {
+            background: rgba(239, 68, 68, 0.25);
+        }
+        
         .btn-confirm {
             background: rgba(34, 197, 94, 0.15);
             color: var(--accent-green);
@@ -397,11 +400,29 @@
         
         .btn-confirm.confirmed {
             background: rgba(34, 197, 94, 0.25);
-            color: var(--accent-green);
             border-color: var(--accent-green);
         }
         
-        /* ===== Empty State ===== */
+        .badge-confirmed {
+            display: inline-block;
+            background: rgba(34, 197, 94, 0.15);
+            color: var(--accent-green);
+            font-size: 10px;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-weight: 600;
+        }
+        
+        .badge-pending {
+            display: inline-block;
+            background: rgba(239, 68, 68, 0.15);
+            color: var(--accent-red);
+            font-size: 10px;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-weight: 600;
+        }
+        
         .empty-state {
             text-align: center;
             padding: 30px 20px;
@@ -424,7 +445,6 @@
             font-size: 13px;
         }
         
-        /* ===== Loading ===== */
         .loading {
             text-align: center;
             padding: 30px 0;
@@ -445,7 +465,6 @@
             100% { transform: rotate(360deg); }
         }
         
-        /* ===== Toast ===== */
         .toast {
             position: fixed;
             bottom: 30px;
@@ -474,7 +493,6 @@
         .toast-success i { color: var(--accent-green); }
         .toast-error i { color: var(--accent-red); }
         
-        /* ===== Responsive ===== */
         @media (max-width: 520px) {
             .container { padding: 20px 14px; border-radius: 16px; }
             .pin-box { gap: 6px; }
@@ -490,37 +508,31 @@
         
         .fade-in { animation: fadeIn 0.4s ease; }
         
-        /* ===== Scrollbar ===== */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: var(--bg-input); border-radius: 10px; }
-        ::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
-        
-        /* ===== Badge ===== */
-        .badge-confirmed {
-            display: inline-block;
-            background: rgba(34, 197, 94, 0.15);
-            color: var(--accent-green);
-            font-size: 10px;
-            padding: 2px 10px;
-            border-radius: 12px;
-            font-weight: 600;
+        .offline-banner {
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            color: var(--accent-red);
+            padding: 10px 14px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 13px;
+            margin-bottom: 14px;
+            display: none;
         }
         
-        .badge-pending {
-            display: inline-block;
-            background: rgba(239, 68, 68, 0.15);
-            color: var(--accent-red);
-            font-size: 10px;
-            padding: 2px 10px;
-            border-radius: 12px;
-            font-weight: 600;
+        .offline-banner.show {
+            display: block;
         }
     </style>
 </head>
 <body>
 
 <div class="container" id="app">
+    
+    <!-- ===== OFFLINE BANNER ===== -->
+    <div id="offlineBanner" class="offline-banner">
+        <i class="fas fa-wifi"></i> ⚠️ ইন্টারনেট সংযোগ নেই। ডেটা সেভ হবে না।
+    </div>
     
     <!-- ===== HEADER ===== -->
     <div class="app-header">
@@ -593,7 +605,7 @@
             </button>
         </div>
         
-        <!-- ===== ADD PASSWORD FORM ===== -->
+        <!-- ===== ADD PASSWORD ===== -->
         <div id="addPasswordForm" class="hidden card">
             <h4 style="margin-bottom: 12px; font-size: 16px;">
                 <i class="fas fa-key" style="color: var(--accent-green);"></i> নতুন তথ্য
@@ -630,7 +642,7 @@
             
             <div class="input-group">
                 <i class="fas fa-globe"></i>
-                <input type="text" id="siteName" placeholder="সাইটের নাম (যদি অন্যান্য সিলেক্ট করেন)">
+                <input type="text" id="siteName" placeholder="সাইটের নাম">
             </div>
             
             <div class="input-group">
@@ -669,14 +681,14 @@
 <!-- ===== TOAST ===== -->
 <div id="toast" class="toast"></div>
 
-<!-- ===== FIREBASE ===== -->
+<!-- ===== FIREBASE SDK ===== -->
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
 
 <script>
     // =============================================
-    // 🔥 FIREBASE CONFIG
+    // 🔥 FIREBASE CONFIG (Realtime Database)
     // =============================================
     const firebaseConfig = {
         apiKey: "AIzaSyCh8ncjWU3GB_INfO0DYy7NXC4ECVTuMew",
@@ -688,9 +700,36 @@
         appId: "1:804125173821:android:fe97178bed5877b8222254"
     };
 
+    // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
-    const db = firebase.firestore();
+    const database = firebase.database();
+
+    // =============================================
+    // 📡 OFFLINE/ONLINE চেক
+    // =============================================
+    function checkOnlineStatus() {
+        const banner = document.getElementById('offlineBanner');
+        if (!navigator.onLine) {
+            banner.classList.add('show');
+            showToast('⚠️ ইন্টারনেট সংযোগ নেই!', 'error');
+        } else {
+            banner.classList.remove('show');
+        }
+    }
+
+    checkOnlineStatus();
+
+    window.addEventListener('online', () => {
+        document.getElementById('offlineBanner').classList.remove('show');
+        showToast('✅ ইন্টারনেট সংযোগ ফিরে এসেছে!', 'success');
+        if (currentUser) loadPasswords();
+    });
+    
+    window.addEventListener('offline', () => {
+        document.getElementById('offlineBanner').classList.add('show');
+        showToast('⚠️ ইন্টারনেট সংযোগ বিচ্ছিন্ন!', 'error');
+    });
 
     // =============================================
     // 📌 STATE
@@ -698,12 +737,13 @@
     let currentUser = null;
     let isPinSet = false;
     let pinVerified = false;
-    let isConfirming = false;
 
     // =============================================
     // 🔐 AUTH STATE
     // =============================================
     auth.onAuthStateChanged(user => {
+        console.log('Auth State:', user ? '✅ Logged In' : '❌ Logged Out');
+        
         if (user) {
             currentUser = user;
             document.getElementById('loginSection').classList.add('hidden');
@@ -725,6 +765,11 @@
     // 📝 LOGIN
     // =============================================
     function login() {
+        if (!navigator.onLine) {
+            showToast('⚠️ ইন্টারনেট সংযোগ প্রয়োজন!', 'error');
+            return;
+        }
+        
         const email = document.getElementById('loginEmail').value.trim();
         const pass = document.getElementById('loginPass').value.trim();
         const msgDiv = document.getElementById('loginMessage');
@@ -745,6 +790,7 @@
                 if (err.code === 'auth/user-not-found') msg = '❌ এই ইমেইলে কোনো অ্যাকাউন্ট নেই। আগে অ্যাকাউন্ট তৈরি করুন।';
                 else if (err.code === 'auth/wrong-password') msg = '❌ ভুল পাসওয়ার্ড!';
                 else if (err.code === 'auth/invalid-email') msg = '❌ সঠিক ইমেইল ঠিকানা দিন';
+                else if (err.code === 'auth/network-request-failed') msg = '❌ ইন্টারনেট সংযোগ নেই!';
                 showMessage(msgDiv, msg, 'error');
                 showToast(msg, 'error');
             });
@@ -754,6 +800,11 @@
     // 📝 SIGNUP
     // =============================================
     function signup() {
+        if (!navigator.onLine) {
+            showToast('⚠️ ইন্টারনেট সংযোগ প্রয়োজন!', 'error');
+            return;
+        }
+        
         const email = document.getElementById('loginEmail').value.trim();
         const pass = document.getElementById('loginPass').value.trim();
         const msgDiv = document.getElementById('loginMessage');
@@ -771,11 +822,12 @@
         
         auth.createUserWithEmailAndPassword(email, pass)
             .then((userCredential) => {
-                return db.collection('users').doc(userCredential.user.uid).set({
+                // Realtime Database এ ইউজার ডেটা তৈরি
+                return database.ref('users/' + userCredential.user.uid).set({
                     email: email,
                     pin: '',
                     passwords: [],
-                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                    createdAt: firebase.database.ServerValue.TIMESTAMP
                 });
             })
             .then(() => {
@@ -787,6 +839,7 @@
                 if (err.code === 'auth/email-already-in-use') msg = '❌ এই ইমেইল ইতিমধ্যে ব্যবহার করা হয়েছে।';
                 else if (err.code === 'auth/invalid-email') msg = '❌ সঠিক ইমেইল ঠিকানা দিন';
                 else if (err.code === 'auth/weak-password') msg = '❌ পাসওয়ার্ড খুব সহজ। ৬+ অক্ষর দিন।';
+                else if (err.code === 'auth/network-request-failed') msg = '❌ ইন্টারনেট সংযোগ নেই!';
                 showMessage(msgDiv, msg, 'error');
                 showToast(msg, 'error');
             });
@@ -798,10 +851,10 @@
     function checkPinStatus() {
         if (!currentUser) return;
         
-        db.collection('users').doc(currentUser.uid).get()
-            .then(doc => {
-                if (doc.exists) {
-                    const data = doc.data();
+        database.ref('users/' + currentUser.uid).once('value')
+            .then(snapshot => {
+                const data = snapshot.val();
+                if (data) {
                     if (data.pin && data.pin.length === 6) {
                         isPinSet = true;
                         document.getElementById('pinTitle').textContent = '🔑 PIN দিন';
@@ -814,16 +867,21 @@
                         document.getElementById('pinBtnText').textContent = 'PIN সেট করুন';
                     }
                 } else {
-                    db.collection('users').doc(currentUser.uid).set({
+                    // ডেটা না থাকলে তৈরি করি
+                    database.ref('users/' + currentUser.uid).set({
                         email: currentUser.email,
                         pin: '',
                         passwords: [],
-                        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                        createdAt: firebase.database.ServerValue.TIMESTAMP
                     }).then(() => checkPinStatus());
                 }
             })
             .catch(err => {
-                showToast('❌ ডেটাবেস সমস্যা: ' + err.message, 'error');
+                if (err.message.includes('offline')) {
+                    showToast('⚠️ ইন্টারনেট সংযোগ নেই! ডেটা লোড করা যাচ্ছে না।', 'error');
+                } else {
+                    showToast('❌ ডেটাবেস সমস্যা: ' + err.message, 'error');
+                }
             });
     }
 
@@ -831,6 +889,11 @@
     // ✅ VERIFY / SET PIN
     // =============================================
     function verifyOrSetPin() {
+        if (!navigator.onLine) {
+            showToast('⚠️ ইন্টারনেট সংযোগ প্রয়োজন!', 'error');
+            return;
+        }
+        
         const inputs = document.querySelectorAll('.pin-input');
         let pin = '';
         inputs.forEach(inp => pin += inp.value);
@@ -848,7 +911,7 @@
         showMessage(msgDiv, '⏳ যাচাই হচ্ছে...', 'success');
         
         if (!isPinSet) {
-            db.collection('users').doc(currentUser.uid).update({ pin: pin })
+            database.ref('users/' + currentUser.uid + '/pin').set(pin)
                 .then(() => {
                     showMessage(msgDiv, '✅ PIN সেট হয়েছে!', 'success');
                     isPinSet = true;
@@ -861,9 +924,9 @@
                     showToast('❌ ' + err.message, 'error');
                 });
         } else {
-            db.collection('users').doc(currentUser.uid).get()
-                .then(doc => {
-                    if (doc.data().pin === pin) {
+            database.ref('users/' + currentUser.uid + '/pin').once('value')
+                .then(snapshot => {
+                    if (snapshot.val() === pin) {
                         showMessage(msgDiv, '✅ PIN সঠিক!', 'success');
                         pinVerified = true;
                         showToast('✅ PIN সঠিক!', 'success');
@@ -896,78 +959,87 @@
     }
 
     // =============================================
-    // 📂 LOAD PASSWORDS
+    // 📂 LOAD PASSWORDS (Realtime Database)
     // =============================================
     function loadPasswords() {
         if (!currentUser) return;
+        
         const list = document.getElementById('passwordList');
         list.innerHTML = `<div class="loading"><div class="spinner"></div><p style="color: var(--text-secondary); font-size: 13px;">লোড হচ্ছে...</p></div>`;
         
-        db.collection('users').doc(currentUser.uid).get()
-            .then(doc => {
-                if (doc.exists) {
-                    const data = doc.data();
-                    const passwords = data.passwords || [];
-                    
-                    if (passwords.length === 0) {
-                        list.innerHTML = `
-                            <div class="empty-state">
-                                <div class="icon"><i class="fas fa-inbox"></i></div>
-                                <h3>কোনো তথ্য নেই</h3>
-                                <p>"যোগ করুন" বাটনে ক্লিক করে পাসওয়ার্ড সেভ করুন</p>
+        database.ref('users/' + currentUser.uid + '/passwords').once('value')
+            .then(snapshot => {
+                const passwords = snapshot.val() || [];
+                
+                if (passwords.length === 0) {
+                    list.innerHTML = `
+                        <div class="empty-state">
+                            <div class="icon"><i class="fas fa-inbox"></i></div>
+                            <h3>কোনো তথ্য নেই</h3>
+                            <p>"যোগ করুন" বাটনে ক্লিক করে পাসওয়ার্ড সেভ করুন</p>
+                        </div>
+                    `;
+                } else {
+                    let html = '';
+                    passwords.forEach((item, index) => {
+                        if (!item) return;
+                        const isConfirmed = item.confirmed || false;
+                        const icon = getSiteIcon(item.site);
+                        const color = getSiteColor(item.site);
+                        
+                        html += `
+                            <div class="password-item">
+                                <div class="item-header">
+                                    <div class="site-name">
+                                        <div class="site-icon" style="background: ${color}">
+                                            ${icon}
+                                        </div>
+                                        ${item.site || 'নাম নেই'}
+                                        <span class="${isConfirmed ? 'badge-confirmed' : 'badge-pending'}">
+                                            ${isConfirmed ? '✅ কনফর্মড' : '⏳ পেন্ডিং'}
+                                        </span>
+                                    </div>
+                                    <button class="btn-delete" onclick="deletePassword(${index})">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                </div>
+                                <div class="item-details">
+                                    ${item.username ? `<div><span class="label">👤 ইউজারনেম</span><span class="value">${item.username}</span></div>` : ''}
+                                    ${item.email ? `<div><span class="label">📧 ইমেইল</span><span class="value">${item.email}</span></div>` : ''}
+                                    <div><span class="label">🔑 পাসওয়ার্ড</span><span class="value">${item.password || 'পাসওয়ার্ড নেই'}</span></div>
+                                </div>
+                                <div class="item-actions">
+                                    <button class="btn btn-copy" onclick="copyText('${(item.password || '').replace(/'/g, "\\'")}', this)">
+                                        <i class="fas fa-copy"></i> কপি পাসওয়ার্ড
+                                    </button>
+                                    ${item.email ? `<button class="btn btn-copy" onclick="copyText('${item.email.replace(/'/g, "\\'")}', this)">
+                                        <i class="fas fa-copy"></i> কপি ইমেইল
+                                    </button>` : ''}
+                                    ${item.username ? `<button class="btn btn-copy" onclick="copyText('${item.username.replace(/'/g, "\\'")}', this)">
+                                        <i class="fas fa-copy"></i> কপি ইউজারনেম
+                                    </button>` : ''}
+                                    <button class="btn btn-confirm ${isConfirmed ? 'confirmed' : ''}" onclick="confirmPassword(${index})">
+                                        <i class="fas fa-check"></i> ${isConfirmed ? 'কনফর্মড' : 'কনফর্ম করুন'}
+                                    </button>
+                                </div>
                             </div>
                         `;
-                    } else {
-                        let html = '';
-                        passwords.forEach((item, index) => {
-                            const isConfirmed = item.confirmed || false;
-                            const icon = getSiteIcon(item.site);
-                            const color = getSiteColor(item.site);
-                            
-                            html += `
-                                <div class="password-item">
-                                    <div class="item-header">
-                                        <div class="site-name">
-                                            <div class="site-icon" style="background: ${color}">
-                                                ${icon}
-                                            </div>
-                                            ${item.site || 'নাম নেই'}
-                                            <span class="${isConfirmed ? 'badge-confirmed' : 'badge-pending'}">
-                                                ${isConfirmed ? '✅ কনফর্মড' : '⏳ পেন্ডিং'}
-                                            </span>
-                                        </div>
-                                        <button class="btn-delete" onclick="deletePassword(${index})" style="background: rgba(239,68,68,0.15); color: var(--accent-red); border: none; padding: 4px 10px; border-radius: 6px; cursor: pointer; font-size: 12px;">
-                                            <i class="fas fa-trash-alt"></i>
-                                        </button>
-                                    </div>
-                                    <div class="item-details">
-                                        ${item.username ? `<div><span class="label">👤 ইউজারনেম</span><span class="value">${item.username}</span></div>` : ''}
-                                        ${item.email ? `<div><span class="label">📧 ইমেইল</span><span class="value">${item.email}</span></div>` : ''}
-                                        <div><span class="label">🔑 পাসওয়ার্ড</span><span class="value">${item.password || 'পাসওয়ার্ড নেই'}</span></div>
-                                    </div>
-                                    <div class="item-actions">
-                                        <button class="btn btn-copy" onclick="copyText('${item.password || ''}', this)">
-                                            <i class="fas fa-copy"></i> কপি পাসওয়ার্ড
-                                        </button>
-                                        ${item.email ? `<button class="btn btn-copy" onclick="copyText('${item.email}', this)">
-                                            <i class="fas fa-copy"></i> কপি ইমেইল
-                                        </button>` : ''}
-                                        ${item.username ? `<button class="btn btn-copy" onclick="copyText('${item.username}', this)">
-                                            <i class="fas fa-copy"></i> কপি ইউজারনেম
-                                        </button>` : ''}
-                                        <button class="btn btn-confirm ${isConfirmed ? 'confirmed' : ''}" onclick="confirmPassword(${index})">
-                                            <i class="fas fa-check"></i> ${isConfirmed ? 'কনফর্মড' : 'কনফর্ম করুন'}
-                                        </button>
-                                    </div>
-                                </div>
-                            `;
-                        });
-                        list.innerHTML = html;
-                    }
+                    });
+                    list.innerHTML = html;
                 }
             })
             .catch(err => {
-                list.innerHTML = `<div class="message message-error"><i class="fas fa-exclamation-circle"></i> ${err.message}</div>`;
+                if (err.message.includes('offline')) {
+                    list.innerHTML = `
+                        <div class="message message-error">
+                            <i class="fas fa-wifi"></i> 
+                            ⚠️ ইন্টারনেট সংযোগ নেই! ডেটা লোড করা যাচ্ছে না।
+                            <br><small style="display:block;margin-top:4px;">ইন্টারনেট চালু করে "রিফ্রেশ" বাটনে ক্লিক করুন।</small>
+                        </div>
+                    `;
+                } else {
+                    list.innerHTML = `<div class="message message-error"><i class="fas fa-exclamation-circle"></i> ${err.message}</div>`;
+                }
                 showToast('❌ ' + err.message, 'error');
             });
     }
@@ -1013,7 +1085,7 @@
             input.placeholder = 'সাইটের নাম';
         } else {
             input.value = '';
-            input.placeholder = 'সাইটের নাম (যদি অন্যান্য সিলেক্ট করেন)';
+            input.placeholder = 'সাইটের নাম';
         }
     }
 
@@ -1021,6 +1093,11 @@
     // ➕ SAVE PASSWORD
     // =============================================
     function savePassword() {
+        if (!navigator.onLine) {
+            showToast('⚠️ ইন্টারনেট সংযোগ প্রয়োজন!', 'error');
+            return;
+        }
+        
         const site = document.getElementById('siteName').value.trim();
         const username = document.getElementById('siteUsername').value.trim();
         const email = document.getElementById('siteEmail').value.trim();
@@ -1037,15 +1114,15 @@
             email: email,
             password: password,
             confirmed: false,
-            createdAt: new Date().toISOString()
+            createdAt: firebase.database.ServerValue.TIMESTAMP
         };
         
-        db.collection('users').doc(currentUser.uid).get()
-            .then(doc => {
-                const data = doc.data();
-                const passwords = data.passwords || [];
+        // প্রথমে বর্তমান পাসওয়ার্ড লিস্ট নিন
+        database.ref('users/' + currentUser.uid + '/passwords').once('value')
+            .then(snapshot => {
+                const passwords = snapshot.val() || [];
                 passwords.push(newEntry);
-                return db.collection('users').doc(currentUser.uid).update({ passwords: passwords });
+                return database.ref('users/' + currentUser.uid + '/passwords').set(passwords);
             })
             .then(() => {
                 showToast('✅ তথ্য সেভ হয়েছে!', 'success');
@@ -1066,13 +1143,17 @@
     // ✅ CONFIRM PASSWORD
     // =============================================
     function confirmPassword(index) {
-        db.collection('users').doc(currentUser.uid).get()
-            .then(doc => {
-                const data = doc.data();
-                const passwords = data.passwords || [];
+        if (!navigator.onLine) {
+            showToast('⚠️ ইন্টারনেট সংযোগ প্রয়োজন!', 'error');
+            return;
+        }
+        
+        database.ref('users/' + currentUser.uid + '/passwords').once('value')
+            .then(snapshot => {
+                const passwords = snapshot.val() || [];
                 if (passwords[index]) {
                     passwords[index].confirmed = !passwords[index].confirmed;
-                    return db.collection('users').doc(currentUser.uid).update({ passwords: passwords });
+                    return database.ref('users/' + currentUser.uid + '/passwords').set(passwords);
                 }
             })
             .then(() => {
@@ -1103,7 +1184,6 @@
                 btn.classList.remove('copied');
             }, 2000);
         }).catch(() => {
-            // Fallback
             const textarea = document.createElement('textarea');
             textarea.value = text;
             document.body.appendChild(textarea);
@@ -1118,14 +1198,17 @@
     // 🗑️ DELETE PASSWORD
     // =============================================
     function deletePassword(index) {
+        if (!navigator.onLine) {
+            showToast('⚠️ ইন্টারনেট সংযোগ প্রয়োজন!', 'error');
+            return;
+        }
         if (!confirm('আপনি কি এই তথ্য মুছতে চান?')) return;
         
-        db.collection('users').doc(currentUser.uid).get()
-            .then(doc => {
-                const data = doc.data();
-                const passwords = data.passwords || [];
+        database.ref('users/' + currentUser.uid + '/passwords').once('value')
+            .then(snapshot => {
+                const passwords = snapshot.val() || [];
                 passwords.splice(index, 1);
-                return db.collection('users').doc(currentUser.uid).update({ passwords: passwords });
+                return database.ref('users/' + currentUser.uid + '/passwords').set(passwords);
             })
             .then(() => {
                 loadPasswords();
@@ -1223,8 +1306,9 @@
     document.getElementById('loginPass').addEventListener('keypress', e => { if (e.key === 'Enter') login(); });
     document.getElementById('loginEmail').addEventListener('keypress', e => { if (e.key === 'Enter') login(); });
 
-    console.log('🚀 অ্যাপ রেডি!');
+    console.log('🚀 অ্যাপ রেডি! (Realtime Database)');
     console.log('📌 প্রজেক্ট:', firebaseConfig.projectId);
+    console.log('📌 Database URL:', firebaseConfig.databaseURL);
 </script>
 
 </body>
