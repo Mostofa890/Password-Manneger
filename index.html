@@ -1,49 +1,1224 @@
-// =============================================
-// ➕ SAVE PASSWORD (ফিক্সড)
-// =============================================
-function savePassword() {
-    const site = document.getElementById('siteName').value.trim();
-    const username = document.getElementById('siteUsername').value.trim();
-    const email = document.getElementById('siteEmail').value.trim();
-    const password = document.getElementById('sitePassword').value.trim();
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔐 সিকিউর পাসওয়ার্ড ম্যানেজার</title>
     
-    if (!site || !password) {
-        showToast('⚠️ সাইটের নাম এবং পাসওয়ার্ড দিন', 'error');
-        return;
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --bg-primary: #0a0e17;
+            --bg-secondary: #111827;
+            --bg-card: #1a2332;
+            --bg-input: #0f1729;
+            --border-color: #2a3a5c;
+            --text-primary: #e8edf5;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --accent-blue: #3b82f6;
+            --accent-green: #22c55e;
+            --accent-red: #ef4444;
+            --accent-purple: #8b5cf6;
+            --glow-blue: rgba(59, 130, 246, 0.3);
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 520px;
+            width: 100%;
+            background: var(--bg-secondary);
+            border-radius: 24px;
+            padding: 32px 28px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            max-height: 98vh;
+            overflow-y: auto;
+        }
+        
+        .container::-webkit-scrollbar { width: 4px; }
+        .container::-webkit-scrollbar-track { background: var(--bg-input); border-radius: 10px; }
+        .container::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 10px; }
+        
+        .hidden { display: none !important; }
+        
+        .app-header {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+        
+        .app-logo {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 68px;
+            height: 68px;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            border-radius: 18px;
+            font-size: 30px;
+            margin-bottom: 14px;
+            box-shadow: 0 4px 20px var(--glow-blue);
+        }
+        
+        .app-title {
+            font-size: 22px;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--text-primary), var(--text-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .app-subtitle {
+            color: var(--text-secondary);
+            font-size: 13px;
+            margin-top: 4px;
+        }
+        
+        .input-group {
+            position: relative;
+            margin-bottom: 14px;
+        }
+        
+        .input-group i {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 16px;
+        }
+        
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 12px 14px 12px 44px;
+            background: var(--bg-input);
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-size: 14px;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s;
+            appearance: none;
+        }
+        
+        .input-group select {
+            padding-right: 40px;
+            cursor: pointer;
+        }
+        
+        .input-group select option {
+            background: var(--bg-card);
+            color: var(--text-primary);
+        }
+        
+        .input-group input:focus, .input-group select:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 0 4px var(--glow-blue);
+        }
+        
+        .input-group .dropdown-arrow {
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            pointer-events: none;
+        }
+        
+        .btn {
+            width: 100%;
+            padding: 13px;
+            border: none;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            color: white;
+            box-shadow: 0 4px 16px var(--glow-blue);
+        }
+        
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 24px var(--glow-blue); }
+        
+        .btn-success {
+            background: linear-gradient(135deg, var(--accent-green), #059669);
+            color: white;
+        }
+        
+        .btn-success:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(34, 197, 94, 0.3); }
+        
+        .btn-danger {
+            background: linear-gradient(135deg, var(--accent-red), #b91c1c);
+            color: white;
+        }
+        
+        .btn-outline {
+            background: transparent;
+            color: var(--text-secondary);
+            border: 2px solid var(--border-color);
+        }
+        
+        .btn-outline:hover {
+            border-color: var(--text-secondary);
+            color: var(--text-primary);
+        }
+        
+        .btn-sm {
+            padding: 6px 14px;
+            font-size: 12px;
+            width: auto;
+        }
+        
+        .btn-copy {
+            background: rgba(59, 130, 246, 0.15);
+            color: var(--accent-blue);
+            border: none;
+            padding: 4px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .btn-copy:hover { background: rgba(59, 130, 246, 0.25); }
+        .btn-copy.copied { background: rgba(34, 197, 94, 0.2); color: var(--accent-green); }
+        
+        .card {
+            background: var(--bg-card);
+            border-radius: 14px;
+            padding: 20px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 14px;
+        }
+        
+        .pin-box {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin: 14px 0;
+        }
+        
+        .pin-box input {
+            width: 48px;
+            height: 56px;
+            text-align: center;
+            font-size: 26px;
+            font-weight: 700;
+            background: var(--bg-input);
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            color: var(--accent-blue);
+            padding: 0;
+            transition: all 0.3s;
+        }
+        
+        .pin-box input:focus {
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 0 4px var(--glow-blue);
+            outline: none;
+        }
+        
+        .pin-box input.filled {
+            border-color: var(--accent-green);
+            background: rgba(34, 197, 94, 0.05);
+        }
+        
+        .message {
+            padding: 10px 14px;
+            border-radius: 8px;
+            margin-top: 10px;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .message-error {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--accent-red);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+        
+        .message-success {
+            background: rgba(34, 197, 94, 0.1);
+            color: var(--accent-green);
+            border: 1px solid rgba(34, 197, 94, 0.2);
+        }
+        
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        
+        .dashboard-header h2 { font-size: 18px; font-weight: 700; }
+        
+        .dashboard-actions {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 14px;
+        }
+        
+        .dashboard-actions .btn {
+            flex: 1;
+            padding: 10px;
+            font-size: 13px;
+        }
+        
+        .password-item {
+            background: var(--bg-input);
+            padding: 14px 16px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s;
+        }
+        
+        .password-item:hover {
+            border-color: var(--accent-blue);
+            transform: translateX(4px);
+        }
+        
+        .password-item .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 6px;
+        }
+        
+        .password-item .site-name {
+            font-weight: 600;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .password-item .site-name .site-icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+        
+        .password-item .item-details {
+            color: var(--text-secondary);
+            font-size: 13px;
+        }
+        
+        .password-item .item-details > div {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 3px 0;
+        }
+        
+        .password-item .item-details .label {
+            color: var(--text-muted);
+            min-width: 65px;
+        }
+        
+        .password-item .item-details .value {
+            color: var(--text-primary);
+            word-break: break-all;
+            flex: 1;
+            margin: 0 8px;
+        }
+        
+        .password-item .item-actions {
+            display: flex;
+            gap: 6px;
+            margin-top: 8px;
+            flex-wrap: wrap;
+        }
+        
+        .password-item .item-actions .btn {
+            padding: 4px 12px;
+            font-size: 11px;
+            width: auto;
+            flex: 1;
+            min-width: 60px;
+        }
+        
+        .btn-delete {
+            background: rgba(239, 68, 68, 0.15);
+            color: var(--accent-red);
+            border: none;
+            padding: 4px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s;
+        }
+        
+        .btn-delete:hover { background: rgba(239, 68, 68, 0.25); }
+        
+        .btn-confirm {
+            background: rgba(34, 197, 94, 0.15);
+            color: var(--accent-green);
+            border: 1px solid rgba(34, 197, 94, 0.2);
+        }
+        
+        .btn-confirm:hover { background: rgba(34, 197, 94, 0.25); }
+        .btn-confirm.confirmed { background: rgba(34, 197, 94, 0.25); border-color: var(--accent-green); }
+        
+        .badge-confirmed {
+            display: inline-block;
+            background: rgba(34, 197, 94, 0.15);
+            color: var(--accent-green);
+            font-size: 10px;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-weight: 600;
+        }
+        
+        .badge-pending {
+            display: inline-block;
+            background: rgba(239, 68, 68, 0.15);
+            color: var(--accent-red);
+            font-size: 10px;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-weight: 600;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 30px 20px;
+        }
+        
+        .empty-state .icon { font-size: 48px; color: var(--text-muted); margin-bottom: 10px; }
+        .empty-state h3 { color: var(--text-secondary); font-weight: 500; font-size: 16px; }
+        .empty-state p { color: var(--text-muted); font-size: 13px; }
+        
+        .loading {
+            text-align: center;
+            padding: 30px 0;
+        }
+        
+        .spinner {
+            width: 36px;
+            height: 36px;
+            border: 4px solid var(--border-color);
+            border-top: 4px solid var(--accent-blue);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto 10px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            padding: 12px 22px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
+            z-index: 999;
+            opacity: 0;
+            transition: all 0.4s ease;
+            font-size: 13px;
+            font-weight: 500;
+            max-width: 90%;
+        }
+        
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+        
+        .toast i { margin-right: 8px; }
+        .toast-success i { color: var(--accent-green); }
+        .toast-error i { color: var(--accent-red); }
+        
+        @media (max-width: 520px) {
+            .container { padding: 20px 14px; border-radius: 16px; }
+            .pin-box { gap: 6px; }
+            .pin-box input { width: 40px; height: 48px; font-size: 22px; }
+            .dashboard-actions { flex-direction: column; }
+            .password-item .item-details > div { flex-wrap: wrap; }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .fade-in { animation: fadeIn 0.4s ease; }
+        
+        .offline-banner {
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            color: var(--accent-red);
+            padding: 10px 14px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 13px;
+            margin-bottom: 14px;
+            display: none;
+        }
+        
+        .offline-banner.show { display: block; }
+        
+        /* ফিল্ড ক্লিয়ার করার সময় অ্যানিমেশন */
+        .input-group input:not(:placeholder-shown) {
+            border-color: var(--accent-green);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container" id="app">
+    
+    <div id="offlineBanner" class="offline-banner">
+        <i class="fas fa-wifi"></i> ⚠️ ইন্টারনেট সংযোগ নেই। ডেটা সেভ হবে না।
+    </div>
+    
+    <div class="app-header">
+        <div class="app-logo"><i class="fas fa-shield-alt"></i></div>
+        <div class="app-title">সিকিউর পাস</div>
+        <div class="app-subtitle">আপনার সব পাসওয়ার্ড এক জায়গায়</div>
+    </div>
+    
+    <!-- ===== LOGIN ===== -->
+    <div id="loginSection" class="fade-in">
+        <div class="card">
+            <div class="input-group">
+                <i class="fas fa-envelope"></i>
+                <input type="email" id="loginEmail" placeholder="আপনার ইমেইল">
+            </div>
+            <div class="input-group">
+                <i class="fas fa-lock"></i>
+                <input type="password" id="loginPass" placeholder="পাসওয়ার্ড (৬+ অক্ষর)">
+            </div>
+            <button class="btn btn-primary" onclick="login()">
+                <i class="fas fa-sign-in-alt"></i> লগইন করুন
+            </button>
+            <button class="btn btn-outline" onclick="signup()" style="margin-top: 10px;">
+                <i class="fas fa-user-plus"></i> নতুন অ্যাকাউন্ট তৈরি করুন
+            </button>
+            <div id="loginMessage"></div>
+        </div>
+    </div>
+    
+    <!-- ===== PIN ===== -->
+    <div id="pinSection" class="hidden fade-in">
+        <div class="card">
+            <h3 style="text-align: center; margin-bottom: 4px;" id="pinTitle">🔑 সিকিউরিটি PIN</h3>
+            <p style="text-align: center; color: var(--text-secondary); font-size: 13px; margin-bottom: 14px;" id="pinSubtitle">
+                ৬ ডিজিটের PIN দিন
+            </p>
+            <div class="pin-box">
+                <input type="password" maxlength="1" class="pin-input" pattern="[0-9]">
+                <input type="password" maxlength="1" class="pin-input" pattern="[0-9]">
+                <input type="password" maxlength="1" class="pin-input" pattern="[0-9]">
+                <input type="password" maxlength="1" class="pin-input" pattern="[0-9]">
+                <input type="password" maxlength="1" class="pin-input" pattern="[0-9]">
+                <input type="password" maxlength="1" class="pin-input" pattern="[0-9]">
+            </div>
+            <button class="btn btn-success" onclick="verifyOrSetPin()">
+                <i class="fas fa-check-circle"></i> <span id="pinBtnText">যাচাই করুন</span>
+            </button>
+            <button class="btn btn-outline" onclick="logout()" style="margin-top: 10px;">
+                <i class="fas fa-arrow-left"></i> ফিরে যান
+            </button>
+            <div id="pinMessage"></div>
+        </div>
+    </div>
+    
+    <!-- ===== DASHBOARD ===== -->
+    <div id="dashboard" class="hidden fade-in">
+        <div class="dashboard-header">
+            <h2><i class="fas fa-folder-open" style="color: var(--accent-blue);"></i> আমার তথ্য</h2>
+            <button class="btn btn-danger btn-sm" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i>
+            </button>
+        </div>
+        
+        <div class="dashboard-actions">
+            <button class="btn btn-primary" onclick="showAddPassword()">
+                <i class="fas fa-plus-circle"></i> যোগ করুন
+            </button>
+            <button class="btn btn-outline" onclick="loadPasswords()">
+                <i class="fas fa-sync-alt"></i>
+            </button>
+        </div>
+        
+        <!-- ===== ADD PASSWORD ===== -->
+        <div id="addPasswordForm" class="hidden card">
+            <h4 style="margin-bottom: 12px; font-size: 16px;">
+                <i class="fas fa-key" style="color: var(--accent-green);"></i> নতুন তথ্য
+            </h4>
+            
+            <div class="input-group">
+                <i class="fas fa-globe"></i>
+                <select id="siteSelect" onchange="updateSiteInput()">
+                    <option value="">-- সাইট সিলেক্ট করুন --</option>
+                    <option value="Gmail">📧 Gmail</option>
+                    <option value="YouTube">▶️ YouTube</option>
+                    <option value="Facebook">📘 Facebook</option>
+                    <option value="Instagram">📸 Instagram</option>
+                    <option value="TikTok">🎵 TikTok</option>
+                    <option value="Twitter">🐦 Twitter</option>
+                    <option value="LinkedIn">💼 LinkedIn</option>
+                    <option value="GitHub">🐙 GitHub</option>
+                    <option value="Amazon">🛒 Amazon</option>
+                    <option value="Netflix">🎬 Netflix</option>
+                    <option value="Spotify">🎵 Spotify</option>
+                    <option value="Microsoft">💻 Microsoft</option>
+                    <option value="Google">🔍 Google</option>
+                    <option value="Apple">🍎 Apple</option>
+                    <option value="WhatsApp">📱 WhatsApp</option>
+                    <option value="Telegram">✈️ Telegram</option>
+                    <option value="Discord">🎮 Discord</option>
+                    <option value="Reddit">🤖 Reddit</option>
+                    <option value="Snapchat">👻 Snapchat</option>
+                    <option value="Pinterest">📌 Pinterest</option>
+                    <option value="Other">🔗 অন্যান্য</option>
+                </select>
+                <i class="fas fa-chevron-down dropdown-arrow"></i>
+            </div>
+            
+            <div class="input-group">
+                <i class="fas fa-globe"></i>
+                <input type="text" id="siteName" placeholder="সাইটের নাম">
+            </div>
+            
+            <div class="input-group">
+                <i class="fas fa-user"></i>
+                <input type="text" id="siteUsername" placeholder="ইউজারনেম / আইডি">
+            </div>
+            
+            <div class="input-group">
+                <i class="fas fa-envelope"></i>
+                <input type="text" id="siteEmail" placeholder="ইমেইল">
+            </div>
+            
+            <div class="input-group">
+                <i class="fas fa-key"></i>
+                <input type="text" id="sitePassword" placeholder="পাসওয়ার্ড">
+            </div>
+            
+            <button class="btn btn-success" onclick="savePassword()">
+                <i class="fas fa-save"></i> সংরক্ষণ করুন
+            </button>
+            <button class="btn btn-outline" onclick="hideAddPassword()" style="margin-top: 8px;">
+                <i class="fas fa-times"></i> বাতিল করুন
+            </button>
+        </div>
+        
+        <!-- ===== PASSWORD LIST ===== -->
+        <div id="passwordList">
+            <div class="loading">
+                <div class="spinner"></div>
+                <p style="color: var(--text-secondary); font-size: 13px;">লোড হচ্ছে...</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ===== TOAST ===== -->
+<div id="toast" class="toast"></div>
+
+<!-- ===== FIREBASE SDK ===== -->
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+
+<script>
+    // =============================================
+    // 🔥 FIREBASE CONFIG
+    // =============================================
+    const firebaseConfig = {
+        apiKey: "AIzaSyCh8ncjWU3GB_INfO0DYy7NXC4ECVTuMew",
+        authDomain: "telecom-700bd.firebaseapp.com",
+        databaseURL: "https://telecom-700bd-default-rtdb.firebaseio.com",
+        projectId: "telecom-700bd",
+        storageBucket: "telecom-700bd.appspot.com",
+        messagingSenderId: "804125173821",
+        appId: "1:804125173821:android:fe97178bed5877b8222254"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.database();
+
+    // =============================================
+    // 📌 STATE
+    // =============================================
+    let currentUser = null;
+    let isPinSet = false;
+    let pinVerified = false;
+
+    // =============================================
+    // 🔐 AUTH STATE
+    // =============================================
+    auth.onAuthStateChanged(user => {
+        console.log('Auth:', user ? '✅ Logged In' : '❌ Logged Out');
+        if (user) {
+            currentUser = user;
+            document.getElementById('loginSection').classList.add('hidden');
+            document.getElementById('pinSection').classList.remove('hidden');
+            document.getElementById('dashboard').classList.add('hidden');
+            checkPinStatus();
+            showToast('✅ লগইন সফল!', 'success');
+        } else {
+            currentUser = null;
+            document.getElementById('loginSection').classList.remove('hidden');
+            document.getElementById('pinSection').classList.add('hidden');
+            document.getElementById('dashboard').classList.add('hidden');
+            pinVerified = false;
+            resetPinInputs();
+        }
+    });
+
+    // =============================================
+    // 📝 LOGIN
+    // =============================================
+    function login() {
+        const email = document.getElementById('loginEmail').value.trim();
+        const pass = document.getElementById('loginPass').value.trim();
+        const msgDiv = document.getElementById('loginMessage');
+        
+        if (!email || !pass) {
+            showMessage(msgDiv, '⚠️ ইমেইল এবং পাসওয়ার্ড দিন', 'error');
+            return;
+        }
+        
+        showMessage(msgDiv, '⏳ লগইন হচ্ছে...', 'success');
+        
+        auth.signInWithEmailAndPassword(email, pass)
+            .then(() => {
+                showMessage(msgDiv, '✅ লগইন সফল!', 'success');
+            })
+            .catch(err => {
+                let msg = err.message;
+                if (err.code === 'auth/user-not-found') msg = '❌ এই ইমেইলে কোনো অ্যাকাউন্ট নেই।';
+                else if (err.code === 'auth/wrong-password') msg = '❌ ভুল পাসওয়ার্ড!';
+                else if (err.code === 'auth/invalid-email') msg = '❌ সঠিক ইমেইল ঠিকানা দিন';
+                else if (err.code === 'auth/network-request-failed') msg = '❌ ইন্টারনেট সংযোগ নেই!';
+                showMessage(msgDiv, msg, 'error');
+                showToast(msg, 'error');
+            });
+    }
+
+    // =============================================
+    // 📝 SIGNUP
+    // =============================================
+    function signup() {
+        const email = document.getElementById('loginEmail').value.trim();
+        const pass = document.getElementById('loginPass').value.trim();
+        const msgDiv = document.getElementById('loginMessage');
+        
+        if (!email || !pass) {
+            showMessage(msgDiv, '⚠️ ইমেইল এবং পাসওয়ার্ড দিন', 'error');
+            return;
+        }
+        if (pass.length < 6) {
+            showMessage(msgDiv, '⚠️ পাসওয়ার্ড কমপক্ষে ৬ অক্ষরের হতে হবে', 'error');
+            return;
+        }
+        
+        showMessage(msgDiv, '⏳ অ্যাকাউন্ট তৈরি হচ্ছে...', 'success');
+        
+        auth.createUserWithEmailAndPassword(email, pass)
+            .then((userCredential) => {
+                const uid = userCredential.user.uid;
+                return db.ref('users/' + uid).set({
+                    email: email,
+                    pin: '',
+                    passwords: [],
+                    createdAt: firebase.database.ServerValue.TIMESTAMP
+                });
+            })
+            .then(() => {
+                showMessage(msgDiv, '✅ অ্যাকাউন্ট তৈরি হয়েছে! এখন PIN সেট করুন।', 'success');
+                showToast('✅ অ্যাকাউন্ট তৈরি হয়েছে!', 'success');
+            })
+            .catch(err => {
+                let msg = err.message;
+                if (err.code === 'auth/email-already-in-use') msg = '❌ এই ইমেইল ইতিমধ্যে ব্যবহার করা হয়েছে।';
+                else if (err.code === 'auth/invalid-email') msg = '❌ সঠিক ইমেইল ঠিকানা দিন';
+                else if (err.code === 'auth/weak-password') msg = '❌ পাসওয়ার্ড খুব সহজ। ৬+ অক্ষর দিন।';
+                else if (err.code === 'auth/network-request-failed') msg = '❌ ইন্টারনেট সংযোগ নেই!';
+                showMessage(msgDiv, msg, 'error');
+                showToast(msg, 'error');
+            });
+    }
+
+    // =============================================
+    // 🔑 CHECK PIN
+    // =============================================
+    function checkPinStatus() {
+        if (!currentUser) return;
+        
+        db.ref('users/' + currentUser.uid + '/pin').once('value')
+            .then(snapshot => {
+                const pin = snapshot.val();
+                if (pin && pin.length === 6) {
+                    isPinSet = true;
+                    document.getElementById('pinTitle').textContent = '🔑 PIN দিন';
+                    document.getElementById('pinSubtitle').textContent = 'আপনার ৬ ডিজিটের PIN দিন';
+                    document.getElementById('pinBtnText').textContent = 'যাচাই করুন';
+                } else {
+                    isPinSet = false;
+                    document.getElementById('pinTitle').textContent = '🔑 নতুন PIN সেট করুন';
+                    document.getElementById('pinSubtitle').textContent = '৬ ডিজিটের PIN সেট করুন';
+                    document.getElementById('pinBtnText').textContent = 'PIN সেট করুন';
+                }
+            })
+            .catch(err => {
+                console.error('PIN Check Error:', err);
+                showToast('❌ ডেটাবেস সমস্যা: ' + err.message, 'error');
+            });
+    }
+
+    // =============================================
+    // ✅ VERIFY / SET PIN
+    // =============================================
+    function verifyOrSetPin() {
+        const inputs = document.querySelectorAll('.pin-input');
+        let pin = '';
+        inputs.forEach(inp => pin += inp.value);
+        const msgDiv = document.getElementById('pinMessage');
+        
+        if (pin.length !== 6) {
+            showMessage(msgDiv, '⚠️ ৬ ডিজিটের PIN দিন', 'error');
+            return;
+        }
+        if (!/^\d{6}$/.test(pin)) {
+            showMessage(msgDiv, '⚠️ শুধুমাত্র সংখ্যা ব্যবহার করুন (0-9)', 'error');
+            return;
+        }
+        
+        showMessage(msgDiv, '⏳ যাচাই হচ্ছে...', 'success');
+        
+        if (!isPinSet) {
+            db.ref('users/' + currentUser.uid + '/pin').set(pin)
+                .then(() => {
+                    showMessage(msgDiv, '✅ PIN সেট হয়েছে!', 'success');
+                    isPinSet = true;
+                    pinVerified = true;
+                    showToast('✅ PIN সেট হয়েছে!', 'success');
+                    setTimeout(() => enterDashboard(), 500);
+                })
+                .catch(err => {
+                    showMessage(msgDiv, '❌ ' + err.message, 'error');
+                    showToast('❌ ' + err.message, 'error');
+                });
+        } else {
+            db.ref('users/' + currentUser.uid + '/pin').once('value')
+                .then(snapshot => {
+                    if (snapshot.val() === pin) {
+                        showMessage(msgDiv, '✅ PIN সঠিক!', 'success');
+                        pinVerified = true;
+                        showToast('✅ PIN সঠিক!', 'success');
+                        setTimeout(() => enterDashboard(), 500);
+                    } else {
+                        showMessage(msgDiv, '❌ ভুল PIN! আবার চেষ্টা করুন।', 'error');
+                        inputs.forEach(inp => { inp.value = ''; inp.classList.remove('filled'); });
+                        inputs[0].focus();
+                        showToast('❌ ভুল PIN!', 'error');
+                    }
+                })
+                .catch(err => {
+                    showMessage(msgDiv, '❌ ' + err.message, 'error');
+                    showToast('❌ ' + err.message, 'error');
+                });
+        }
+    }
+
+    // =============================================
+    // 📊 ENTER DASHBOARD
+    // =============================================
+    function enterDashboard() {
+        if (!pinVerified) {
+            showMessage(document.getElementById('pinMessage'), '⚠️ প্রথমে PIN যাচাই করুন', 'error');
+            return;
+        }
+        document.getElementById('pinSection').classList.add('hidden');
+        document.getElementById('dashboard').classList.remove('hidden');
+        loadPasswords();
+    }
+
+    // =============================================
+    // 📂 LOAD PASSWORDS
+    // =============================================
+    function loadPasswords() {
+        if (!currentUser) return;
+        
+        const list = document.getElementById('passwordList');
+        list.innerHTML = `<div class="loading"><div class="spinner"></div><p style="color: var(--text-secondary); font-size: 13px;">লোড হচ্ছে...</p></div>`;
+        
+        db.ref('users/' + currentUser.uid + '/passwords').once('value')
+            .then(snapshot => {
+                const passwords = snapshot.val() || [];
+                
+                if (!passwords || passwords.length === 0) {
+                    list.innerHTML = `
+                        <div class="empty-state">
+                            <div class="icon"><i class="fas fa-inbox"></i></div>
+                            <h3>কোনো তথ্য নেই</h3>
+                            <p>"যোগ করুন" বাটনে ক্লিক করে পাসওয়ার্ড সেভ করুন</p>
+                        </div>
+                    `;
+                } else {
+                    let html = '';
+                    passwords.forEach((item, index) => {
+                        if (!item) return;
+                        const isConfirmed = item.confirmed || false;
+                        const icon = getSiteIcon(item.site);
+                        const color = getSiteColor(item.site);
+                        
+                        const siteName = (item.site || 'নাম নেই').replace(/'/g, "\\'");
+                        const username = (item.username || '').replace(/'/g, "\\'");
+                        const email = (item.email || '').replace(/'/g, "\\'");
+                        const password = (item.password || '').replace(/'/g, "\\'");
+                        
+                        html += `
+                            <div class="password-item">
+                                <div class="item-header">
+                                    <div class="site-name">
+                                        <div class="site-icon" style="background: ${color}">
+                                            ${icon}
+                                        </div>
+                                        ${item.site || 'নাম নেই'}
+                                        <span class="${isConfirmed ? 'badge-confirmed' : 'badge-pending'}">
+                                            ${isConfirmed ? '✅ কনফর্মড' : '⏳ পেন্ডিং'}
+                                        </span>
+                                    </div>
+                                    <button class="btn-delete" onclick="deletePassword(${index})">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                </div>
+                                <div class="item-details">
+                                    ${item.username ? `<div><span class="label">👤 ইউজারনেম</span><span class="value">${item.username}</span></div>` : ''}
+                                    ${item.email ? `<div><span class="label">📧 ইমেইল</span><span class="value">${item.email}</span></div>` : ''}
+                                    <div><span class="label">🔑 পাসওয়ার্ড</span><span class="value">${item.password || 'পাসওয়ার্ড নেই'}</span></div>
+                                </div>
+                                <div class="item-actions">
+                                    <button class="btn btn-copy" onclick="copyText('${password}', this)">
+                                        <i class="fas fa-copy"></i> কপি পাসওয়ার্ড
+                                    </button>
+                                    ${item.email ? `<button class="btn btn-copy" onclick="copyText('${email}', this)">
+                                        <i class="fas fa-copy"></i> কপি ইমেইল
+                                    </button>` : ''}
+                                    ${item.username ? `<button class="btn btn-copy" onclick="copyText('${username}', this)">
+                                        <i class="fas fa-copy"></i> কপি ইউজারনেম
+                                    </button>` : ''}
+                                    <button class="btn btn-confirm ${isConfirmed ? 'confirmed' : ''}" onclick="confirmPassword(${index})">
+                                        <i class="fas fa-check"></i> ${isConfirmed ? 'কনফর্মড' : 'কনফর্ম করুন'}
+                                    </button>
+                                </div>
+                            </div>
+                        `;
+                    });
+                    list.innerHTML = html;
+                }
+            })
+            .catch(err => {
+                list.innerHTML = `<div class="message message-error"><i class="fas fa-exclamation-circle"></i> ${err.message}</div>`;
+                showToast('❌ ' + err.message, 'error');
+            });
+    }
+
+    // =============================================
+    // 🎨 SITE ICON & COLOR
+    // =============================================
+    function getSiteIcon(site) {
+        const icons = {
+            'Gmail': '📧', 'YouTube': '▶️', 'Facebook': '📘', 'Instagram': '📸',
+            'TikTok': '🎵', 'Twitter': '🐦', 'LinkedIn': '💼', 'GitHub': '🐙',
+            'Amazon': '🛒', 'Netflix': '🎬', 'Spotify': '🎵', 'Microsoft': '💻',
+            'Google': '🔍', 'Apple': '🍎', 'WhatsApp': '📱', 'Telegram': '✈️',
+            'Discord': '🎮', 'Reddit': '🤖', 'Snapchat': '👻', 'Pinterest': '📌'
+        };
+        return icons[site] || '🔗';
+    }
+
+    function getSiteColor(site) {
+        const colors = {
+            'Gmail': '#ea4335', 'YouTube': '#ff0000', 'Facebook': '#1877f2',
+            'Instagram': '#e4405f', 'TikTok': '#000000', 'Twitter': '#1da1f2',
+            'LinkedIn': '#0a66c2', 'GitHub': '#333', 'Amazon': '#ff9900',
+            'Netflix': '#e50914', 'Spotify': '#1db954', 'Microsoft': '#00a4ef',
+            'Google': '#4285f4', 'Apple': '#555', 'WhatsApp': '#25d366',
+            'Telegram': '#0088cc', 'Discord': '#5865f2', 'Reddit': '#ff4500',
+            'Snapchat': '#fffc00', 'Pinterest': '#e60023'
+        };
+        return colors[site] || '#6b7280';
+    }
+
+    // =============================================
+    // 📝 UPDATE SITE INPUT
+    // =============================================
+    function updateSiteInput() {
+        const select = document.getElementById('siteSelect');
+        const input = document.getElementById('siteName');
+        if (select.value === 'Other') {
+            input.value = '';
+            input.placeholder = 'সাইটের নাম লিখুন';
+        } else if (select.value) {
+            input.value = select.value;
+            input.placeholder = 'সাইটের নাম';
+        } else {
+            input.value = '';
+            input.placeholder = 'সাইটের নাম';
+        }
+    }
+
+    // =============================================
+    // ➕ SAVE PASSWORD (ফিক্সড - ফিল্ড ক্লিয়ার হবে)
+    // =============================================
+    function savePassword() {
+        const site = document.getElementById('siteName').value.trim();
+        const username = document.getElementById('siteUsername').value.trim();
+        const email = document.getElementById('siteEmail').value.trim();
+        const password = document.getElementById('sitePassword').value.trim();
+        
+        if (!site || !password) {
+            showToast('⚠️ সাইটের নাম এবং পাসওয়ার্ড দিন', 'error');
+            return;
+        }
+        
+        const newEntry = {
+            site: site,
+            username: username,
+            email: email,
+            password: password,
+            confirmed: false,
+            createdAt: firebase.database.ServerValue.TIMESTAMP
+        };
+        
+        db.ref('users/' + currentUser.uid + '/passwords').once('value')
+            .then(snapshot => {
+                const passwords = snapshot.val() || [];
+                passwords.push(newEntry);
+                return db.ref('users/' + currentUser.uid + '/passwords').set(passwords);
+            })
+            .then(() => {
+                showToast('✅ তথ্য সেভ হয়েছে!', 'success');
+                
+                // ===== সব ফিল্ড ক্লিয়ার =====
+                document.getElementById('siteSelect').value = '';
+                document.getElementById('siteName').value = '';
+                document.getElementById('siteUsername').value = '';
+                document.getElementById('siteEmail').value = '';
+                document.getElementById('sitePassword').value = '';
+                
+                // ===== ফর্ম হাইড =====
+                document.getElementById('addPasswordForm').classList.add('hidden');
+                
+                // ===== লিস্ট রিফ্রেশ =====
+                loadPasswords();
+            })
+            .catch(err => {
+                showToast('❌ সেভ করতে সমস্যা: ' + err.message, 'error');
+            });
+    }
+
+    // =============================================
+    // ✅ CONFIRM PASSWORD
+    // =============================================
+    function confirmPassword(index) {
+        db.ref('users/' + currentUser.uid + '/passwords').once('value')
+            .then(snapshot => {
+                const passwords = snapshot.val() || [];
+                if (passwords[index]) {
+                    passwords[index].confirmed = !passwords[index].confirmed;
+                    return db.ref('users/' + currentUser.uid + '/passwords').set(passwords);
+                }
+            })
+            .then(() => {
+                loadPasswords();
+                showToast('✅ স্ট্যাটাস আপডেট হয়েছে!', 'success');
+            })
+            .catch(err => {
+                showToast('❌ আপডেট করতে সমস্যা: ' + err.message, 'error');
+            });
+    }
+
+    // =============================================
+    // 📋 COPY TEXT
+    // =============================================
+    function copyText(text, btn) {
+        if (!text) {
+            showToast('⚠️ কপি করার মতো কিছু নেই', 'error');
+            return;
+        }
+        
+        navigator.clipboard.writeText(text).then(() => {
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-check"></i> কপি হয়েছে!';
+            btn.classList.add('copied');
+            showToast('✅ কপি হয়েছে!', 'success');
+            setTimeout(() => {
+                btn.innerHTML = originalText;
+                btn.classList.remove('copied');
+            }, 2000);
+        }).catch(() => {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+            showToast('✅ কপি হয়েছে!', 'success');
+        });
+    }
+
+    // =============================================
+    // 🗑️ DELETE PASSWORD
+    // =============================================
+    function deletePassword(index) {
+        if (!confirm('আপনি কি এই তথ্য মুছতে চান?')) return;
+        
+        db.ref('users/' + currentUser.uid + '/passwords').once('value')
+            .then(snapshot => {
+                const passwords = snapshot.val() || [];
+                passwords.splice(index, 1);
+                return db.ref('users/' + currentUser.uid + '/passwords').set(passwords);
+            })
+            .then(() => {
+                loadPasswords();
+                showToast('✅ মুছে ফেলা হয়েছে!', 'success');
+            })
+            .catch(err => {
+                showToast('❌ মুছতে সমস্যা: ' + err.message, 'error');
+            });
+    }
+
+    // =============================================
+    // 📝 ADD FORM SHOW/HIDE
+    // =============================================
+    function showAddPassword() {
+        document.getElementById('addPasswordForm').classList.remove('hidden');
     }
     
-    const newEntry = {
-        site: site,
-        username: username,
-        email: email,
-        password: password,
-        confirmed: false,
-        createdAt: firebase.database.ServerValue.TIMESTAMP
-    };
-    
-    db.ref('users/' + currentUser.uid + '/passwords').once('value')
-        .then(snapshot => {
-            const passwords = snapshot.val() || [];
-            passwords.push(newEntry);
-            return db.ref('users/' + currentUser.uid + '/passwords').set(passwords);
-        })
-        .then(() => {
-            showToast('✅ তথ্য সেভ হয়েছে!', 'success');
-            
-            // ===== ফিল্ড ক্লিয়ার =====
-            document.getElementById('siteSelect').value = '';
-            document.getElementById('siteName').value = '';
-            document.getElementById('siteUsername').value = '';
-            document.getElementById('siteEmail').value = '';
-            document.getElementById('sitePassword').value = '';
-            
-            // ===== ফর্ম হাইড =====
-            document.getElementById('addPasswordForm').classList.add('hidden');
-            
-            // ===== লিস্ট রিফ্রেশ =====
-            loadPasswords();
-        })
-        .catch(err => {
-            showToast('❌ সেভ করতে সমস্যা: ' + err.message, 'error');
+    function hideAddPassword() {
+        document.getElementById('addPasswordForm').classList.add('hidden');
+        // ফর্ম হাইড করার সময় ফিল্ড ক্লিয়ার করুন
+        document.getElementById('siteSelect').value = '';
+        document.getElementById('siteName').value = '';
+        document.getElementById('siteUsername').value = '';
+        document.getElementById('siteEmail').value = '';
+        document.getElementById('sitePassword').value = '';
+    }
+
+    // =============================================
+    // 🚪 LOGOUT
+    // =============================================
+    function logout() {
+        if (confirm('আপনি কি লগআউট করতে চান?')) {
+            pinVerified = false;
+            auth.signOut();
+            resetPinInputs();
+            document.getElementById('loginEmail').value = '';
+            document.getElementById('loginPass').value = '';
+            document.getElementById('loginMessage').innerHTML = '';
+            document.getElementById('pinMessage').innerHTML = '';
+            showToast('👋 লগআউট হয়েছে', 'success');
+        }
+    }
+
+    // =============================================
+    // 🔄 RESET PIN INPUTS
+    // =============================================
+    function resetPinInputs() {
+        document.querySelectorAll('.pin-input').forEach(inp => {
+            inp.value = '';
+            inp.classList.remove('filled');
         });
-}
+    }
+
+    // =============================================
+    // 📢 MESSAGE HELPER
+    // =============================================
+    function showMessage(div, text, type) {
+        const className = type === 'error' ? 'message-error' : 'message-success';
+        const icon = type === 'error' ? 'fa-exclamation-circle' : 'fa-check-circle';
+        div.innerHTML = `<div class="message ${className}"><i class="fas ${icon}"></i> ${text}</div>`;
+    }
+
+    // =============================================
+    // 📢 TOAST
+    // =============================================
+    function showToast(msg, type = 'info') {
+        const toast = document.getElementById('toast');
+        const icon = type === 'error' ? 'fa-exclamation-circle' : type === 'success' ? 'fa-check-circle' : 'fa-info-circle';
+        toast.innerHTML = `<i class="fas ${icon}"></i> ${msg}`;
+        toast.className = `toast show toast-${type}`;
+        clearTimeout(toast._timeout);
+        toast._timeout = setTimeout(() => toast.classList.remove('show'), 3500);
+    }
+
+    // =============================================
+    // ⌨️ PIN INPUT AUTO-FOCUS
+    // =============================================
+    document.querySelectorAll('.pin-input').forEach((inp, idx, arr) => {
+        inp.addEventListener('input', function() {
+            this.value = this.value.replace(/[^0-9]/g, '');
+            if (this.value.length === 1) {
+                this.classList.add('filled');
+                if (idx < 5) arr[idx + 1].focus();
+            } else {
+                this.classList.remove('filled');
+            }
+        });
+        inp.addEventListener('keydown', function(e) {
+            if (e.key === 'Backspace' && idx > 0 && !this.value) {
+                arr[idx - 1].focus();
+                arr[idx - 1].value = '';
+                arr[idx - 1].classList.remove('filled');
+            }
+            if (e.key === 'Enter') verifyOrSetPin();
+        });
+    });
+
+    // =============================================
+    // ⌨️ ENTER KEY SUPPORT
+    // =============================================
+    document.getElementById('loginPass').addEventListener('keypress', e => { if (e.key === 'Enter') login(); });
+    document.getElementById('loginEmail').addEventListener('keypress', e => { if (e.key === 'Enter') login(); });
+
+    console.log('🚀 অ্যাপ রেডি! (Realtime Database)');
+    console.log('📌 প্রজেক্ট:', firebaseConfig.projectId);
+    console.log('📌 Database URL:', firebaseConfig.databaseURL);
+</script>
+
+</body>
+</html>
