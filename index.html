@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     
     <style>
-        /* ===== আগের সব স্টাইল একই থাকবে ===== */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         :root {
@@ -83,7 +82,6 @@
         
         .hidden { display: none !important; }
         
-        /* ===== HEADER ===== */
         .app-header {
             text-align: center;
             margin-bottom: 28px;
@@ -126,7 +124,6 @@
             letter-spacing: 0.3px;
         }
         
-        /* ===== INPUTS ===== */
         .input-group {
             position: relative;
             margin-bottom: 14px;
@@ -191,7 +188,6 @@
             font-size: 12px;
         }
         
-        /* ===== BUTTONS ===== */
         .btn {
             width: 100%;
             padding: 14px;
@@ -295,7 +291,6 @@
             border-color: rgba(34, 197, 94, 0.2);
         }
         
-        /* ===== CARD ===== */
         .card {
             background: var(--glass-bg);
             border-radius: 16px;
@@ -310,7 +305,6 @@
             border-color: rgba(59, 130, 246, 0.1);
         }
         
-        /* ===== PIN INPUT ===== */
         .pin-box {
             display: flex;
             gap: 10px;
@@ -346,7 +340,6 @@
             box-shadow: 0 0 20px rgba(34, 197, 94, 0.1);
         }
         
-        /* ===== MESSAGES ===== */
         .message {
             padding: 12px 16px;
             border-radius: 10px;
@@ -375,7 +368,6 @@
             border: 1px solid rgba(34, 197, 94, 0.15);
         }
         
-        /* ===== DASHBOARD ===== */
         .dashboard-header {
             display: flex;
             justify-content: space-between;
@@ -404,9 +396,6 @@
             border-radius: 10px;
         }
         
-        /* ============================================ */
-        /* ===== PASSWORD ITEM ===== */
-        /* ============================================ */
         .password-item {
             background: var(--bg-input);
             padding: 16px 18px;
@@ -560,7 +549,6 @@
             box-shadow: 0 0 20px rgba(34, 197, 94, 0.1);
         }
         
-        /* ===== BADGES ===== */
         .badge-confirmed {
             display: inline-flex;
             align-items: center;
@@ -589,7 +577,6 @@
             letter-spacing: 0.3px;
         }
         
-        /* ===== EMPTY STATE ===== */
         .empty-state {
             text-align: center;
             padding: 40px 20px;
@@ -619,7 +606,6 @@
             font-size: 13px;
         }
         
-        /* ===== LOADING ===== */
         .loading {
             text-align: center;
             padding: 30px 0;
@@ -640,7 +626,6 @@
             100% { transform: rotate(360deg); }
         }
         
-        /* ===== TOAST ===== */
         .toast {
             position: fixed;
             bottom: 30px;
@@ -674,7 +659,6 @@
         .toast-error i { color: var(--accent-red); }
         .toast-info i { color: var(--accent-blue); }
         
-        /* ===== RESPONSIVE ===== */
         @media (max-width: 520px) {
             .container { padding: 20px 14px; border-radius: 20px; }
             .pin-box { gap: 6px; }
@@ -723,7 +707,6 @@
             background: rgba(15, 23, 41, 0.9);
         }
         
-        /* কালারফুল বর্ডার */
         .password-item[data-color="blue"]::before { background: linear-gradient(180deg, #3b82f6, #60a5fa); }
         .password-item[data-color="purple"]::before { background: linear-gradient(180deg, #8b5cf6, #a78bfa); }
         .password-item[data-color="pink"]::before { background: linear-gradient(180deg, #ec4899, #f472b6); }
@@ -812,7 +795,7 @@
             </button>
         </div>
         
-        <!-- ===== ADD PASSWORD (ফোন নাম্বার যোগ করা হয়েছে) ===== -->
+        <!-- ===== ADD PASSWORD ===== -->
         <div id="addPasswordForm" class="hidden card">
             <h4 style="margin-bottom: 14px; font-size: 16px; font-weight: 700;">
                 <i class="fas fa-key" style="color: var(--accent-green);"></i> নতুন তথ্য যোগ করুন
@@ -857,7 +840,6 @@
                 <input type="text" id="siteUsername" placeholder="ইউজারনেম / আইডি">
             </div>
             
-            <!-- ===== ফোন নাম্বার ফিল্ড (অপশনাল) ===== -->
             <div class="input-group">
                 <i class="fas fa-phone"></i>
                 <input type="tel" id="sitePhone" placeholder="📱 ফোন নাম্বার (ঐচ্ছিক)">
@@ -1001,7 +983,7 @@
                 return db.ref('users/' + uid).set({
                     email: email,
                     pin: '',
-                    passwords: [],
+                    passwords: {}, // ← খালি অবজেক্ট (অবজেক্ট হিসেবে)
                     createdAt: firebase.database.ServerValue.TIMESTAMP
                 });
             })
@@ -1116,7 +1098,7 @@
     }
 
     // =============================================
-    // 📂 LOAD PASSWORDS
+    // 📂 LOAD PASSWORDS (push কী দিয়ে লোড)
     // =============================================
     function loadPasswords() {
         if (!currentUser) return;
@@ -1126,9 +1108,9 @@
         
         db.ref('users/' + currentUser.uid + '/passwords').once('value')
             .then(snapshot => {
-                const passwords = snapshot.val() || [];
+                const data = snapshot.val();
                 
-                if (!passwords || passwords.length === 0) {
+                if (!data) {
                     list.innerHTML = `
                         <div class="empty-state">
                             <span class="icon">🔐</span>
@@ -1136,82 +1118,93 @@
                             <p>"যোগ করুন" বাটনে ক্লিক করে পাসওয়ার্ড সেভ করুন</p>
                         </div>
                     `;
-                } else {
-                    let html = '';
-                    passwords.forEach((item, index) => {
-                        if (!item) return;
-                        const isConfirmed = item.confirmed || false;
-                        const icon = getSiteIcon(item.site);
-                        const color = getSiteColor(item.site);
-                        const colorClass = getColorClass(item.site);
-                        
-                        const siteName = (item.site || 'নাম নেই').replace(/'/g, "\\'");
-                        const username = (item.username || '').replace(/'/g, "\\'");
-                        const phone = (item.phone || '').replace(/'/g, "\\'");
-                        const email = (item.email || '').replace(/'/g, "\\'");
-                        const password = (item.password || '').replace(/'/g, "\\'");
-                        
-                        html += `
-                            <div class="password-item fade-in" data-color="${colorClass}">
-                                <div class="item-header">
-                                    <div class="site-name">
-                                        <div class="site-icon" style="background: ${color}">
-                                            ${icon}
-                                        </div>
-                                        ${item.site || 'নাম নেই'}
-                                        <span class="${isConfirmed ? 'badge-confirmed' : 'badge-pending'}">
-                                            <i class="fas ${isConfirmed ? 'fa-check-circle' : 'fa-clock'}"></i>
-                                            ${isConfirmed ? 'কনফর্মড' : 'পেন্ডিং'}
-                                        </span>
+                    return;
+                }
+                
+                // অবজেক্ট থেকে অ্যারে তৈরি
+                const keys = Object.keys(data);
+                
+                if (keys.length === 0) {
+                    list.innerHTML = `
+                        <div class="empty-state">
+                            <span class="icon">🔐</span>
+                            <h3>কোনো তথ্য নেই</h3>
+                            <p>"যোগ করুন" বাটনে ক্লিক করে পাসওয়ার্ড সেভ করুন</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                let html = '';
+                keys.forEach((key, index) => {
+                    const item = data[key];
+                    if (!item) return;
+                    
+                    const isConfirmed = item.confirmed || false;
+                    const icon = getSiteIcon(item.site);
+                    const color = getSiteColor(item.site);
+                    const colorClass = getColorClass(item.site);
+                    
+                    html += `
+                        <div class="password-item fade-in" data-color="${colorClass}">
+                            <div class="item-header">
+                                <div class="site-name">
+                                    <div class="site-icon" style="background: ${color}">
+                                        ${icon}
                                     </div>
-                                    <button class="btn-delete" onclick="deletePassword(${index})">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </button>
+                                    ${item.site || 'নাম নেই'}
+                                    <span class="${isConfirmed ? 'badge-confirmed' : 'badge-pending'}">
+                                        <i class="fas ${isConfirmed ? 'fa-check-circle' : 'fa-clock'}"></i>
+                                        ${isConfirmed ? 'কনফর্মড' : 'পেন্ডিং'}
+                                    </span>
                                 </div>
-                                <div class="item-details">
-                                    ${item.username ? `
-                                    <div>
-                                        <span class="label"><i class="fas fa-user" style="color: var(--accent-blue); width: 14px;"></i> ইউজারনেম</span>
-                                        <span class="value">${item.username}</span>
-                                    </div>` : ''}
-                                    ${item.phone ? `
-                                    <div>
-                                        <span class="label"><i class="fas fa-phone" style="color: var(--accent-green); width: 14px;"></i> ফোন নাম্বার</span>
-                                        <span class="value">${item.phone}</span>
-                                    </div>` : ''}
-                                    ${item.email ? `
-                                    <div>
-                                        <span class="label"><i class="fas fa-envelope" style="color: var(--accent-purple); width: 14px;"></i> ইমেইল</span>
-                                        <span class="value">${item.email}</span>
-                                    </div>` : ''}
-                                    <div>
-                                        <span class="label"><i class="fas fa-key" style="color: var(--accent-orange); width: 14px;"></i> পাসওয়ার্ড</span>
-                                        <span class="value">${item.password || 'পাসওয়ার্ড নেই'}</span>
-                                    </div>
-                                </div>
-                                <div class="item-actions">
-                                    <button class="btn-copy" onclick="copyText('${password}', this)">
-                                        <i class="fas fa-copy"></i> পাসওয়ার্ড
-                                    </button>
-                                    ${item.phone ? `<button class="btn-copy" onclick="copyText('${phone}', this)">
-                                        <i class="fas fa-copy"></i> ফোন
-                                    </button>` : ''}
-                                    ${item.email ? `<button class="btn-copy" onclick="copyText('${email}', this)">
-                                        <i class="fas fa-copy"></i> ইমেইল
-                                    </button>` : ''}
-                                    ${item.username ? `<button class="btn-copy" onclick="copyText('${username}', this)">
-                                        <i class="fas fa-copy"></i> ইউজারনেম
-                                    </button>` : ''}
-                                    <button class="btn-confirm ${isConfirmed ? 'confirmed' : ''}" onclick="confirmPassword(${index})">
-                                        <i class="fas ${isConfirmed ? 'fa-check-circle' : 'fa-check'}"></i>
-                                        ${isConfirmed ? 'কনফর্মড' : 'কনফর্ম করুন'}
-                                    </button>
+                                <button class="btn-delete" onclick="deletePassword('${key}')">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </div>
+                            <div class="item-details">
+                                ${item.username ? `
+                                <div>
+                                    <span class="label"><i class="fas fa-user" style="color: var(--accent-blue); width: 14px;"></i> ইউজারনেম</span>
+                                    <span class="value">${item.username}</span>
+                                </div>` : ''}
+                                ${item.phone ? `
+                                <div>
+                                    <span class="label"><i class="fas fa-phone" style="color: var(--accent-green); width: 14px;"></i> ফোন নাম্বার</span>
+                                    <span class="value">${item.phone}</span>
+                                </div>` : ''}
+                                ${item.email ? `
+                                <div>
+                                    <span class="label"><i class="fas fa-envelope" style="color: var(--accent-purple); width: 14px;"></i> ইমেইল</span>
+                                    <span class="value">${item.email}</span>
+                                </div>` : ''}
+                                <div>
+                                    <span class="label"><i class="fas fa-key" style="color: var(--accent-orange); width: 14px;"></i> পাসওয়ার্ড</span>
+                                    <span class="value">${item.password || 'পাসওয়ার্ড নেই'}</span>
                                 </div>
                             </div>
-                        `;
-                    });
-                    list.innerHTML = html;
-                }
+                            <div class="item-actions">
+                                <button class="btn-copy" onclick="copyText('${(item.password || '').replace(/'/g, "\\'")}', this)">
+                                    <i class="fas fa-copy"></i> পাসওয়ার্ড
+                                </button>
+                                ${item.phone ? `<button class="btn-copy" onclick="copyText('${item.phone.replace(/'/g, "\\'")}', this)">
+                                    <i class="fas fa-copy"></i> ফোন
+                                </button>` : ''}
+                                ${item.email ? `<button class="btn-copy" onclick="copyText('${item.email.replace(/'/g, "\\'")}', this)">
+                                    <i class="fas fa-copy"></i> ইমেইল
+                                </button>` : ''}
+                                ${item.username ? `<button class="btn-copy" onclick="copyText('${item.username.replace(/'/g, "\\'")}', this)">
+                                    <i class="fas fa-copy"></i> ইউজারনেম
+                                </button>` : ''}
+                                <button class="btn-confirm ${isConfirmed ? 'confirmed' : ''}" onclick="confirmPassword('${key}')">
+                                    <i class="fas ${isConfirmed ? 'fa-check-circle' : 'fa-check'}"></i>
+                                    ${isConfirmed ? 'কনফর্মড' : 'কনফর্ম করুন'}
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                });
+                list.innerHTML = html;
             })
             .catch(err => {
                 list.innerHTML = `<div class="message message-error"><i class="fas fa-exclamation-circle"></i> ${err.message}</div>`;
@@ -1278,9 +1271,15 @@
     }
 
     // =============================================
-    // ➕ SAVE PASSWORD (ফোন নাম্বার যোগ করা হয়েছে)
+    // ✅ SAVE PASSWORD (push() দিয়ে সেভ - আলাদা ফোল্ডার)
     // =============================================
     function savePassword() {
+        // ইউজার লগইন করা আছে কিনা চেক
+        if (!currentUser) {
+            showToast('⚠️ দয়া করে লগইন করুন!', 'error');
+            return;
+        }
+
         const site = document.getElementById('siteName').value.trim();
         const username = document.getElementById('siteUsername').value.trim();
         const phone = document.getElementById('sitePhone').value.trim();
@@ -1302,15 +1301,15 @@
             createdAt: firebase.database.ServerValue.TIMESTAMP
         };
         
-        db.ref('users/' + currentUser.uid + '/passwords').once('value')
-            .then(snapshot => {
-                const passwords = snapshot.val() || [];
-                passwords.push(newEntry);
-                return db.ref('users/' + currentUser.uid + '/passwords').set(passwords);
-            })
+        // 🔥 push() ব্যবহার করে আলাদা কী তৈরি করুন
+        const newRef = db.ref('users/' + currentUser.uid + '/passwords').push();
+        
+        newRef.set(newEntry)
             .then(() => {
                 showToast('✅ তথ্য সেভ হয়েছে!', 'success');
+                console.log('✅ ডেটা সেভ হয়েছে:', newEntry);
                 
+                // ফিল্ড ক্লিয়ার
                 document.getElementById('siteSelect').value = '';
                 document.getElementById('siteName').value = '';
                 document.getElementById('siteUsername').value = '';
@@ -1322,20 +1321,27 @@
                 loadPasswords();
             })
             .catch(err => {
+                console.error('❌ সেভ করতে সমস্যা:', err);
                 showToast('❌ সেভ করতে সমস্যা: ' + err.message, 'error');
             });
     }
 
     // =============================================
-    // ✅ CONFIRM PASSWORD
+    // ✅ CONFIRM PASSWORD (কী দিয়ে)
     // =============================================
-    function confirmPassword(index) {
-        db.ref('users/' + currentUser.uid + '/passwords').once('value')
+    function confirmPassword(key) {
+        if (!currentUser) {
+            showToast('⚠️ দয়া করে লগইন করুন!', 'error');
+            return;
+        }
+        
+        const ref = db.ref('users/' + currentUser.uid + '/passwords/' + key);
+        ref.once('value')
             .then(snapshot => {
-                const passwords = snapshot.val() || [];
-                if (passwords[index]) {
-                    passwords[index].confirmed = !passwords[index].confirmed;
-                    return db.ref('users/' + currentUser.uid + '/passwords').set(passwords);
+                const item = snapshot.val();
+                if (item) {
+                    const newConfirmed = !item.confirmed;
+                    return ref.update({ confirmed: newConfirmed });
                 }
             })
             .then(() => {
@@ -1377,17 +1383,12 @@
     }
 
     // =============================================
-    // 🗑️ DELETE PASSWORD
+    // 🗑️ DELETE PASSWORD (কী দিয়ে)
     // =============================================
-    function deletePassword(index) {
+    function deletePassword(key) {
         if (!confirm('আপনি কি এই তথ্য মুছতে চান?')) return;
         
-        db.ref('users/' + currentUser.uid + '/passwords').once('value')
-            .then(snapshot => {
-                const passwords = snapshot.val() || [];
-                passwords.splice(index, 1);
-                return db.ref('users/' + currentUser.uid + '/passwords').set(passwords);
-            })
+        db.ref('users/' + currentUser.uid + '/passwords/' + key).remove()
             .then(() => {
                 loadPasswords();
                 showToast('✅ মুছে ফেলা হয়েছে!', 'success');
@@ -1492,6 +1493,7 @@
 
     console.log('🚀 অ্যাপ রেডি! (Realtime Database)');
     console.log('📌 প্রজেক্ট:', firebaseConfig.projectId);
+    console.log('📌 Database URL:', firebaseConfig.databaseURL);
 </script>
 
 </body>
