@@ -5,18 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🔐 সিকিউর পাসওয়ার্ড ম্যানেজার</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     
     <style>
+        /* ===== আগের সব স্টাইল একই থাকবে ===== */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         :root {
             --bg-primary: #0a0e17;
-            --bg-secondary: #111827;
-            --bg-card: #1a2332;
-            --bg-input: #0f1729;
-            --border-color: #2a3a5c;
+            --bg-secondary: #0f1923;
+            --bg-card: rgba(26, 35, 50, 0.8);
+            --bg-input: rgba(15, 23, 41, 0.9);
+            --border-color: rgba(42, 58, 92, 0.5);
             --text-primary: #e8edf5;
             --text-secondary: #94a3b8;
             --text-muted: #64748b;
@@ -24,8 +25,13 @@
             --accent-green: #22c55e;
             --accent-red: #ef4444;
             --accent-purple: #8b5cf6;
+            --accent-pink: #ec4899;
+            --accent-orange: #f59e0b;
+            --accent-cyan: #06b6d4;
             --glow-blue: rgba(59, 130, 246, 0.3);
-            --shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+            --glass-bg: rgba(26, 35, 50, 0.6);
+            --glass-border: rgba(255, 255, 255, 0.05);
         }
         
         body {
@@ -37,58 +43,90 @@
             justify-content: center;
             align-items: center;
             padding: 20px;
+            background-image: 
+                radial-gradient(ellipse at 10% 20%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 90% 80%, rgba(139, 92, 246, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(236, 72, 153, 0.05) 0%, transparent 70%);
         }
         
         .container {
-            max-width: 520px;
+            max-width: 540px;
             width: 100%;
             background: var(--bg-secondary);
-            border-radius: 24px;
+            border-radius: 28px;
             padding: 32px 28px;
             box-shadow: var(--shadow);
-            border: 1px solid var(--border-color);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
             max-height: 98vh;
             overflow-y: auto;
+            position: relative;
+        }
+        
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple), var(--accent-pink));
+            border-radius: 28px 28px 0 0;
         }
         
         .container::-webkit-scrollbar { width: 4px; }
         .container::-webkit-scrollbar-track { background: var(--bg-input); border-radius: 10px; }
-        .container::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 10px; }
+        .container::-webkit-scrollbar-thumb { 
+            background: linear-gradient(180deg, var(--accent-blue), var(--accent-purple));
+            border-radius: 10px; 
+        }
         
         .hidden { display: none !important; }
         
+        /* ===== HEADER ===== */
         .app-header {
             text-align: center;
             margin-bottom: 28px;
+            position: relative;
         }
         
         .app-logo {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 68px;
-            height: 68px;
-            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
-            border-radius: 18px;
-            font-size: 30px;
+            width: 72px;
+            height: 72px;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple), var(--accent-pink));
+            border-radius: 22px;
+            font-size: 32px;
             margin-bottom: 14px;
-            box-shadow: 0 4px 20px var(--glow-blue);
+            box-shadow: 0 4px 30px rgba(59, 130, 246, 0.4);
+            animation: pulse-glow 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 4px 30px rgba(59, 130, 246, 0.4); }
+            50% { box-shadow: 0 4px 50px rgba(139, 92, 246, 0.6); }
         }
         
         .app-title {
-            font-size: 22px;
-            font-weight: 800;
-            background: linear-gradient(135deg, var(--text-primary), var(--text-secondary));
+            font-size: 24px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #60a5fa, #a78bfa, #f472b6);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            letter-spacing: -0.5px;
         }
         
         .app-subtitle {
             color: var(--text-secondary);
             font-size: 13px;
             margin-top: 4px;
+            font-weight: 400;
+            letter-spacing: 0.3px;
         }
         
+        /* ===== INPUTS ===== */
         .input-group {
             position: relative;
             margin-bottom: 14px;
@@ -101,35 +139,46 @@
             transform: translateY(-50%);
             color: var(--text-muted);
             font-size: 16px;
+            transition: color 0.3s;
+            z-index: 1;
         }
         
         .input-group input, .input-group select {
             width: 100%;
-            padding: 12px 14px 12px 44px;
+            padding: 13px 14px 13px 44px;
             background: var(--bg-input);
             border: 2px solid var(--border-color);
-            border-radius: 10px;
+            border-radius: 12px;
             color: var(--text-primary);
             font-size: 14px;
             font-family: 'Inter', sans-serif;
             transition: all 0.3s;
             appearance: none;
+            position: relative;
         }
         
         .input-group select {
             padding-right: 40px;
             cursor: pointer;
+            background-image: linear-gradient(135deg, var(--bg-input), rgba(59, 130, 246, 0.05));
         }
         
         .input-group select option {
             background: var(--bg-card);
             color: var(--text-primary);
+            padding: 10px;
         }
         
         .input-group input:focus, .input-group select:focus {
             outline: none;
             border-color: var(--accent-blue);
             box-shadow: 0 0 0 4px var(--glow-blue);
+            background: rgba(15, 23, 41, 0.95);
+        }
+        
+        .input-group input::placeholder {
+            color: var(--text-muted);
+            font-weight: 300;
         }
         
         .input-group .dropdown-arrow {
@@ -139,49 +188,81 @@
             transform: translateY(-50%);
             color: var(--text-muted);
             pointer-events: none;
+            font-size: 12px;
         }
         
+        /* ===== BUTTONS ===== */
         .btn {
             width: 100%;
-            padding: 13px;
+            padding: 14px;
             border: none;
-            border-radius: 10px;
+            border-radius: 12px;
             font-size: 15px;
             font-weight: 600;
             font-family: 'Inter', sans-serif;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            letter-spacing: 0.3px;
         }
+        
+        .btn::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.1), transparent);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .btn:hover::after { opacity: 1; }
+        .btn:active { transform: scale(0.97); }
         
         .btn-primary {
             background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
             color: white;
-            box-shadow: 0 4px 16px var(--glow-blue);
+            box-shadow: 0 4px 20px var(--glow-blue);
         }
         
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 24px var(--glow-blue); }
+        .btn-primary:hover { 
+            transform: translateY(-2px); 
+            box-shadow: 0 6px 30px var(--glow-blue);
+        }
         
         .btn-success {
             background: linear-gradient(135deg, var(--accent-green), #059669);
             color: white;
+            box-shadow: 0 4px 20px rgba(34, 197, 94, 0.3);
         }
         
-        .btn-success:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(34, 197, 94, 0.3); }
+        .btn-success:hover { 
+            transform: translateY(-2px); 
+            box-shadow: 0 6px 30px rgba(34, 197, 94, 0.4);
+        }
         
         .btn-danger {
             background: linear-gradient(135deg, var(--accent-red), #b91c1c);
             color: white;
+            box-shadow: 0 4px 20px rgba(239, 68, 68, 0.2);
+        }
+        
+        .btn-danger:hover { 
+            transform: translateY(-2px); 
+            box-shadow: 0 6px 30px rgba(239, 68, 68, 0.3);
         }
         
         .btn-outline {
             background: transparent;
             color: var(--text-secondary);
             border: 2px solid var(--border-color);
+            backdrop-filter: blur(5px);
         }
         
         .btn-outline:hover {
-            border-color: var(--text-secondary);
+            border-color: var(--accent-blue);
             color: var(--text-primary);
+            background: rgba(59, 130, 246, 0.05);
         }
         
         .btn-sm {
@@ -191,28 +272,45 @@
         }
         
         .btn-copy {
-            background: rgba(59, 130, 246, 0.15);
+            background: rgba(59, 130, 246, 0.12);
             color: var(--accent-blue);
-            border: none;
-            padding: 4px 12px;
-            border-radius: 6px;
+            border: 1px solid rgba(59, 130, 246, 0.1);
+            padding: 5px 12px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 500;
+            transition: all 0.3s;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .btn-copy:hover { 
+            background: rgba(59, 130, 246, 0.2);
+            transform: translateY(-1px);
+        }
+        
+        .btn-copy.copied {
+            background: rgba(34, 197, 94, 0.15);
+            color: var(--accent-green);
+            border-color: rgba(34, 197, 94, 0.2);
+        }
+        
+        /* ===== CARD ===== */
+        .card {
+            background: var(--glass-bg);
+            border-radius: 16px;
+            padding: 22px 20px;
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+            margin-bottom: 14px;
             transition: all 0.3s;
         }
         
-        .btn-copy:hover { background: rgba(59, 130, 246, 0.25); }
-        .btn-copy.copied { background: rgba(34, 197, 94, 0.2); color: var(--accent-green); }
-        
-        .card {
-            background: var(--bg-card);
-            border-radius: 14px;
-            padding: 20px;
-            border: 1px solid var(--border-color);
-            margin-bottom: 14px;
+        .card:hover {
+            border-color: rgba(59, 130, 246, 0.1);
         }
         
+        /* ===== PIN INPUT ===== */
         .pin-box {
             display: flex;
             gap: 10px;
@@ -221,92 +319,127 @@
         }
         
         .pin-box input {
-            width: 48px;
-            height: 56px;
+            width: 50px;
+            height: 58px;
             text-align: center;
             font-size: 26px;
             font-weight: 700;
             background: var(--bg-input);
             border: 2px solid var(--border-color);
-            border-radius: 10px;
+            border-radius: 12px;
             color: var(--accent-blue);
             padding: 0;
             transition: all 0.3s;
+            font-family: 'Inter', sans-serif;
         }
         
         .pin-box input:focus {
             border-color: var(--accent-blue);
             box-shadow: 0 0 0 4px var(--glow-blue);
             outline: none;
+            transform: translateY(-2px);
         }
         
         .pin-box input.filled {
             border-color: var(--accent-green);
             background: rgba(34, 197, 94, 0.05);
+            box-shadow: 0 0 20px rgba(34, 197, 94, 0.1);
         }
         
+        /* ===== MESSAGES ===== */
         .message {
-            padding: 10px 14px;
-            border-radius: 8px;
-            margin-top: 10px;
+            padding: 12px 16px;
+            border-radius: 10px;
+            margin-top: 12px;
             font-size: 13px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
+            animation: slideDown 0.3s ease;
+        }
+        
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         
         .message-error {
             background: rgba(239, 68, 68, 0.1);
             color: var(--accent-red);
-            border: 1px solid rgba(239, 68, 68, 0.2);
+            border: 1px solid rgba(239, 68, 68, 0.15);
         }
         
         .message-success {
             background: rgba(34, 197, 94, 0.1);
             color: var(--accent-green);
-            border: 1px solid rgba(34, 197, 94, 0.2);
+            border: 1px solid rgba(34, 197, 94, 0.15);
         }
         
+        /* ===== DASHBOARD ===== */
         .dashboard-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 16px;
+            margin-bottom: 18px;
         }
         
-        .dashboard-header h2 { font-size: 18px; font-weight: 700; }
+        .dashboard-header h2 {
+            font-size: 18px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--text-primary), var(--text-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
         
         .dashboard-actions {
             display: flex;
             gap: 10px;
-            margin-bottom: 14px;
+            margin-bottom: 16px;
         }
         
         .dashboard-actions .btn {
             flex: 1;
             padding: 10px;
             font-size: 13px;
+            border-radius: 10px;
         }
         
+        /* ============================================ */
+        /* ===== PASSWORD ITEM ===== */
+        /* ============================================ */
         .password-item {
             background: var(--bg-input);
-            padding: 14px 16px;
-            border-radius: 10px;
-            margin-bottom: 10px;
+            padding: 16px 18px;
+            border-radius: 14px;
+            margin-bottom: 12px;
             border: 1px solid var(--border-color);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .password-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            border-radius: 14px 0 0 14px;
             transition: all 0.3s;
         }
         
         .password-item:hover {
-            border-color: var(--accent-blue);
-            transform: translateX(4px);
+            border-color: rgba(59, 130, 246, 0.2);
+            transform: translateX(6px) translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
         }
         
         .password-item .item-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 6px;
+            margin-bottom: 10px;
         }
         
         .password-item .site-name {
@@ -314,34 +447,48 @@
             font-size: 15px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
         }
         
         .password-item .site-name .site-icon {
-            width: 28px;
-            height: 28px;
-            border-radius: 6px;
+            width: 32px;
+            height: 32px;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 14px;
+            font-size: 15px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s;
+        }
+        
+        .password-item:hover .site-icon {
+            transform: scale(1.05) rotate(-5deg);
         }
         
         .password-item .item-details {
             color: var(--text-secondary);
             font-size: 13px;
+            padding: 4px 0;
         }
         
         .password-item .item-details > div {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            padding: 3px 0;
+            padding: 4px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+        }
+        
+        .password-item .item-details > div:last-child {
+            border-bottom: none;
         }
         
         .password-item .item-details .label {
             color: var(--text-muted);
-            min-width: 65px;
+            min-width: 75px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.3px;
         }
         
         .password-item .item-details .value {
@@ -349,87 +496,143 @@
             word-break: break-all;
             flex: 1;
             margin: 0 8px;
+            font-weight: 400;
+            font-size: 13px;
         }
         
         .password-item .item-actions {
             display: flex;
             gap: 6px;
-            margin-top: 8px;
+            margin-top: 10px;
             flex-wrap: wrap;
+            padding-top: 10px;
+            border-top: 1px solid rgba(255, 255, 255, 0.03);
         }
         
         .password-item .item-actions .btn {
-            padding: 4px 12px;
+            padding: 5px 12px;
             font-size: 11px;
             width: auto;
             flex: 1;
             min-width: 60px;
+            border-radius: 8px;
         }
         
         .btn-delete {
-            background: rgba(239, 68, 68, 0.15);
+            background: rgba(239, 68, 68, 0.1);
             color: var(--accent-red);
-            border: none;
-            padding: 4px 10px;
-            border-radius: 6px;
+            border: 1px solid rgba(239, 68, 68, 0.1);
+            padding: 5px 12px;
+            border-radius: 8px;
             cursor: pointer;
             font-size: 12px;
+            font-weight: 500;
             transition: all 0.3s;
+            font-family: 'Inter', sans-serif;
         }
         
-        .btn-delete:hover { background: rgba(239, 68, 68, 0.25); }
+        .btn-delete:hover {
+            background: rgba(239, 68, 68, 0.2);
+            transform: translateY(-1px);
+        }
         
         .btn-confirm {
-            background: rgba(34, 197, 94, 0.15);
+            background: rgba(34, 197, 94, 0.1);
             color: var(--accent-green);
-            border: 1px solid rgba(34, 197, 94, 0.2);
+            border: 1px solid rgba(34, 197, 94, 0.1);
+            padding: 5px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 500;
+            transition: all 0.3s;
+            font-family: 'Inter', sans-serif;
         }
         
-        .btn-confirm:hover { background: rgba(34, 197, 94, 0.25); }
-        .btn-confirm.confirmed { background: rgba(34, 197, 94, 0.25); border-color: var(--accent-green); }
+        .btn-confirm:hover {
+            background: rgba(34, 197, 94, 0.2);
+            transform: translateY(-1px);
+        }
         
+        .btn-confirm.confirmed {
+            background: rgba(34, 197, 94, 0.2);
+            border-color: var(--accent-green);
+            box-shadow: 0 0 20px rgba(34, 197, 94, 0.1);
+        }
+        
+        /* ===== BADGES ===== */
         .badge-confirmed {
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
             background: rgba(34, 197, 94, 0.15);
             color: var(--accent-green);
             font-size: 10px;
-            padding: 2px 10px;
-            border-radius: 12px;
+            padding: 3px 12px;
+            border-radius: 20px;
             font-weight: 600;
+            border: 1px solid rgba(34, 197, 94, 0.1);
+            letter-spacing: 0.3px;
         }
         
         .badge-pending {
-            display: inline-block;
-            background: rgba(239, 68, 68, 0.15);
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: rgba(239, 68, 68, 0.12);
             color: var(--accent-red);
             font-size: 10px;
-            padding: 2px 10px;
-            border-radius: 12px;
+            padding: 3px 12px;
+            border-radius: 20px;
             font-weight: 600;
+            border: 1px solid rgba(239, 68, 68, 0.1);
+            letter-spacing: 0.3px;
         }
         
+        /* ===== EMPTY STATE ===== */
         .empty-state {
             text-align: center;
-            padding: 30px 20px;
+            padding: 40px 20px;
         }
         
-        .empty-state .icon { font-size: 48px; color: var(--text-muted); margin-bottom: 10px; }
-        .empty-state h3 { color: var(--text-secondary); font-weight: 500; font-size: 16px; }
-        .empty-state p { color: var(--text-muted); font-size: 13px; }
+        .empty-state .icon {
+            font-size: 56px;
+            margin-bottom: 16px;
+            display: block;
+            animation: float 3s ease-in-out infinite;
+        }
         
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .empty-state h3 {
+            color: var(--text-secondary);
+            font-weight: 600;
+            font-size: 16px;
+            margin-bottom: 4px;
+        }
+        
+        .empty-state p {
+            color: var(--text-muted);
+            font-size: 13px;
+        }
+        
+        /* ===== LOADING ===== */
         .loading {
             text-align: center;
             padding: 30px 0;
         }
         
         .spinner {
-            width: 36px;
-            height: 36px;
-            border: 4px solid var(--border-color);
-            border-top: 4px solid var(--accent-blue);
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--border-color);
+            border-top: 3px solid var(--accent-blue);
             border-radius: 50%;
             animation: spin 0.8s linear infinite;
-            margin: 0 auto 10px;
+            margin: 0 auto 12px;
         }
         
         @keyframes spin {
@@ -437,6 +640,7 @@
             100% { transform: rotate(360deg); }
         }
         
+        /* ===== TOAST ===== */
         .toast {
             position: fixed;
             bottom: 30px;
@@ -444,16 +648,20 @@
             transform: translateX(-50%) translateY(100px);
             background: var(--bg-secondary);
             color: var(--text-primary);
-            padding: 12px 22px;
-            border-radius: 10px;
-            border: 1px solid var(--border-color);
+            padding: 14px 24px;
+            border-radius: 14px;
+            border: 1px solid var(--glass-border);
             box-shadow: var(--shadow);
             z-index: 999;
             opacity: 0;
-            transition: all 0.4s ease;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             font-size: 13px;
             font-weight: 500;
             max-width: 90%;
+            backdrop-filter: blur(20px);
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
         
         .toast.show {
@@ -461,43 +669,69 @@
             transform: translateX(-50%) translateY(0);
         }
         
-        .toast i { margin-right: 8px; }
+        .toast i { font-size: 18px; }
         .toast-success i { color: var(--accent-green); }
         .toast-error i { color: var(--accent-red); }
+        .toast-info i { color: var(--accent-blue); }
         
+        /* ===== RESPONSIVE ===== */
         @media (max-width: 520px) {
-            .container { padding: 20px 14px; border-radius: 16px; }
+            .container { padding: 20px 14px; border-radius: 20px; }
             .pin-box { gap: 6px; }
-            .pin-box input { width: 40px; height: 48px; font-size: 22px; }
+            .pin-box input { width: 42px; height: 50px; font-size: 22px; }
             .dashboard-actions { flex-direction: column; }
             .password-item .item-details > div { flex-wrap: wrap; }
+            .password-item .item-details .label { min-width: 60px; }
         }
         
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+            from { opacity: 0; transform: translateY(15px); }
             to { opacity: 1; transform: translateY(0); }
         }
         
         .fade-in { animation: fadeIn 0.4s ease; }
         
         .offline-banner {
-            background: rgba(239, 68, 68, 0.15);
-            border: 1px solid rgba(239, 68, 68, 0.2);
+            background: rgba(239, 68, 68, 0.12);
+            border: 1px solid rgba(239, 68, 68, 0.15);
             color: var(--accent-red);
-            padding: 10px 14px;
-            border-radius: 10px;
+            padding: 10px 16px;
+            border-radius: 12px;
             text-align: center;
             font-size: 13px;
             margin-bottom: 14px;
             display: none;
+            backdrop-filter: blur(10px);
         }
         
         .offline-banner.show { display: block; }
         
-        /* ফিল্ড ক্লিয়ার করার সময় অ্যানিমেশন */
-        .input-group input:not(:placeholder-shown) {
-            border-color: var(--accent-green);
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { 
+            background: linear-gradient(180deg, var(--accent-blue), var(--accent-purple));
+            border-radius: 10px;
         }
+        
+        #addPasswordForm .input-group input,
+        #addPasswordForm .input-group select {
+            background: rgba(15, 23, 41, 0.6);
+        }
+        
+        #addPasswordForm .input-group input:focus,
+        #addPasswordForm .input-group select:focus {
+            background: rgba(15, 23, 41, 0.9);
+        }
+        
+        /* কালারফুল বর্ডার */
+        .password-item[data-color="blue"]::before { background: linear-gradient(180deg, #3b82f6, #60a5fa); }
+        .password-item[data-color="purple"]::before { background: linear-gradient(180deg, #8b5cf6, #a78bfa); }
+        .password-item[data-color="pink"]::before { background: linear-gradient(180deg, #ec4899, #f472b6); }
+        .password-item[data-color="green"]::before { background: linear-gradient(180deg, #22c55e, #4ade80); }
+        .password-item[data-color="orange"]::before { background: linear-gradient(180deg, #f59e0b, #fbbf24); }
+        .password-item[data-color="red"]::before { background: linear-gradient(180deg, #ef4444, #f87171); }
+        .password-item[data-color="cyan"]::before { background: linear-gradient(180deg, #06b6d4, #22d3ee); }
+        .password-item[data-color="default"]::before { background: linear-gradient(180deg, #6b7280, #9ca3af); }
     </style>
 </head>
 <body>
@@ -511,7 +745,7 @@
     <div class="app-header">
         <div class="app-logo"><i class="fas fa-shield-alt"></i></div>
         <div class="app-title">সিকিউর পাস</div>
-        <div class="app-subtitle">আপনার সব পাসওয়ার্ড এক জায়গায়</div>
+        <div class="app-subtitle">🔐 আপনার সব পাসওয়ার্ড এক জায়গায়</div>
     </div>
     
     <!-- ===== LOGIN ===== -->
@@ -538,7 +772,7 @@
     <!-- ===== PIN ===== -->
     <div id="pinSection" class="hidden fade-in">
         <div class="card">
-            <h3 style="text-align: center; margin-bottom: 4px;" id="pinTitle">🔑 সিকিউরিটি PIN</h3>
+            <h3 style="text-align: center; margin-bottom: 4px; font-weight: 700;" id="pinTitle">🔑 সিকিউরিটি PIN</h3>
             <p style="text-align: center; color: var(--text-secondary); font-size: 13px; margin-bottom: 14px;" id="pinSubtitle">
                 ৬ ডিজিটের PIN দিন
             </p>
@@ -578,10 +812,10 @@
             </button>
         </div>
         
-        <!-- ===== ADD PASSWORD ===== -->
+        <!-- ===== ADD PASSWORD (ফোন নাম্বার যোগ করা হয়েছে) ===== -->
         <div id="addPasswordForm" class="hidden card">
-            <h4 style="margin-bottom: 12px; font-size: 16px;">
-                <i class="fas fa-key" style="color: var(--accent-green);"></i> নতুন তথ্য
+            <h4 style="margin-bottom: 14px; font-size: 16px; font-weight: 700;">
+                <i class="fas fa-key" style="color: var(--accent-green);"></i> নতুন তথ্য যোগ করুন
             </h4>
             
             <div class="input-group">
@@ -621,6 +855,12 @@
             <div class="input-group">
                 <i class="fas fa-user"></i>
                 <input type="text" id="siteUsername" placeholder="ইউজারনেম / আইডি">
+            </div>
+            
+            <!-- ===== ফোন নাম্বার ফিল্ড (অপশনাল) ===== -->
+            <div class="input-group">
+                <i class="fas fa-phone"></i>
+                <input type="tel" id="sitePhone" placeholder="📱 ফোন নাম্বার (ঐচ্ছিক)">
             </div>
             
             <div class="input-group">
@@ -891,7 +1131,7 @@
                 if (!passwords || passwords.length === 0) {
                     list.innerHTML = `
                         <div class="empty-state">
-                            <div class="icon"><i class="fas fa-inbox"></i></div>
+                            <span class="icon">🔐</span>
                             <h3>কোনো তথ্য নেই</h3>
                             <p>"যোগ করুন" বাটনে ক্লিক করে পাসওয়ার্ড সেভ করুন</p>
                         </div>
@@ -903,14 +1143,16 @@
                         const isConfirmed = item.confirmed || false;
                         const icon = getSiteIcon(item.site);
                         const color = getSiteColor(item.site);
+                        const colorClass = getColorClass(item.site);
                         
                         const siteName = (item.site || 'নাম নেই').replace(/'/g, "\\'");
                         const username = (item.username || '').replace(/'/g, "\\'");
+                        const phone = (item.phone || '').replace(/'/g, "\\'");
                         const email = (item.email || '').replace(/'/g, "\\'");
                         const password = (item.password || '').replace(/'/g, "\\'");
                         
                         html += `
-                            <div class="password-item">
+                            <div class="password-item fade-in" data-color="${colorClass}">
                                 <div class="item-header">
                                     <div class="site-name">
                                         <div class="site-icon" style="background: ${color}">
@@ -918,7 +1160,8 @@
                                         </div>
                                         ${item.site || 'নাম নেই'}
                                         <span class="${isConfirmed ? 'badge-confirmed' : 'badge-pending'}">
-                                            ${isConfirmed ? '✅ কনফর্মড' : '⏳ পেন্ডিং'}
+                                            <i class="fas ${isConfirmed ? 'fa-check-circle' : 'fa-clock'}"></i>
+                                            ${isConfirmed ? 'কনফর্মড' : 'পেন্ডিং'}
                                         </span>
                                     </div>
                                     <button class="btn-delete" onclick="deletePassword(${index})">
@@ -926,22 +1169,42 @@
                                     </button>
                                 </div>
                                 <div class="item-details">
-                                    ${item.username ? `<div><span class="label">👤 ইউজারনেম</span><span class="value">${item.username}</span></div>` : ''}
-                                    ${item.email ? `<div><span class="label">📧 ইমেইল</span><span class="value">${item.email}</span></div>` : ''}
-                                    <div><span class="label">🔑 পাসওয়ার্ড</span><span class="value">${item.password || 'পাসওয়ার্ড নেই'}</span></div>
+                                    ${item.username ? `
+                                    <div>
+                                        <span class="label"><i class="fas fa-user" style="color: var(--accent-blue); width: 14px;"></i> ইউজারনেম</span>
+                                        <span class="value">${item.username}</span>
+                                    </div>` : ''}
+                                    ${item.phone ? `
+                                    <div>
+                                        <span class="label"><i class="fas fa-phone" style="color: var(--accent-green); width: 14px;"></i> ফোন নাম্বার</span>
+                                        <span class="value">${item.phone}</span>
+                                    </div>` : ''}
+                                    ${item.email ? `
+                                    <div>
+                                        <span class="label"><i class="fas fa-envelope" style="color: var(--accent-purple); width: 14px;"></i> ইমেইল</span>
+                                        <span class="value">${item.email}</span>
+                                    </div>` : ''}
+                                    <div>
+                                        <span class="label"><i class="fas fa-key" style="color: var(--accent-orange); width: 14px;"></i> পাসওয়ার্ড</span>
+                                        <span class="value">${item.password || 'পাসওয়ার্ড নেই'}</span>
+                                    </div>
                                 </div>
                                 <div class="item-actions">
-                                    <button class="btn btn-copy" onclick="copyText('${password}', this)">
-                                        <i class="fas fa-copy"></i> কপি পাসওয়ার্ড
+                                    <button class="btn-copy" onclick="copyText('${password}', this)">
+                                        <i class="fas fa-copy"></i> পাসওয়ার্ড
                                     </button>
-                                    ${item.email ? `<button class="btn btn-copy" onclick="copyText('${email}', this)">
-                                        <i class="fas fa-copy"></i> কপি ইমেইল
+                                    ${item.phone ? `<button class="btn-copy" onclick="copyText('${phone}', this)">
+                                        <i class="fas fa-copy"></i> ফোন
                                     </button>` : ''}
-                                    ${item.username ? `<button class="btn btn-copy" onclick="copyText('${username}', this)">
-                                        <i class="fas fa-copy"></i> কপি ইউজারনেম
+                                    ${item.email ? `<button class="btn-copy" onclick="copyText('${email}', this)">
+                                        <i class="fas fa-copy"></i> ইমেইল
                                     </button>` : ''}
-                                    <button class="btn btn-confirm ${isConfirmed ? 'confirmed' : ''}" onclick="confirmPassword(${index})">
-                                        <i class="fas fa-check"></i> ${isConfirmed ? 'কনফর্মড' : 'কনফর্ম করুন'}
+                                    ${item.username ? `<button class="btn-copy" onclick="copyText('${username}', this)">
+                                        <i class="fas fa-copy"></i> ইউজারনেম
+                                    </button>` : ''}
+                                    <button class="btn-confirm ${isConfirmed ? 'confirmed' : ''}" onclick="confirmPassword(${index})">
+                                        <i class="fas ${isConfirmed ? 'fa-check-circle' : 'fa-check'}"></i>
+                                        ${isConfirmed ? 'কনফর্মড' : 'কনফর্ম করুন'}
                                     </button>
                                 </div>
                             </div>
@@ -983,6 +1246,19 @@
         return colors[site] || '#6b7280';
     }
 
+    function getColorClass(site) {
+        const classes = {
+            'Gmail': 'red', 'YouTube': 'red', 'Facebook': 'blue',
+            'Instagram': 'pink', 'TikTok': 'default', 'Twitter': 'blue',
+            'LinkedIn': 'blue', 'GitHub': 'default', 'Amazon': 'orange',
+            'Netflix': 'red', 'Spotify': 'green', 'Microsoft': 'blue',
+            'Google': 'blue', 'Apple': 'default', 'WhatsApp': 'green',
+            'Telegram': 'cyan', 'Discord': 'purple', 'Reddit': 'orange',
+            'Snapchat': 'yellow', 'Pinterest': 'red'
+        };
+        return classes[site] || 'default';
+    }
+
     // =============================================
     // 📝 UPDATE SITE INPUT
     // =============================================
@@ -1002,11 +1278,12 @@
     }
 
     // =============================================
-    // ➕ SAVE PASSWORD (ফিক্সড - ফিল্ড ক্লিয়ার হবে)
+    // ➕ SAVE PASSWORD (ফোন নাম্বার যোগ করা হয়েছে)
     // =============================================
     function savePassword() {
         const site = document.getElementById('siteName').value.trim();
         const username = document.getElementById('siteUsername').value.trim();
+        const phone = document.getElementById('sitePhone').value.trim();
         const email = document.getElementById('siteEmail').value.trim();
         const password = document.getElementById('sitePassword').value.trim();
         
@@ -1018,6 +1295,7 @@
         const newEntry = {
             site: site,
             username: username,
+            phone: phone,
             email: email,
             password: password,
             confirmed: false,
@@ -1033,17 +1311,14 @@
             .then(() => {
                 showToast('✅ তথ্য সেভ হয়েছে!', 'success');
                 
-                // ===== সব ফিল্ড ক্লিয়ার =====
                 document.getElementById('siteSelect').value = '';
                 document.getElementById('siteName').value = '';
                 document.getElementById('siteUsername').value = '';
+                document.getElementById('sitePhone').value = '';
                 document.getElementById('siteEmail').value = '';
                 document.getElementById('sitePassword').value = '';
                 
-                // ===== ফর্ম হাইড =====
                 document.getElementById('addPasswordForm').classList.add('hidden');
-                
-                // ===== লিস্ট রিফ্রেশ =====
                 loadPasswords();
             })
             .catch(err => {
@@ -1131,10 +1406,10 @@
     
     function hideAddPassword() {
         document.getElementById('addPasswordForm').classList.add('hidden');
-        // ফর্ম হাইড করার সময় ফিল্ড ক্লিয়ার করুন
         document.getElementById('siteSelect').value = '';
         document.getElementById('siteName').value = '';
         document.getElementById('siteUsername').value = '';
+        document.getElementById('sitePhone').value = '';
         document.getElementById('siteEmail').value = '';
         document.getElementById('sitePassword').value = '';
     }
@@ -1217,7 +1492,6 @@
 
     console.log('🚀 অ্যাপ রেডি! (Realtime Database)');
     console.log('📌 প্রজেক্ট:', firebaseConfig.projectId);
-    console.log('📌 Database URL:', firebaseConfig.databaseURL);
 </script>
 
 </body>
